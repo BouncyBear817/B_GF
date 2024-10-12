@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e07671a30d9346bab6ae2d2079c642bc, type: 3}
+  m_Name: GameGlobalSettings
+  m_EditorClassIdentifier: 
+  mScriptAuthor: Default
+  mScriptVersion: 0.0.1
+  mAppStage: 1
+  mMainFont: {fileID: 0}
+  mConfigPath: test/
+  mVersionListFileName: VersionList.txt
+  mResourceVersionFileName: ResourceVersion.txt
+  mServerType: 1
+  mInternalNet: http://127.0.0.1:8081/
+  mExternalNet: 
+  mFormalNet: 
+  mCurrentUseServerChannel: 
+  mServerChannelInfos: []

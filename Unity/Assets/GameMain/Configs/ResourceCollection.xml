@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<UnityGameFramework>
+  <ResourceCollection>
+    <Resources>
+      <Resource Name="Prefabs/UI/UIInitRootForm" LoadType="0" Packed="False" />
+    </Resources>
+    <Assets>
+      <Asset Guid="237ceae042d29dd49b41253f9e940ecf" ResourceName="Prefabs/UI/UIInitRootForm" />
+    </Assets>
+  </ResourceCollection>
+</UnityGameFramework>
