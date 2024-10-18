@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1504c4960a14809879337fa793e3a26, type: 3}
   m_Name: GameConfigSettings
   m_EditorClassIdentifier: 
-  mDataTables: []
-  mConfigs: []
-  mLanguages: []
+  mDataTables:
+  - LevelTable
+  - Core/EntityGroupTable
+  - Core/SoundGroupTable
+  - Core/UIGroupTable
+  mConfigs:
+  - Base
+  mLocalizations: []

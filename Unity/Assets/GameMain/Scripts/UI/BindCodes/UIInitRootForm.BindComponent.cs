@@ -11,7 +11,7 @@ namespace GameMain.UI
 
 		private void GetBindComponents(GameObject go)
 		{
-			mUIFormInfo = new Constant.UI.UIFormInfo(Constant.UI.EUIFormType.MainForm, "Base", "UIInitRootForm", Constant.UI.EUIGroupName.BackgroundUI, false, true);
+			mUIFormInfo = new Constant.UI.UIFormInfo(Constant.UI.EUIFormType.MainForm, "Base", "UIInitRootForm", Constant.EUIGroupName.BackgroundUI, false, true);
 			var uiAutoBindTool = go.GetComponent<UIAutoBindTool>();
 
 			mTransLaunchView = uiAutoBindTool.GetBindComponent<RectTransform>(0);

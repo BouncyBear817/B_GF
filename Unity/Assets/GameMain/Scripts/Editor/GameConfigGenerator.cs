@@ -34,7 +34,9 @@ namespace GameMain.Editor
         {
             RefreshAllConfigs();
             RefreshAllDataTables();
-            RefreshAllLanguages();
+            RefreshAllLocalizations();
+
+            GenerateGroupEnumScript();
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace GameMain.Editor
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.DataTablePath);
                 case GameConfigType.Config:
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.ConfigPath);
-                case GameConfigType.Language:
+                case GameConfigType.Localization:
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.LocalizationPath);
             }
 
@@ -70,7 +72,7 @@ namespace GameMain.Editor
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.DataTableExcelPath);
                 case GameConfigType.Config:
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.ConfigExcelPath);
-                case GameConfigType.Language:
+                case GameConfigType.Localization:
                     return PathUtil.GetGameConfigFullPath(SettingsUtils.GamePathSettings.LocalizationExcelPath);
             }
 
@@ -160,7 +162,7 @@ namespace GameMain.Editor
                 case GameConfigType.DataTable:
                 case GameConfigType.Config:
                     return ".txt";
-                case GameConfigType.Language:
+                case GameConfigType.Localization:
                     return ".json";
             }
 
@@ -198,7 +200,7 @@ namespace GameMain.Editor
         private static List<string> ScanVariableTypes()
         {
             var types = new List<string>();
-            var nestedTypes = typeof(DataTableProcessor).GetNestedTypes(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | BindingFlags.Instance);
+            var nestedTypes = typeof(DataTableProcessor).GetNestedTypes(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             foreach (var nestedType in nestedTypes)
             {
                 if (nestedType.IsClass && nestedType.BaseType != null && nestedType.BaseType.IsGenericType &&
@@ -231,7 +233,7 @@ namespace GameMain.Editor
 
         private static bool ExcelToTxtFile(string excelPath, string txtPath)
         {
-            var result = false;
+            bool result;
             var fileInfo = new FileInfo(excelPath);
             var tmpExcelFilePath = PathUtil.GetCombinePath(fileInfo.Directory?.FullName, $"{fileInfo.Name},tmp");
             try
@@ -245,7 +247,6 @@ namespace GameMain.Editor
                     for (var rowIndex = excelWorksheet.Dimension.Start.Row; rowIndex <= excelWorksheet.Dimension.End.Row; rowIndex++)
                     {
                         lineTxt.Clear();
-                        var rowTxt = string.Empty;
                         for (int columnIndex = excelWorksheet.Dimension.Start.Column; columnIndex <= excelWorksheet.Dimension.End.Column; columnIndex++)
                         {
                             var cellContent = excelWorksheet.GetValue<string>(rowIndex, columnIndex);
@@ -279,7 +280,7 @@ namespace GameMain.Editor
                         Directory.CreateDirectory(outTxtDir);
                     }
 
-                    File.WriteAllText(txtPath, excelTxt.ToString());
+                    File.WriteAllText(txtPath, excelTxt.ToString(), Encoding.UTF8);
 
                     result = true;
                 }

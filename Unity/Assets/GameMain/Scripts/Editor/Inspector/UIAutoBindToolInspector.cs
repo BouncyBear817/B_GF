@@ -57,7 +57,6 @@ namespace GameMain.Editor
             mMountCodePath = serializedObject.FindProperty("mMountCodePath");
 
             mUIAutoBindGlobalSettings = SettingsUtils.GetSettings<UIAutoBindGlobalSettings>();
-            ;
 
             serializedObject.ApplyModifiedProperties();
         }
@@ -131,7 +130,7 @@ namespace GameMain.Editor
             
             mModuleName.stringValue = EditorGUILayout.TextField(new GUIContent("Module Name"), mModuleName.stringValue);
             mUIFormType.enumValueIndex = (int)(Constant.UI.EUIFormType)EditorGUILayout.EnumPopup("UI Form Type", mTarget.UIFormType);
-            mUIGroupName.enumValueIndex = (int)(Constant.UI.EUIGroupName)EditorGUILayout.EnumPopup("UI Group Name", mTarget.UIGroupName);
+            mUIGroupName.enumValueIndex = (int)(Constant.EUIGroupName)EditorGUILayout.EnumPopup("UI Group Name", mTarget.UIGroupName);
             mAllowMultiInstance.boolValue = EditorGUILayout.Toggle("Allow Multi Instance", mAllowMultiInstance.boolValue);
             mPauseCoveredUIForm.boolValue = EditorGUILayout.Toggle("Pause Covered UI Form", mPauseCoveredUIForm.boolValue);
             
@@ -322,7 +321,7 @@ namespace GameMain.Editor
                 }
 
                 sw.WriteLine("\n\t\tprivate void GetBindComponents(GameObject go)\n\t\t{");
-                sw.WriteLine($"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(Constant.UI.EUIFormType.{mTarget.UIFormType}, \"{mTarget.ModuleName}\", \"{mTarget.ClassName}\", Constant.UI.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
+                sw.WriteLine($"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(Constant.UI.EUIFormType.{mTarget.UIFormType}, \"{mTarget.ModuleName}\", \"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
                 sw.WriteLine("\t\t\tvar uiAutoBindTool = go.GetComponent<UIAutoBindTool>();\n");
                 for (var i = 0; i < mTarget.mBindDataList.Count; i++)
                 {

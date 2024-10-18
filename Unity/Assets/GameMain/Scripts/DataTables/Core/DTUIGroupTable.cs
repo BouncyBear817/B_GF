@@ -11,9 +11,9 @@ using UnityGameFramework.Runtime;
 namespace GameMain
 {
     /// <summary>
-    /// test
+    /// UIGroup
     /// </summary>
-    public class DTperson : DataRowBase
+    public class DTUIGroupTable : DataRowBase
     {
         private int mId = 0;
 
@@ -23,19 +23,14 @@ namespace GameMain
         public override int Id => mId;
 
         /// <summary>
-        /// 姓名
+        /// 界面名称
         /// </summary>
         public string Name {get; private set;}
 
         /// <summary>
-        /// 性别
+        /// 界面深度
         /// </summary>
-        public string Sex {get; private set;}
-
-        /// <summary>
-        /// 年龄
-        /// </summary>
-        public int Age {get; private set;}
+        public int Depth {get; private set;}
 
 
         public override bool ParseDataRow(string dataRowString, object userData)
@@ -51,8 +46,7 @@ namespace GameMain
             mId = int.Parse(columnStrings[index++]);
             index++;
             Name = columnStrings[index++];
-            Sex = columnStrings[index++];
-            Age = int.Parse(columnStrings[index++]);
+            Depth = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -66,8 +60,7 @@ namespace GameMain
                 {
                     mId = binaryReader.Read7BitEncodedInt32();
                     Name = binaryReader.ReadString();
-                    Sex = binaryReader.ReadString();
-                    Age = binaryReader.Read7BitEncodedInt32();
+                    Depth = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

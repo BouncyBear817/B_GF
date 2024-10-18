@@ -33,7 +33,7 @@ namespace GameMain
 
         private static void InitComponentsSet()
         {
-            UI.CreateUIGroups();
+            
         }
     }
 }

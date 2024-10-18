@@ -16,7 +16,7 @@ namespace GameMain
     {
         public static string GetConfigAsset(string assetName, bool fromBytes, bool txtOrXml)
         {
-            return Utility.Text.Format("Assets/GameMain/Configs/{0}.{1}", assetName, fromBytes ? "bytes" : txtOrXml ? "xml" : "json");
+            return Utility.Text.Format("Assets/GameMain/Configs/{0}.{1}", assetName, fromBytes ? "bytes" : txtOrXml ? "txt" : "xml");
         }
 
         public static string GetLocalizationAsset(string assetName, bool bytesOrXml)

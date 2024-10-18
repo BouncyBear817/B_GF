@@ -51,6 +51,12 @@ namespace GameMain.Editor
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mDataTableExcelPath"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mLocalizationExcelPath"));
 
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mEntityGroupDataTableExcelPath"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mSoundGroupDataTableExcelPath"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mUIGroupDataTableExcelPath"));
+
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mDataTableGroupCodePath"));
+
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mEntityPath"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mFontPath"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mMusicPath"));

@@ -32,7 +32,7 @@ namespace GameMain.Editor
             {
                 new GameConfigView(mGameConfigSettings, GameConfigType.Config),
                 new GameConfigView(mGameConfigSettings, GameConfigType.DataTable),
-                new GameConfigView(mGameConfigSettings, GameConfigType.Language)
+                new GameConfigView(mGameConfigSettings, GameConfigType.Localization)
             };
 
             ReloadView(mGameConfigSettings);
@@ -90,9 +90,9 @@ namespace GameMain.Editor
                         field.SetValue(gameConfigSettings, gameConfigView.GetSelectedGameConfig());
                     }
                 }
-                else if (gameConfigView.ConfigType == GameConfigType.Language)
+                else if (gameConfigView.ConfigType == GameConfigType.Localization)
                 {
-                    var field = type.GetField("mLanguages", BindingFlags.Instance | BindingFlags.NonPublic);
+                    var field = type.GetField("mLocalizations", BindingFlags.Instance | BindingFlags.NonPublic);
                     if (field != null)
                     {
                         field.SetValue(gameConfigSettings, gameConfigView.GetSelectedGameConfig());

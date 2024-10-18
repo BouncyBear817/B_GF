@@ -14,15 +14,7 @@ namespace GameMain
     {
         public static partial class UI
         {
-            public static Dictionary<EUIGroupName, int> UIGroupMap = new Dictionary<EUIGroupName, int>()
-            {
-                { EUIGroupName.AlwaysBottomUI, 1000 },
-                { EUIGroupName.BackgroundUI, 2000 },
-                { EUIGroupName.CommonUI, 3000 },
-                { EUIGroupName.AnimationOnUI, 4000 },
-                { EUIGroupName.PopupUI, 5000 },
-                { EUIGroupName.GuideUI, 6000 }
-            };
+            
         }
     }
 }

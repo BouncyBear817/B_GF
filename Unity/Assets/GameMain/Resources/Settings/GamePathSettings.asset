@@ -18,6 +18,10 @@ MonoBehaviour:
   mConfigExcelPath: GameData/Configs
   mDataTableExcelPath: GameData/DataTables
   mLocalizationExcelPath: GameData/Localizations
+  mEntityGroupDataTableExcelPath: Core/EntityGroupTable.xlsx
+  mSoundGroupDataTableExcelPath: Core/SoundGroupTable.xlsx
+  mUIGroupDataTableExcelPath: Core/UIGroupTable.xlsx
+  mDataTableGroupCodePath: Assets/GameMain/Scripts/Definition/Constant/Constant.Group.cs
   mEntityPath: Assets/GameMain/Entities
   mFontPath: Assets/GameMain/Fonts
   mMusicPath: Assets/GameMain/Music

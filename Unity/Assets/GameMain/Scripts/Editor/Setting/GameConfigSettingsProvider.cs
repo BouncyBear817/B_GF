@@ -45,7 +45,7 @@ namespace GameMain.Editor
             {
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mDataTables"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mConfigs"));
-                Helper.DrawPropertyField(mCustomSettings.FindProperty("mLanguages"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mLocalizations"));
                 EditorGUILayout.Space(20);
                 if (!changeCheckScope.changed)
                 {

@@ -39,7 +39,7 @@ namespace GameMain
                 return;
             }
 
-            var dataRowClassName = DataRowClassPrefixName + splitedNames[0];
+            var dataRowClassName = DataRowClassPrefixName + GetClassName(splitedNames[0]);
             var dataRowType = Type.GetType(dataRowClassName);
             if (dataRowType == null)
             {
@@ -127,6 +127,17 @@ namespace GameMain
             }
 
             return new Vector4();
+        }
+
+        private static string GetClassName(string dataTableName)
+        {
+            if (dataTableName.Contains('/'))
+            {
+                var strArray = dataTableName.Split('/');
+                return strArray[strArray.Length - 1];
+            }
+
+            return dataTableName;
         }
     }
 }

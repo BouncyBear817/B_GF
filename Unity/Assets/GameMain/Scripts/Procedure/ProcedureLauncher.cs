@@ -20,8 +20,6 @@ namespace GameMain
             base.OnEnter(procedureOwner);
             Log.Info("Procedure Launcher...");
 
-            // MainEntry.UI.OpenUIForm(AssetUtil.GetUIFormAsset("UIInitRootForm"), Constant.UI.EUIGroupName.BackgroundUI.ToString());
-            
             ChangeState<ProcedureSplash>(procedureOwner);
         }
     }

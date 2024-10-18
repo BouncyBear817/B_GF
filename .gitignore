@@ -10,6 +10,10 @@ Unity/[Bb]uilds/
 Unity/[Ll]ogs/
 Unity/[Uu]ser[Ss]ettings/
 
+# Ignore assetbundle
+Unity/Assets/StreamingAssets
+Unity/GameAssetBundle
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 Unity/[Mm]emoryCaptures/

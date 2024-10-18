@@ -34,7 +34,7 @@ namespace GameMain.Editor
         /// <summary>
         /// 本地化语言表
         /// </summary>
-        Language
+        Localization
     }
 
     public partial class GameConfigSettingsInspector
@@ -69,6 +69,8 @@ namespace GameMain.Editor
                 mGameConfigSettings = gameConfigSettings;
                 ConfigType = configType;
 
+                mFoldout = true;
+
                 ItemDatas = new List<ItemData>();
                 ConfigPath = GameConfigGenerator.GetGameConfigPrePath(configType);
 
@@ -83,8 +85,8 @@ namespace GameMain.Editor
                         return SettingsUtils.GameConfigSettings.DataTables;
                     case GameConfigType.Config:
                         return SettingsUtils.GameConfigSettings.Configs;
-                    case GameConfigType.Language:
-                        return SettingsUtils.GameConfigSettings.Languages;
+                    case GameConfigType.Localization:
+                        return SettingsUtils.GameConfigSettings.Localizations;
                 }
 
                 return null;
@@ -192,9 +194,9 @@ namespace GameMain.Editor
                                 GUIUtility.ExitGUI();
                             }
 
-                            if (GUILayout.Button("Export", GUILayout.Width(70)))
+                            if (GUILayout.Button("Generate", GUILayout.Width(70)))
                             {
-                                Export();
+                                Generate();
                             }
                         }
                         EditorGUILayout.EndHorizontal();
@@ -218,17 +220,18 @@ namespace GameMain.Editor
                 return dataChanged;
             }
 
-            private void Export()
+            private void Generate()
             {
                 switch (ConfigType)
                 {
                     case GameConfigType.DataTable:
                         GameConfigGenerator.RefreshDataTables(GameConfigGenerator.GetGameConfigExcelRelativeFullPath(ConfigType, GetGameConfigList()));
+                        GameConfigGenerator.GenerateGroupEnumScript();
                         break;
                     case GameConfigType.Config:
                         GameConfigGenerator.RefreshConfigs(GameConfigGenerator.GetGameConfigExcelRelativeFullPath(ConfigType, GetGameConfigList()));
                         break;
-                    case GameConfigType.Language:
+                    case GameConfigType.Localization:
                         break;
                 }
             }

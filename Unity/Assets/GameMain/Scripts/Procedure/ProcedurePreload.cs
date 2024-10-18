@@ -8,6 +8,7 @@
 
 using System.Collections.Generic;
 using GameFramework;
+using UnityEngine;
 using UnityGameFramework.Runtime;
 using ProcedureOwner = GameFramework.Fsm.IFsm<GameFramework.Procedure.IProcedureManager>;
 
@@ -15,7 +16,13 @@ namespace GameMain
 {
     public class ProcedurePreload : ProcedureBase
     {
-        private Dictionary<string, bool> mLoadedFlag = new Dictionary<string, bool>();
+        private const float ProgressSpeed = 10f;
+
+        private int mTotalProgress = 0;
+        private int mLoadedProgress = 0;
+        private float mSmoothProgress = 0;
+        private bool mPreloadedAllCompleted = false;
+
 
         public override bool UseNativeDialog => true;
 
@@ -28,7 +35,12 @@ namespace GameMain
             MainEntry.Event.Subscribe(LoadDataTableSuccessEventArgs.EventId, OnLoadDataTableSuccess);
             MainEntry.Event.Subscribe(LoadDataTableFailureEventArgs.EventId, OnLoadDataTableFailure);
 
-            mLoadedFlag.Clear();
+            Log.Info("Enter Preloading Game Config...");
+
+            mLoadedProgress = 0;
+            mSmoothProgress = 0;
+            mPreloadedAllCompleted = false;
+            mTotalProgress = SettingsUtils.GameConfigSettings.Configs.Length + SettingsUtils.GameConfigSettings.DataTables.Length;
 
             PreloadResources();
         }
@@ -37,12 +49,21 @@ namespace GameMain
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
 
-            foreach (var (_, isLoaded) in mLoadedFlag)
+            if (mTotalProgress <= 0 || mPreloadedAllCompleted)
             {
-                if (!isLoaded)
-                {
-                    return;
-                }
+                return;
+            }
+
+            mSmoothProgress = Mathf.Lerp(mSmoothProgress, mLoadedProgress / (float)mTotalProgress, elapseSeconds * ProgressSpeed);
+
+            if (mLoadedProgress >= mTotalProgress && mSmoothProgress >= 0.99f)
+            {
+                mPreloadedAllCompleted = true;
+                InitGameFrameworkSettings();
+
+                Log.Info($"Preloaded Game Config complete, enter game scene...");
+                procedureOwner.SetData<VarString>("NextScene", "Game");
+                ChangeState<ProcedureChangeScene>(procedureOwner);
             }
         }
 
@@ -58,22 +79,127 @@ namespace GameMain
 
         private void PreloadResources()
         {
+            LoadConfigs();
+            LoadDataTables();
+            LoadLocalizations();
+        }
+
+        private void LoadConfigs()
+        {
+            foreach (var config in SettingsUtils.GameConfigSettings.Configs)
+            {
+                MainEntry.Config.LoadConfig(config, AssetUtil.GetConfigAsset(config, false, true), this);
+            }
+        }
+
+        private void LoadDataTables()
+        {
+            foreach (var dataTable in SettingsUtils.GameConfigSettings.DataTables)
+            {
+                MainEntry.DataTable.LoadDataTable(dataTable, AssetUtil.GetDataTableAsset(dataTable, false, true), this);
+            }
+        }
+
+        private void LoadLocalizations()
+        {
+            foreach (var localization in SettingsUtils.GameConfigSettings.Localizations)
+            {
+                Log.Info(localization);
+            }
+        }
+
+        private void InitGameFrameworkSettings()
+        {
+            var entityGroupTb = MainEntry.DataTable.GetDataTable<DTEntityGroupTable>();
+            foreach (var entityGroup in entityGroupTb.GetAllDataRows())
+            {
+                if (MainEntry.Entity.HasEntityGroup(entityGroup.Name))
+                {
+                    var group = MainEntry.Entity.GetEntityGroup(entityGroup.Name);
+                    group.InstanceAutoReleaseInterval = entityGroup.InstanceAutoReleaseInterval;
+                    group.InstanceCapacity = entityGroup.InstanceCapacity;
+                    group.InstanceExpireTime = entityGroup.InstanceExpireTime;
+                    group.InstancePriority = entityGroup.InstancePriority;
+                    continue;
+                }
+
+                MainEntry.Entity.AddEntityGroup(entityGroup.Name, entityGroup.InstanceAutoReleaseInterval, entityGroup.InstanceCapacity, entityGroup.InstanceExpireTime,
+                    entityGroup.InstancePriority);
+            }
+
+            var soundGroupTb = MainEntry.DataTable.GetDataTable<DTSoundGroupTable>();
+            foreach (var soundGroup in soundGroupTb)
+            {
+                if (MainEntry.Sound.HasSoundGroup(soundGroup.Name))
+                {
+                    var group = MainEntry.Sound.GetSoundGroup(soundGroup.Name);
+                    group.AvoidBeingReplacedBySamePriority = soundGroup.AvoidBeingReplacedBySamePriority;
+                    group.Mute = soundGroup.Mute;
+                    group.Volume = soundGroup.Volume;
+                    continue;
+                }
+
+                MainEntry.Sound.AddSoundGroup(soundGroup.Name, soundGroup.AvoidBeingReplacedBySamePriority, soundGroup.Mute, soundGroup.Volume, soundGroup.SoundAgentCount);
+            }
+
+            var uiGroupTb = MainEntry.DataTable.GetDataTable<DTUIGroupTable>();
+            foreach (var uiGroup in uiGroupTb)
+            {
+                if (MainEntry.UI.HasUIGroup(uiGroup.Name))
+                {
+                    var group = MainEntry.UI.GetUIGroup(uiGroup.Name);
+                    group.Depth = uiGroup.Depth;
+                    continue;
+                }
+
+                MainEntry.UI.AddUIGroup(uiGroup.Name, uiGroup.Depth);
+            }
         }
 
         private void OnLoadConfigSuccess(object sender, BaseEventArgs e)
         {
+            var eventArgs = e as LoadConfigSuccessEventArgs;
+            if (eventArgs != null)
+            {
+                if (eventArgs.UserData != this)
+                {
+                    return;
+                }
+            }
+
+            mLoadedProgress++;
         }
 
         private void OnLoadConfigFailure(object sender, BaseEventArgs e)
         {
+            var eventArgs = e as LoadConfigFailureEventArgs;
+            if (eventArgs != null)
+            {
+                Log.Error(eventArgs.ErrorMessage);
+            }
         }
 
         private void OnLoadDataTableSuccess(object sender, BaseEventArgs e)
         {
+            var eventArgs = e as LoadDataTableSuccessEventArgs;
+            if (eventArgs != null)
+            {
+                if (eventArgs.UserData != this)
+                {
+                    return;
+                }
+            }
+
+            mLoadedProgress++;
         }
 
         private void OnLoadDataTableFailure(object sender, BaseEventArgs e)
         {
+            var eventArgs = e as LoadDataTableFailureEventArgs;
+            if (eventArgs != null)
+            {
+                Log.Error(eventArgs.ErrorMessage);
+            }
         }
     }
 }

@@ -1,8 +1,0 @@
-#	test				
-#	ID		Name	Sex	Age
-#	int		string	string	int
-#		备注	姓名	性别	年龄
-	1		li	nan	32
-	2		sun	nv	33
-	3		jiang	nan	56
-	4		li	nv	8

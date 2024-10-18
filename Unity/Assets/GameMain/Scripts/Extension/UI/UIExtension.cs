@@ -86,14 +86,6 @@ namespace GameMain
             uiComponent.CloseUIForm(uiForm.UIForm);
         }
 
-        public static void CreateUIGroups(this UIComponent uiComponent)
-        {
-            foreach (var (euiGroupName, value) in Constant.UI.UIGroupMap)
-            {
-                uiComponent.AddUIGroup(euiGroupName.ToString(), value);
-            }
-        }
-
         /// <summary>
         /// 适配挖孔屏与刘海屏
         /// </summary>

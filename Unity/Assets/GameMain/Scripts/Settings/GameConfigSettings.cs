@@ -7,6 +7,7 @@
 //  *************************************************************/
 
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain
 {
@@ -15,7 +16,7 @@ namespace GameMain
     {
         [SerializeField] private string[] mDataTables;
         [SerializeField] private string[] mConfigs;
-        [SerializeField] private string[] mLanguages;
+        [SerializeField] private string[] mLocalizations;
 
         public string[] DataTables
         {
@@ -29,10 +30,10 @@ namespace GameMain
             set => mConfigs = value;
         }
 
-        public string[] Languages
+        public string[] Localizations
         {
-            get => mLanguages;
-            set => mLanguages = value;
+            get => mLocalizations;
+            set => mLocalizations = value;
         }
     }
 }

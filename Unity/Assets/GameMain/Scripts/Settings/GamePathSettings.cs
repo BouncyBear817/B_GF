@@ -17,20 +17,29 @@ namespace GameMain
         [SerializeField] private string mConfigPath;
         [SerializeField] private string mDataTablePath;
         [SerializeField] private string mLocalizationPath;
-        
+
         [Header("Game Config Excel")] 
         [SerializeField] private string mConfigExcelPath;
         [SerializeField] private string mDataTableExcelPath;
         [SerializeField] private string mLocalizationExcelPath;
+
+        [Header("Data Table Core Excel")] 
+        [SerializeField] private string mEntityGroupDataTableExcelPath;
+        [SerializeField] private string mSoundGroupDataTableExcelPath;
+        [SerializeField] private string mUIGroupDataTableExcelPath;
         
-        [Header("Game Asset")]
+        [Header("Data Table Core Group Code")]
+        [SerializeField] private string mDataTableGroupCodePath;
+
+        [Header("Game Asset")] 
         [SerializeField] private string mEntityPath;
         [SerializeField] private string mFontPath;
         [SerializeField] private string mMusicPath;
         [SerializeField] private string mScenePath;
         [SerializeField] private string mSoundPath;
 
-        [Header("UI")] [SerializeField] private string mUIPath;
+        [Header("UI")] 
+        [SerializeField] private string mUIPath;
 
 
         public string ConfigPath
@@ -45,6 +54,54 @@ namespace GameMain
             set => mDataTablePath = value;
         }
 
+        public string LocalizationPath
+        {
+            get => mLocalizationPath;
+            set => mLocalizationPath = value;
+        }
+
+        public string ConfigExcelPath
+        {
+            get => mConfigExcelPath;
+            set => mConfigExcelPath = value;
+        }
+
+        public string DataTableExcelPath
+        {
+            get => mDataTableExcelPath;
+            set => mDataTableExcelPath = value;
+        }
+
+        public string LocalizationExcelPath
+        {
+            get => mLocalizationExcelPath;
+            set => mLocalizationExcelPath = value;
+        }
+
+        public string EntityGroupDataTableExcelPath
+        {
+            get => mEntityGroupDataTableExcelPath;
+            set => mEntityGroupDataTableExcelPath = value;
+        }
+
+        public string SoundGroupDataTableExcelPath
+        {
+            get => mSoundGroupDataTableExcelPath;
+            set => mSoundGroupDataTableExcelPath = value;
+        }
+
+        public string UIGroupDataTableExcelPath
+        {
+            get => mUIGroupDataTableExcelPath;
+            set => mUIGroupDataTableExcelPath = value;
+        }
+
+        public string DataTableGroupCodePath
+        {
+            get => mDataTableGroupCodePath;
+            set => mDataTableGroupCodePath = value;
+        }
+
         public string EntityPath
         {
             get => mEntityPath;
@@ -55,12 +112,6 @@ namespace GameMain
         {
             get => mFontPath;
             set => mFontPath = value;
-        }
-
-        public string LocalizationPath
-        {
-            get => mLocalizationPath;
-            set => mLocalizationPath = value;
         }
 
         public string MusicPath
@@ -85,24 +136,6 @@ namespace GameMain
         {
             get => mUIPath;
             set => mUIPath = value;
-        }
-
-        public string ConfigExcelPath
-        {
-            get => mConfigExcelPath;
-            set => mConfigExcelPath = value;
-        }
-
-        public string DataTableExcelPath
-        {
-            get => mDataTableExcelPath;
-            set => mDataTableExcelPath = value;
-        }
-
-        public string LocalizationExcelPath
-        {
-            get => mLocalizationExcelPath;
-            set => mLocalizationExcelPath = value;
         }
     }
 }

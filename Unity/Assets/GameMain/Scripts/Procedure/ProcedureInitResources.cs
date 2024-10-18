@@ -41,8 +41,6 @@ namespace GameMain
         {
             mInitResourcesComplete = true;
             Log.Info("Init Resources complete...");
-            
-            MainEntry.UI.OpenUIForm(AssetUtil.GetUIFormAsset("UIInitRootForm"), Constant.UI.EUIGroupName.BackgroundUI.ToString());
         }
     }
 }

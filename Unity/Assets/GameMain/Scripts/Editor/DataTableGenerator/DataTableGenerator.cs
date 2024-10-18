@@ -74,8 +74,32 @@ namespace GameMain.Editor
         private static string GetDataTableBytesPath(string dataTableName) =>
             GameFramework.Utility.Path.GetRegularPath(Path.Combine(DataTableConstant.DataTablePath, dataTableName + DataTableConstant.BytesSuffix));
 
-        private static string GetCSharpCodePath(string dataTableName) =>
-            GameFramework.Utility.Path.GetRegularPath(Path.Combine(DataTableConstant.CSharpCodePath, DataTableConstant.PrefixName + dataTableName + DataTableConstant.CSharpSuffix));
+        private static string GetCSharpCodePath(string dataTableName)
+        {
+            string codeName;
+            if (dataTableName.Contains('/'))
+            {
+                var strArray = dataTableName.Split('/');
+                var name = strArray[strArray.Length - 1];
+                var className = GetCSharpClassName(dataTableName);
+                codeName = dataTableName.Replace(name, className);
+            }
+            else
+            {
+                codeName = DataTableConstant.PrefixName + dataTableName;
+            }
+
+            var path = GameFramework.Utility.Path.GetRegularPath(Path.Combine(DataTableConstant.CSharpCodePath, codeName + DataTableConstant.CSharpSuffix));
+            var pathDir = Path.GetDirectoryName(path);
+            if (pathDir != null && !Directory.Exists(pathDir))
+            {
+                Directory.CreateDirectory(pathDir);
+            }
+
+            return path;
+        }
+
+        private static string GetCSharpClassName(string dataTableName) => DataTableConstant.PrefixName + Path.GetFileName(dataTableName);
 
         private static void DataTableCodeGenerator(DataTableProcessor dataTableProcessor, StringBuilder codeContent, object userData)
         {
@@ -83,7 +107,7 @@ namespace GameMain.Editor
 
             codeContent.Replace("__DATA_TABLE_NAME_SPACE__", "GameMain");
             codeContent.Replace("__DATA_TABLE_COMMENT__", dataTableProcessor.GetValue(0, 1));
-            codeContent.Replace("__DATA_TABLE_CLASS_NAME__", DataTableConstant.PrefixName + dataTableName);
+            codeContent.Replace("__DATA_TABLE_CLASS_NAME__", GetCSharpClassName(dataTableName));
             codeContent.Replace("__DATA_TABLE_ID_COMMENT__", dataTableProcessor.GetComment(dataTableProcessor.IdColumn));
             codeContent.Replace("__DATA_TABLE_PROPERTIES__", GenerateDataTableProperties(dataTableProcessor));
             codeContent.Replace("__DATA_TABLE_PARSER__", GenerateDataTableParser(dataTableProcessor));
@@ -115,11 +139,16 @@ namespace GameMain.Editor
                     stringBuilder.AppendLine();
                 }
 
-                stringBuilder
-                    .AppendLine("        /// <summary>")
-                    .AppendFormat("        /// {0}", dataTableProcessor.GetComment(i)).AppendLine()
-                    .AppendLine("        /// </summary>")
-                    .AppendLine($"        public {dataTableProcessor.GetLanguageKeyword(i)} {dataTableProcessor.GetName(i)}" + " {" + "get; private set;" + "}");
+                var comment = dataTableProcessor.GetComment(i);
+                if (!string.IsNullOrEmpty(comment))
+                {
+                    stringBuilder
+                        .AppendLine("        /// <summary>")
+                        .AppendFormat("        /// {0}", comment).AppendLine()
+                        .AppendLine("        /// </summary>");
+                }
+
+                stringBuilder.AppendLine($"        public {dataTableProcessor.GetLanguageKeyword(i)} {dataTableProcessor.GetName(i)}" + " {" + "get; private set;" + "}");
             }
 
             return stringBuilder.ToString();

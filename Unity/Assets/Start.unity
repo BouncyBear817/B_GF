@@ -1470,9 +1470,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AvailableProcedureTypeNames:
+  - GameMain.ProcedureChangeScene
   - GameMain.ProcedureCheckVersion
   - GameMain.ProcedureInitResources
   - GameMain.ProcedureLauncher
+  - GameMain.ProcedureMenu
   - GameMain.ProcedurePreload
   - GameMain.ProcedureSplash
   m_EntranceProcedureTypeName: GameMain.ProcedureLauncher
