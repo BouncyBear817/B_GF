@@ -153,7 +153,7 @@ namespace GameMain.Editor
                     Debug.LogError($"Check Raw Data Failed. DataTableName : {dataTableName}.");
                     continue;
                 }
-                
+
                 // DataTableGenerator.GenerateDataFile(dataTableProcessor, dataTableName);
                 DataTableGenerator.GenerateCodeFile(dataTableProcessor, dataTableName);
             }
@@ -204,7 +204,8 @@ namespace GameMain.Editor
                     }
 
                     var enumName = excelSheet.GetValue(rowIndex, 4).ToString();
-                    var comment = excelSheet.GetValue(rowIndex, 3).ToString();
+                    var commentValue = excelSheet.GetValue(rowIndex, 3);
+                    var comment = commentValue == null ? null : commentValue.ToString();
                     enumDic.TryAdd(enumName, comment);
                 }
 

@@ -155,6 +155,26 @@ namespace GameMain
             MainEntry.UI.CloseUIForm(this);
         }
 
+        public void Init(object userData)
+        {
+            OnInit(userData);
+        }
+
+        public void Recycle()
+        {
+            OnRecycle();
+        }
+
+        public void Open(object userData)
+        {
+            OnOpen(userData);
+        }
+
+        public void Close(bool isShutdown, object userData)
+        {
+            OnClose(isShutdown, userData);
+        }
+
         public void Broadcast(uint msgId, params object[] args)
         {
             MainEntry.Messenger.Broadcast(msgId, args);

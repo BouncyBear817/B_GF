@@ -37,8 +37,6 @@ namespace GameMain
 
         [SerializeField] private string mClassName;
         [SerializeField] private string mNamespace;
-        [SerializeField] private string mModuleName;
-        [SerializeField] private Constant.UI.EUIFormType mUIFormType;
         [SerializeField] private Constant.EUIGroupName mUIGroupName;
         [SerializeField] private bool mAllowMultiInstance;
         [SerializeField] private bool mPauseCoveredUIForm;
@@ -52,10 +50,6 @@ namespace GameMain
         public string ComponentCodePath => mComponentCodePath;
 
         public string MountCodePath => mMountCodePath;
-
-        public string ModuleName => mModuleName;
-
-        public Constant.UI.EUIFormType UIFormType => mUIFormType;
 
         public Constant.EUIGroupName UIGroupName => mUIGroupName;
 

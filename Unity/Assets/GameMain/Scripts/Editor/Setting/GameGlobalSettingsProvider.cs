@@ -48,14 +48,22 @@ namespace GameMain.Editor
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mScriptVersion"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mAppStage"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mMainFont"));
-                Helper.DrawPropertyField(mCustomSettings.FindProperty("mConfigPath"));
-                Helper.DrawPropertyField(mCustomSettings.FindProperty("mVersionListFileName"));
+                
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mForceUpdateApp"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mAppUpdateUri"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mAppUpdateDesc"));
+                
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mApplicableGameVersion"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mInternalResourceVersion"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mResourceVersionFileName"));
+                
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mServerType"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mInternalNet"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mExternalNet"));
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mFormalNet"));
+                
                 Helper.DrawPropertyField(mCustomSettings.FindProperty("mCurrentUseServerChannel"));
+                Helper.DrawPropertyField(mCustomSettings.FindProperty("mServerChannelInfos"));
                 EditorGUILayout.Space(20);
                 if (!changeCheckScope.changed)
                 {

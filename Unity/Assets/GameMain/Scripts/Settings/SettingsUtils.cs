@@ -78,9 +78,9 @@ namespace GameMain
             }
         }
 
-        public static string GetVersionListPath()
+        public static string GetVersionListPath(string platform)
         {
-            return GetResourceServerPath() + GameGlobalSettings.ConfigPath + GameGlobalSettings.VersionListFileName;
+            return PathUtil.GetCombinePath(GetResourceServerPath(), platform, GameGlobalSettings.ResourceVersionFileName);
         }
 
 #if UNITY_EDITOR

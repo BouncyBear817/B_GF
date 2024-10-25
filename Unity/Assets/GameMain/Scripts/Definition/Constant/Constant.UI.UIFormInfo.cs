@@ -18,16 +18,6 @@ namespace GameMain
             public class UIFormInfo
             {
                 /// <summary>
-                /// 界面类型
-                /// </summary>
-                public EUIFormType UIFormType { get; }
-
-                /// <summary>
-                /// 模块名称
-                /// </summary>
-                public string ModuleName { get; }
-
-                /// <summary>
                 /// 资源名称
                 /// </summary>
                 public string AssetName { get; }
@@ -47,10 +37,8 @@ namespace GameMain
                 /// </summary>
                 public bool PauseCoveredUIForm { get; }
 
-                public UIFormInfo(EUIFormType uiFormType, string moduleName, string assetName, EUIGroupName uiGroupName, bool allowMultiInstance, bool pauseCoveredUIForm)
+                public UIFormInfo(string assetName, EUIGroupName uiGroupName, bool allowMultiInstance, bool pauseCoveredUIForm)
                 {
-                    UIFormType = uiFormType;
-                    ModuleName = moduleName;
                     AssetName = assetName;
                     UIGroupName = uiGroupName;
                     AllowMultiInstance = allowMultiInstance;

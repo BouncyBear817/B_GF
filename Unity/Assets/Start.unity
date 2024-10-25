@@ -305,6 +305,54 @@ MonoBehaviour:
   m_LocalizationHelperTypeName: UnityGameFramework.Runtime.DefaultLocalizationHelper
   m_CustomLocalizationHelper: {fileID: 0}
   m_CachedBytesSize: 0
+--- !u!1 &138417670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 138417671}
+  - component: {fileID: 138417672}
+  m_Layer: 0
+  m_Name: BuiltinData
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &138417671
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138417670}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 335947030}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &138417672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 138417670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0180a2cbdd54b78959cfa14ba6eccec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mDialogForm: {fileID: -6415377498719043792, guid: d5a7a81298ac0a6459a3bd0ecff02069,
+    type: 3}
+  mProgressForm: {fileID: 5127673783243750151, guid: 21aa6dbe000cd3b42a65378d7acdf741,
+    type: 3}
 --- !u!1 &195547146
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,9 +437,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 105771298}
-  - {fileID: 1461623012}
+  - {fileID: 138417671}
   - {fileID: 33584423}
+  - {fileID: 1461623012}
+  - {fileID: 105771298}
   m_Father: {fileID: 573971938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &363777014
@@ -776,7 +825,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98acd7d3bd2bf54dadf9644f60e5cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorResourceMode: 0
+  m_EditorResourceMode: 1
   m_EditorLanguage: 8
   m_TextHelperTypeName: UnityGameFramework.Runtime.DefaultTextHelper
   m_VersionHelperTypeName: UnityGameFramework.Runtime.DefaultVersionHelper
@@ -1394,7 +1443,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1280, y: 720}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3

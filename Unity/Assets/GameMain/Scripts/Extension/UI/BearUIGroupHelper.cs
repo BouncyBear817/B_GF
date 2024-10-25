@@ -17,7 +17,7 @@ namespace GameMain
     /// </summary>
     public class BearUIGroupHelper : UIGroupHelperBase
     {
-        public const int DepthFactor = 10000;
+        public const int DepthFactor = 1000;
 
         private int mDepth = 0;
         private Canvas mCachedCanvas = null;

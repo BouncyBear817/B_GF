@@ -6,9 +6,6 @@
  * Modify Record:
  *************************************************************/
 
-
-using GameFramework;
-using GameFramework.Procedure;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -22,6 +19,8 @@ namespace GameMain
 
         public static CrossPlatformComponent CrossPlatform { get; private set; }
 
+        public static BuiltinDataComponent BuiltinData { get; private set; }
+
         private static void InitCustomComponents()
         {
             NetConnector = GameEntry.GetComponent<NetConnectorComponent>();
@@ -29,11 +28,12 @@ namespace GameMain
             Messenger = GameEntry.GetComponent<MessengerComponent>();
 
             CrossPlatform = GameEntry.GetComponent<CrossPlatformComponent>();
+
+            BuiltinData = GameEntry.GetComponent<BuiltinDataComponent>();
         }
 
         private static void InitComponentsSet()
         {
-            
         }
     }
 }

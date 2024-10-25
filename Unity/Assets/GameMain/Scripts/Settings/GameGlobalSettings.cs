@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameMain
 {
@@ -19,37 +20,65 @@ namespace GameMain
         [SerializeField] private string mScriptAuthor = "Default";
         [SerializeField] private string mScriptVersion = "0.0.1";
         [SerializeField] private AppStage mAppStage = AppStage.None;
-        
+
         [Header("Font")] 
         [SerializeField] private Font mMainFont;
 
-        [Header("Config")] 
-        [SerializeField] private string mConfigPath = "";
-        [SerializeField] private string mVersionListFileName = "VersionList.txt";
+        [Header("App Version")] 
+        [SerializeField] private bool mForceUpdateApp = false;
+        [SerializeField] private string mAppUpdateUri = "";
+        [SerializeField] private string mAppUpdateDesc = "";
+
+        [Header("Resource Version")]
+        [SerializeField] private string mApplicableGameVersion = "";
+        [SerializeField] private int mInternalResourceVersion = 0;
         [SerializeField] private string mResourceVersionFileName = "ResourceVersion.txt";
-        
-        [Header("ResourceServer")]
+
+        [Header("Resource Update Prefix Uri")] 
         [SerializeField] private ServerType mServerType = ServerType.None;
         [SerializeField] private string mInternalNet = "";
         [SerializeField] private string mExternalNet = "";
         [SerializeField] private string mFormalNet = "";
 
-        [Header("Server")] 
-        [SerializeField] private string mCurrentUseServerChannel;
+        [Header("Server")] [SerializeField] private string mCurrentUseServerChannel;
         [SerializeField] private List<ServerChannelInfo> mServerChannelInfos;
 
 
         public string ScriptAuthor => mScriptAuthor;
 
         public string ScriptVersion => mScriptVersion;
-        
+
         public AppStage AppStage => mAppStage;
 
         public Font MainFont => mMainFont;
 
-        public string ConfigPath => mConfigPath;
+        public bool ForceUpdateApp => mForceUpdateApp;
 
-        public string VersionListFileName => mVersionListFileName;
+        public string AppUpdateUri => mAppUpdateUri;
+
+        public string AppUpdateDesc => mAppUpdateDesc;
+
+        public string UpdatePrefixUri
+        {
+            get
+            {
+                switch (ServerType)
+                {
+                    case ServerType.InternalNet:
+                        return mInternalNet;
+                    case ServerType.ExternalNet:
+                        return mExternalNet;
+                    case ServerType.FormalNet:
+                        return mFormalNet;
+                    default:
+                        return "";
+                }
+            }
+        }
+
+        public string ApplicableGameVersion => mApplicableGameVersion;
+
+        public int InternalResourceVersion => mInternalResourceVersion;
 
         public string ResourceVersionFileName => mResourceVersionFileName;
 

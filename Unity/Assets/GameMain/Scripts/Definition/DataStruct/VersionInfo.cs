@@ -11,33 +11,44 @@ namespace GameMain
     /// <summary>
     /// 版本信息内容
     /// </summary>
+    [System.Serializable]
     public class VersionInfo
     {
         /// <summary>
-        /// 是否强制更新
+        /// 是否强制更新App
         /// </summary>
-        public bool ForceUpdateGame { get; set; }
-
+        public bool ForceUpdateApp { get; set; }
+        
         /// <summary>
-        /// 最新的游戏版本号
+        /// 最新App版本号
         /// </summary>
-        public string LatestGameVersion { get; set; }
-
+        public string LatestAppVersion { get; set; }
+        
         /// <summary>
-        /// 最新的内部游戏版号
+        /// App更新下载地址
         /// </summary>
-        public int InternalGameVersion { get; set; }
-
+        public string AppUpdateUri { get; set; }
+        
         /// <summary>
-        /// 最新的内部资源版本号
+        /// App更新说明
         /// </summary>
-        public int InternalResourceVersion { get; set; }
+        public string AppUpdateDesc { get; set; }
 
         /// <summary>
         /// 资源更新下载地址
         /// </summary>
         public string UpdatePrefixUri { get; set; }
+        
+        /// <summary>
+        /// 资源适配的版本号
+        /// </summary>
+        public string ApplicableGameVersion { get; set; }
 
+        /// <summary>
+        /// 最新的内部资源版本号
+        /// </summary>
+        public int InternalResourceVersion { get; set; }
+        
         /// <summary>
         /// 资源版本列表长度
         /// </summary>

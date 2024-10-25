@@ -23,6 +23,7 @@ namespace GameMain
 		}
 		public enum EUIGroupName
 		{
+			Default,
 			/// <summary>
 			/// 一直处于底部的界面
 			/// </summary>

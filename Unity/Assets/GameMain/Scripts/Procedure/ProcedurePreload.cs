@@ -35,7 +35,7 @@ namespace GameMain
             MainEntry.Event.Subscribe(LoadDataTableSuccessEventArgs.EventId, OnLoadDataTableSuccess);
             MainEntry.Event.Subscribe(LoadDataTableFailureEventArgs.EventId, OnLoadDataTableFailure);
 
-            Log.Info("Enter Preloading Game Config...");
+            Log.Info("Preload Game Config And Init Game Config...");
 
             mLoadedProgress = 0;
             mSmoothProgress = 0;
@@ -55,10 +55,12 @@ namespace GameMain
             }
 
             mSmoothProgress = Mathf.Lerp(mSmoothProgress, mLoadedProgress / (float)mTotalProgress, elapseSeconds * ProgressSpeed);
+            MainEntry.BuiltinData.ShowProgress($"{mSmoothProgress:P1}", mSmoothProgress);
 
             if (mLoadedProgress >= mTotalProgress && mSmoothProgress >= 0.99f)
             {
                 mPreloadedAllCompleted = true;
+                MainEntry.BuiltinData.HideProgress();
                 InitGameFrameworkSettings();
 
                 Log.Info($"Preloaded Game Config complete, enter game scene...");
@@ -161,13 +163,12 @@ namespace GameMain
             var eventArgs = e as LoadConfigSuccessEventArgs;
             if (eventArgs != null)
             {
-                if (eventArgs.UserData != this)
+                if (eventArgs.UserData == this)
                 {
-                    return;
+                    Log.Info($"Load config success : '{eventArgs.ConfigAssetName}'.");
+                    mLoadedProgress++;
                 }
             }
-
-            mLoadedProgress++;
         }
 
         private void OnLoadConfigFailure(object sender, BaseEventArgs e)
@@ -175,7 +176,7 @@ namespace GameMain
             var eventArgs = e as LoadConfigFailureEventArgs;
             if (eventArgs != null)
             {
-                Log.Error(eventArgs.ErrorMessage);
+                Log.Error($"Load config failed : '{eventArgs.ConfigAssetName}', error message : {eventArgs.ErrorMessage}");
             }
         }
 
@@ -184,13 +185,12 @@ namespace GameMain
             var eventArgs = e as LoadDataTableSuccessEventArgs;
             if (eventArgs != null)
             {
-                if (eventArgs.UserData != this)
+                if (eventArgs.UserData == this)
                 {
-                    return;
+                    Log.Info($"Load data table success : '{eventArgs.DataTableAssetName}'.");
+                    mLoadedProgress++;
                 }
             }
-
-            mLoadedProgress++;
         }
 
         private void OnLoadDataTableFailure(object sender, BaseEventArgs e)
@@ -198,7 +198,7 @@ namespace GameMain
             var eventArgs = e as LoadDataTableFailureEventArgs;
             if (eventArgs != null)
             {
-                Log.Error(eventArgs.ErrorMessage);
+                Log.Error($"Load data table failed : '{eventArgs.DataTableAssetName}', error message : {eventArgs.ErrorMessage}");
             }
         }
     }

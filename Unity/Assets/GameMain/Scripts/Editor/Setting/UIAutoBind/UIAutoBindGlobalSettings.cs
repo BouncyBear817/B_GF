@@ -86,7 +86,7 @@ namespace GameMain
                     if (prefixRule.Prefix.Equals(targetPrefix))
                     {
                         var typeName = prefixRule.FullName;
-                        filedNames.Add($"{targetPrefix}{filedName}");
+                        filedNames.Add(filedName);
                         typeNames.Add(typeName);
                         isFindType = true;
                         isValid = true;

@@ -17,7 +17,7 @@ MonoBehaviour:
   mMountCodePath: GameMain/Scripts/UI/MountCodes
   mMountScriptAssemblyList: []
   mPrefixRuleList:
-  - Prefix: B
+  - Prefix: Btn
     FullName: Button
   - Prefix: I
     FullName: Image
@@ -61,3 +61,5 @@ MonoBehaviour:
     FullName: Mask
   - Prefix: Mask2D
     FullName: RectMask2D
+  - Prefix: T
+    FullName: Text

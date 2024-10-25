@@ -8,6 +8,9 @@
 
 using System;
 using System.Collections;
+using GameFramework;
+using GameFramework.UI;
+using GameMain.UI;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
@@ -50,6 +53,21 @@ namespace GameMain
                 }
 
                 return mUICamera;
+            }
+        }
+
+        private static IUIManager mUIManager;
+
+        public static IUIManager UIManager
+        {
+            get
+            {
+                if (mUIManager == null)
+                {
+                    mUIManager = GameFrameworkEntry.GetModule<IUIManager>();
+                }
+
+                return mUIManager;
             }
         }
 
@@ -109,6 +127,26 @@ namespace GameMain
             var pos = topBar.anchoredPosition;
             pos.y = -topSpace;
             topBar.anchoredPosition = pos;
+        }
+
+        public static Transform GetUIGroupRoot(this UIComponent uiComponent, Constant.EUIGroupName groupName)
+        {
+            var group = uiComponent.GetUIGroup(groupName.ToString());
+            if (group != null)
+            {
+                var helper = group.Helper as BearUIGroupHelper;
+                if (helper != null)
+                {
+                    return helper.transform;
+                }
+            }
+
+            return null;
+        }
+
+        public static IUIFormHelper GetUIFormHelper(this UIComponent uiComponent)
+        {
+            return uiComponent.GetComponentInChildren<IUIFormHelper>();
         }
     }
 }

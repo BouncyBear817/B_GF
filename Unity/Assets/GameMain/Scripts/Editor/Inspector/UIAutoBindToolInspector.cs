@@ -26,8 +26,6 @@ namespace GameMain.Editor
         private SerializedProperty mBindComponentList;
         private SerializedProperty mClassName;
         private SerializedProperty mNamespace;
-        private SerializedProperty mModuleName;
-        private SerializedProperty mUIFormType;
         private SerializedProperty mUIGroupName;
         private SerializedProperty mAllowMultiInstance;
         private SerializedProperty mPauseCoveredUIForm;
@@ -48,8 +46,6 @@ namespace GameMain.Editor
             mBindComponentList = serializedObject.FindProperty("mBindComponentList");
             mClassName = serializedObject.FindProperty("mClassName");
             mNamespace = serializedObject.FindProperty("mNamespace");
-            mModuleName = serializedObject.FindProperty("mModuleName");
-            mUIFormType = serializedObject.FindProperty("mUIFormType");
             mUIGroupName = serializedObject.FindProperty("mUIGroupName");
             mAllowMultiInstance = serializedObject.FindProperty("mAllowMultiInstance");
             mPauseCoveredUIForm = serializedObject.FindProperty("mPauseCoveredUIForm");
@@ -128,8 +124,6 @@ namespace GameMain.Editor
             }
             EditorGUILayout.EndHorizontal();
             
-            mModuleName.stringValue = EditorGUILayout.TextField(new GUIContent("Module Name"), mModuleName.stringValue);
-            mUIFormType.enumValueIndex = (int)(Constant.UI.EUIFormType)EditorGUILayout.EnumPopup("UI Form Type", mTarget.UIFormType);
             mUIGroupName.enumValueIndex = (int)(Constant.EUIGroupName)EditorGUILayout.EnumPopup("UI Group Name", mTarget.UIGroupName);
             mAllowMultiInstance.boolValue = EditorGUILayout.Toggle("Allow Multi Instance", mAllowMultiInstance.boolValue);
             mPauseCoveredUIForm.boolValue = EditorGUILayout.Toggle("Pause Covered UI Form", mPauseCoveredUIForm.boolValue);
@@ -321,7 +315,7 @@ namespace GameMain.Editor
                 }
 
                 sw.WriteLine("\n\t\tprivate void GetBindComponents(GameObject go)\n\t\t{");
-                sw.WriteLine($"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(Constant.UI.EUIFormType.{mTarget.UIFormType}, \"{mTarget.ModuleName}\", \"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
+                sw.WriteLine($"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(\"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
                 sw.WriteLine("\t\t\tvar uiAutoBindTool = go.GetComponent<UIAutoBindTool>();\n");
                 for (var i = 0; i < mTarget.mBindDataList.Count; i++)
                 {
@@ -366,7 +360,7 @@ namespace GameMain.Editor
                     var ns = string.IsNullOrEmpty(mTarget.Namespace) ? DefaultNamespace : mTarget.Namespace;
                     sw.WriteLine($"\nnamespace {ns}" + "\n{");
                     sw.WriteLine($"\t/// <summary>\n\t/// Please modify the description.\n\t/// </summary>");
-                    sw.WriteLine($"\tpublic partial class {className}" + ": UGUIForm\n\t{");
+                    sw.WriteLine($"\tpublic partial class {className}" + ": BearUIForm\n\t{");
 
                     sw.WriteLine("\t\tprotected override void OnInit(object userData)\n\t\t{");
                     sw.WriteLine("\t\t\tbase.OnInit(userData);");
