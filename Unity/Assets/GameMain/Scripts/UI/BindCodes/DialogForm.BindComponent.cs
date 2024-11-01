@@ -6,28 +6,28 @@ namespace GameMain.UI
 {
 	public partial class DialogForm
 	{
-		private Text mTitle;
-		private Text mMessage;
-		private Button mConfirm;
-		private Text mConfirmText;
-		private Button mCancel;
-		private Text mCancelText;
-		private Button mOther;
-		private Text mOtherText;
+		private Text mTTitle;
+		private Text mTMessage;
+		private Button mBtnConfirm;
+		private Text mTConfirmText;
+		private Button mBtnCancel;
+		private Text mTCancelText;
+		private Button mBtnOther;
+		private Text mTOtherText;
 
 		private void GetBindComponents(GameObject go)
 		{
 			mUIFormInfo = new Constant.UI.UIFormInfo("DialogForm", Constant.EUIGroupName.PopupUI, false, false);
 			var uiAutoBindTool = go.GetComponent<UIAutoBindTool>();
 
-			mTitle = uiAutoBindTool.GetBindComponent<Text>(0);
-			mMessage = uiAutoBindTool.GetBindComponent<Text>(1);
-			mConfirm = uiAutoBindTool.GetBindComponent<Button>(2);
-			mConfirmText = uiAutoBindTool.GetBindComponent<Text>(3);
-			mCancel = uiAutoBindTool.GetBindComponent<Button>(4);
-			mCancelText = uiAutoBindTool.GetBindComponent<Text>(5);
-			mOther = uiAutoBindTool.GetBindComponent<Button>(6);
-			mOtherText = uiAutoBindTool.GetBindComponent<Text>(7);
+			mTTitle = uiAutoBindTool.GetBindComponent<Text>(0);
+			mTMessage = uiAutoBindTool.GetBindComponent<Text>(1);
+			mBtnConfirm = uiAutoBindTool.GetBindComponent<Button>(2);
+			mTConfirmText = uiAutoBindTool.GetBindComponent<Text>(3);
+			mBtnCancel = uiAutoBindTool.GetBindComponent<Button>(4);
+			mTCancelText = uiAutoBindTool.GetBindComponent<Text>(5);
+			mBtnOther = uiAutoBindTool.GetBindComponent<Button>(6);
+			mTOtherText = uiAutoBindTool.GetBindComponent<Text>(7);
 		}
 	}
 }

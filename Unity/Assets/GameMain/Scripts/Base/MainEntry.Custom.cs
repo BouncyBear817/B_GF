@@ -19,7 +19,7 @@ namespace GameMain
 
         public static CrossPlatformComponent CrossPlatform { get; private set; }
 
-        public static BuiltinDataComponent BuiltinData { get; private set; }
+        public static BuiltinUIFormComponent BuiltinUIForm { get; private set; }
 
         private static void InitCustomComponents()
         {
@@ -29,7 +29,7 @@ namespace GameMain
 
             CrossPlatform = GameEntry.GetComponent<CrossPlatformComponent>();
 
-            BuiltinData = GameEntry.GetComponent<BuiltinDataComponent>();
+            BuiltinUIForm = GameEntry.GetComponent<BuiltinUIFormComponent>();
         }
 
         private static void InitComponentsSet()

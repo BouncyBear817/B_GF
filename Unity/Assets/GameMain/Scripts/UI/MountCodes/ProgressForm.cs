@@ -5,7 +5,7 @@ namespace GameMain.UI
 	/// <summary>
 	/// Please modify the description.
 	/// </summary>
-	public partial class ProgressForm: BearUIForm
+	public partial class ProgressForm : BearUIForm
 	{
 		protected override void OnInit(object userData)
 		{
@@ -13,7 +13,7 @@ namespace GameMain.UI
 			GetBindComponents(gameObject);
 
 			#region Auto Generate,Do not modify!
-			mProgress.onValueChanged.AddListener(ProgressEvent);
+			mSlProgress.onValueChanged.AddListener(SlProgressEvent);
 			#endregion
 		}
 
@@ -23,12 +23,13 @@ namespace GameMain.UI
 
 		public void SetProgress(string message, float value)
 		{
-			mMessage.text = message;
-			mProgress.value = value;
+			mTMessage.text = message;
+			mSlProgress.value = value;
 		}
 
-		private void ProgressEvent(float value)
+		public void SetBackground(Sprite sprite)
 		{
+			mIBackground.sprite = sprite;
 		}
 
 /*--------------------Auto generate footer.Do not add anything below the footer!------------*/

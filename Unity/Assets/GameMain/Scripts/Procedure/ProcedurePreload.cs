@@ -55,12 +55,12 @@ namespace GameMain
             }
 
             mSmoothProgress = Mathf.Lerp(mSmoothProgress, mLoadedProgress / (float)mTotalProgress, elapseSeconds * ProgressSpeed);
-            MainEntry.BuiltinData.ShowProgress($"{mSmoothProgress:P1}", mSmoothProgress);
+            MainEntry.BuiltinUIForm.ShowProgress($"{mSmoothProgress:P1}", mSmoothProgress);
 
             if (mLoadedProgress >= mTotalProgress && mSmoothProgress >= 0.99f)
             {
                 mPreloadedAllCompleted = true;
-                MainEntry.BuiltinData.HideProgress();
+                MainEntry.BuiltinUIForm.HideProgress();
                 InitGameFrameworkSettings();
 
                 Log.Info($"Preloaded Game Config complete, enter game scene...");

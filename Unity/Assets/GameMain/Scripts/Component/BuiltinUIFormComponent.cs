@@ -14,36 +14,32 @@ using Object = UnityEngine.Object;
 
 namespace GameMain
 {
-    public class BuiltinDataComponent : GameFrameworkComponent
+    public class BuiltinUIFormComponent : GameFrameworkComponent
     {
-        [SerializeField] private DialogForm mDialogForm;
-
+        [SerializeField] private SplashForm mSplashForm;
         [SerializeField] private ProgressForm mProgressForm;
-
-
-        public DialogForm DialogForm => mDialogForm;
-
-        public ProgressForm ProgressForm => mProgressForm;
+        [SerializeField] private DialogForm mDialogForm;
 
         public void InitBuiltinForm()
         {
-            mProgressForm = Object.Instantiate<ProgressForm>(mProgressForm, MainEntry.UI.GetUIGroupRoot(Constant.EUIGroupName.Default));
+            mSplashForm.Init(null);
+            mSplashForm.gameObject.SetActive(false);
+
             mProgressForm.Init(null);
             mProgressForm.gameObject.SetActive(false);
 
-            mDialogForm = Object.Instantiate<DialogForm>(mDialogForm, MainEntry.UI.GetUIGroupRoot(Constant.EUIGroupName.Default));
             mDialogForm.Init(null);
             mDialogForm.gameObject.SetActive(false);
         }
 
-        public void ShowDialog(DialogParams dialogParams)
+        public void ShowSplash(GameFrameworkAction completeAction)
         {
-            mDialogForm.Open(dialogParams);
-        }
-
-        public void HideDialog()
-        {
-            mDialogForm.Close(false, null);
+            mSplashForm.Open(null);
+            StartCoroutine(mSplashForm.StartSplash(() =>
+            {
+                completeAction?.Invoke();
+                mSplashForm.Close(false, null);
+            }));
         }
 
         public void ShowProgress(string message, float progress)
@@ -59,6 +55,16 @@ namespace GameMain
         public void HideProgress()
         {
             mProgressForm.Close(false, null);
+        }
+
+        public void ShowDialog(DialogParams dialogParams)
+        {
+            mDialogForm.Open(dialogParams);
+        }
+
+        public void HideDialog()
+        {
+            mDialogForm.Close(false, null);
         }
     }
 }

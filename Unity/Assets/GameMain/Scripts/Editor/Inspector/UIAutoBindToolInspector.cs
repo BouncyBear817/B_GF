@@ -60,11 +60,11 @@ namespace GameMain.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            
+
             DrawSetting();
 
             DrawBindData();
-            
+
             DrawButton();
 
             serializedObject.ApplyModifiedProperties();
@@ -114,6 +114,7 @@ namespace GameMain.Editor
             {
                 mNamespace.stringValue = mUIAutoBindGlobalSettings.Namespace;
             }
+
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
@@ -122,12 +123,13 @@ namespace GameMain.Editor
             {
                 mClassName.stringValue = mTarget.gameObject.name;
             }
+
             EditorGUILayout.EndHorizontal();
-            
+
             mUIGroupName.enumValueIndex = (int)(Constant.EUIGroupName)EditorGUILayout.EnumPopup("UI Group Name", mTarget.UIGroupName);
             mAllowMultiInstance.boolValue = EditorGUILayout.Toggle("Allow Multi Instance", mAllowMultiInstance.boolValue);
             mPauseCoveredUIForm.boolValue = EditorGUILayout.Toggle("Pause Covered UI Form", mPauseCoveredUIForm.boolValue);
-            
+
             EditorGUILayout.LabelField("----------------------------------------------------------------------");
             EditorGUILayout.LabelField("Default Component Code Saved Path:");
             EditorGUILayout.LabelField(mComponentCodePath.stringValue);
@@ -315,7 +317,8 @@ namespace GameMain.Editor
                 }
 
                 sw.WriteLine("\n\t\tprivate void GetBindComponents(GameObject go)\n\t\t{");
-                sw.WriteLine($"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(\"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
+                sw.WriteLine(
+                    $"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(\"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
                 sw.WriteLine("\t\t\tvar uiAutoBindTool = go.GetComponent<UIAutoBindTool>();\n");
                 for (var i = 0; i < mTarget.mBindDataList.Count; i++)
                 {
@@ -360,12 +363,13 @@ namespace GameMain.Editor
                     var ns = string.IsNullOrEmpty(mTarget.Namespace) ? DefaultNamespace : mTarget.Namespace;
                     sw.WriteLine($"\nnamespace {ns}" + "\n{");
                     sw.WriteLine($"\t/// <summary>\n\t/// Please modify the description.\n\t/// </summary>");
-                    sw.WriteLine($"\tpublic partial class {className}" + ": BearUIForm\n\t{");
+                    sw.WriteLine($"\tpublic partial class {className}" + " : BearUIForm\n\t{");
 
                     sw.WriteLine("\t\tprotected override void OnInit(object userData)\n\t\t{");
                     sw.WriteLine("\t\t\tbase.OnInit(userData);");
                     sw.WriteLine("\t\t\tGetBindComponents(gameObject);\n");
                     sw.WriteLine($"\t\t\t{regionStart}\n");
+                    sw.WriteLine("\t\t\t\n");
                     foreach (var bindData in mTarget.mBindDataList)
                     {
                         var str = GetListener(bindData);
@@ -375,6 +379,7 @@ namespace GameMain.Editor
                         }
                     }
 
+                    sw.WriteLine("\t\t\t\n");
                     sw.WriteLine($"\n\t\t\t{regionEnd}");
                     sw.WriteLine("\t\t}\n");
 

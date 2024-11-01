@@ -139,7 +139,7 @@ namespace GameMain
             var latestAppVersion = System.Version.Parse(versionInfo.LatestAppVersion);
             if (latestAppVersion > curAppVersion)
             {
-                MainEntry.BuiltinData.ShowDialog(new DialogParams("New Version!", versionInfo.AppUpdateDesc,
+                MainEntry.BuiltinUIForm.ShowDialog(new DialogParams("New Version!", versionInfo.AppUpdateDesc,
                     "Update", o =>
                     {
                         Application.OpenURL(versionInfo.AppUpdateUri);
@@ -261,7 +261,7 @@ namespace GameMain
             }
 
             var progress = currentLength / (float)mUpdateTotalCompressedLength;
-            MainEntry.BuiltinData.ShowProgress($"{progress:P1}", progress);
+            MainEntry.BuiltinUIForm.ShowProgress($"{progress:P1}", progress);
         }
 
         private void OnWebRequestSuccess(object sender, BaseEventArgs e)
@@ -320,7 +320,7 @@ namespace GameMain
             var eventArgs = e as UnityGameFramework.Runtime.ResourceUpdateAllCompleteEventArgs;
             if (eventArgs != null)
             {
-                MainEntry.BuiltinData.HideProgress();
+                MainEntry.BuiltinUIForm.HideProgress();
                 Log.Info("Resource update all complete.");
             }
         }

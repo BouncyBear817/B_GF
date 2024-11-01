@@ -20,27 +20,25 @@ namespace GameMain.UI
             GetBindComponents(gameObject);
 
             #region Auto Generate,Do not modify!
-
-            mConfirm.onClick.AddListener(ConfirmEvent);
-            mCancel.onClick.AddListener(CancelEvent);
-            mOther.onClick.AddListener(OtherEvent);
-
+			mBtnConfirm.onClick.AddListener(BtnConfirmEvent);
+			mBtnCancel.onClick.AddListener(BtnCancelEvent);
+			mBtnOther.onClick.AddListener(BtnOtherEvent);
             #endregion
         }
 
-        private void ConfirmEvent()
+        private void BtnConfirmEvent()
         {
             mOnConfirmClick?.Invoke(this);
             OnClose(false, null);
         }
 
-        private void CancelEvent()
+        private void BtnCancelEvent()
         {
             mOnCancelClick?.Invoke(this);
             OnClose(false, null);
         }
 
-        private void OtherEvent()
+        private void BtnOtherEvent()
         {
             mOnOtherClick?.Invoke(this);
             OnClose(false, null);
@@ -71,16 +69,16 @@ namespace GameMain.UI
 
         private void InitData()
         {
-            mConfirm.gameObject.SetActive(false);
-            mCancel.gameObject.SetActive(false);
-            mOther.gameObject.SetActive(false);
-
-            mTitle.text = string.Empty;
-            mMessage.text = string.Empty;
-
-            mConfirmText.text = string.Empty;
-            mCancelText.text = string.Empty;
-            mOtherText.text = string.Empty;
+            mBtnConfirm.gameObject.SetActive(false);
+            mBtnCancel.gameObject.SetActive(false);
+            mBtnOther.gameObject.SetActive(false);
+            
+            mTTitle.text = string.Empty;
+            mTMessage.text = string.Empty;
+            
+            mTConfirmText.text = string.Empty;
+            mTCancelText.text = string.Empty;
+            mTOtherText.text = string.Empty;
 
             mOnConfirmClick = null;
             mOnCancelClick = null;
@@ -89,28 +87,26 @@ namespace GameMain.UI
 
         private void RefreshDialog(DialogParams dialogParams)
         {
-            mConfirm.gameObject.SetActive(dialogParams.Mode >= 1);
-            mCancel.gameObject.SetActive(dialogParams.Mode >= 2);
-            mOther.gameObject.SetActive(dialogParams.Mode >= 3);
+            mBtnConfirm.gameObject.SetActive(dialogParams.Mode >= 1);
+            mBtnCancel.gameObject.SetActive(dialogParams.Mode >= 2);
+            mBtnOther.gameObject.SetActive(dialogParams.Mode >= 3);
 
             if (dialogParams.IsPauseGame)
             {
                 MainEntry.Base.PauseGame();
             }
 
-            mTitle.text = dialogParams.Title;
-            mMessage.text = dialogParams.Message;
-
-            mConfirmText.text = dialogParams.ConfirmButtonText;
-            mCancelText.text = dialogParams.CancelButtonText;
-            mOtherText.text = dialogParams.OtherButtonText;
+            mTTitle.text = dialogParams.Title;
+            mTMessage.text = dialogParams.Message;
+            
+            mTConfirmText.text = dialogParams.ConfirmButtonText;
+            mTCancelText.text = dialogParams.CancelButtonText;
+            mTOtherText.text = dialogParams.OtherButtonText;
 
             mOnConfirmClick = dialogParams.OnConfirmClick;
             mOnCancelClick = dialogParams.OnCancelClick;
             mOnOtherClick = dialogParams.OnOtherClick;
         }
-
-
 /*--------------------Auto generate footer.Do not add anything below the footer!------------*/
-    }
+	}
 }

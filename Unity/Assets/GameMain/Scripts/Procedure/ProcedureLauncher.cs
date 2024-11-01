@@ -22,7 +22,7 @@ namespace GameMain
             
             BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
             
-            MainEntry.BuiltinData.InitBuiltinForm();
+            MainEntry.BuiltinUIForm.InitBuiltinForm();
             
             ChangeState<ProcedureSplash>(procedureOwner);
         }

@@ -19,19 +19,20 @@ namespace GameMain
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
+            OnStartSplash(procedureOwner);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
         {
             base.OnUpdate(procedureOwner, elapseSeconds, realElapseSeconds);
-            OnStartSplash(procedureOwner);
         }
 
         private void OnStartSplash(ProcedureOwner procedureOwner)
         {
             //TODO: 开启Splash....
             Log.Info("Start Splash...");
-            OnChangeState(procedureOwner);
+
+            MainEntry.BuiltinUIForm.ShowSplash(() => { OnChangeState(procedureOwner); });
         }
 
         private void OnChangeState(ProcedureOwner procedureOwner)

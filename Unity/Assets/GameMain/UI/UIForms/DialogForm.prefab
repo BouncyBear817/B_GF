@@ -299,8 +299,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: cadd0764941c8b646ae79b51d0ea8285, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -638,21 +638,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mBindDataList:
-  - Name: Title
+  - Name: TTitle
     BindComponent: {fileID: 11434978}
-  - Name: Message
+  - Name: TMessage
     BindComponent: {fileID: 11419300}
-  - Name: Confirm
+  - Name: BtnConfirm
     BindComponent: {fileID: 6380696829075772984}
-  - Name: ConfirmText
+  - Name: TConfirmText
     BindComponent: {fileID: 11466394}
-  - Name: Cancel
+  - Name: BtnCancel
     BindComponent: {fileID: 5140872678513861971}
-  - Name: CancelText
+  - Name: TCancelText
     BindComponent: {fileID: 11420780}
-  - Name: Other
+  - Name: BtnOther
     BindComponent: {fileID: 1200721729251435062}
-  - Name: OtherText
+  - Name: TOtherText
     BindComponent: {fileID: 11468576}
   mClassName: DialogForm
   mNamespace: GameMain.UI
