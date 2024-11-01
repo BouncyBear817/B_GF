@@ -305,12 +305,6 @@ MonoBehaviour:
   m_LocalizationHelperTypeName: UnityGameFramework.Runtime.DefaultLocalizationHelper
   m_CustomLocalizationHelper: {fileID: 0}
   m_CachedBytesSize: 0
---- !u!1 &133529571 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7884792885241507766, guid: aa8a3b448876cbc47b67f1c66104eb04,
-    type: 3}
-  m_PrefabInstance: {fileID: 2004770599802382974}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &133529572 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 325285603050414780, guid: aa8a3b448876cbc47b67f1c66104eb04,
@@ -323,73 +317,12 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 2004770599802382974}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133529571}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8fa18ec0427f0240b99998ff2181fe2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &133529578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133529571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 069bed31507b4366a652999db78cebe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mSequenceAnimations:
-  - AddType: 0
-    AnimationType: 0
-    UseFromTarget: 1
-    FromTarget: {fileID: 0}
-    FromValue: {x: 0, y: 0, z: 0, w: 0}
-    UseToTarget: 0
-    ToTarget: {fileID: 0}
-    ToValue: {x: 0, y: 0, z: 0, w: 0}
-    SpeedBased: 0
-    DurationOrSpeed: 0
-    Snapping: 0
-    Loops: 0
-    LoopType: 0
-    UpdateType: 0
-    Delay: 0
-    CurveOrEase: 0
-    EaseCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 0
-      m_PostInfinity: 0
-      m_RotationOrder: 0
-    Ease: 6
-    OnPlay:
-      m_PersistentCalls:
-        m_Calls: []
-    OnUpdate:
-      m_PersistentCalls:
-        m_Calls: []
-    OnComplete:
-      m_PersistentCalls:
-        m_Calls: []
-  mPlayOnAwake: 0
-  mSnapping: 0
-  mDelay: 0
-  mEase: 6
-  mLoops: 1
-  mLoopType: 0
-  mUpdateType: 0
-  mOnPlay:
-    m_PersistentCalls:
-      m_Calls: []
-  mOnUpdate:
-    m_PersistentCalls:
-      m_Calls: []
-  mOnComplete:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &195547146
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,7 +794,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f98acd7d3bd2bf54dadf9644f60e5cb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EditorResourceMode: 0
+  m_EditorResourceMode: 1
   m_EditorLanguage: 8
   m_TextHelperTypeName: UnityGameFramework.Runtime.DefaultTextHelper
   m_VersionHelperTypeName: UnityGameFramework.Runtime.DefaultVersionHelper
@@ -2280,11 +2213,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7884792885241507766, guid: aa8a3b448876cbc47b67f1c66104eb04,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 133529578}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aa8a3b448876cbc47b67f1c66104eb04, type: 3}
 --- !u!1001 &6103232599132583567
 PrefabInstance:

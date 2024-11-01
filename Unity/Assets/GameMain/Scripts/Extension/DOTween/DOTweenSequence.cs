@@ -14,11 +14,9 @@ namespace GameMain
 {
     public class DOTweenSequence : MonoBehaviour
     {
-        [SerializeField]
-        private SequenceAnimation[] mSequenceAnimations;
+        [SerializeField] private SequenceAnimation[] mSequenceAnimations;
 
         [SerializeField] private bool mPlayOnAwake;
-        [SerializeField] private bool mSnapping;
         [SerializeField] private float mDelay;
         [SerializeField] private Ease mEase = Ease.OutQuad;
         [SerializeField] private int mLoops = 1;
@@ -54,7 +52,7 @@ namespace GameMain
                     var tween = sequenceAnimation.CreateTween(true);
                     if (tween == null)
                     {
-                        var typeName = sequenceAnimation.FromTarget == null ? "null" : sequenceAnimation.FromTarget.GetType().Name;
+                        var typeName = sequenceAnimation.Target == null ? "null" : sequenceAnimation.Target.GetType().Name;
                         Debug.LogError($"Tween is null, Index : {i}, Animation Type : {sequenceAnimation.AnimationType}, Component Type : {typeName}");
                         continue;
                     }
@@ -78,7 +76,7 @@ namespace GameMain
                     var tween = sequenceAnimation.CreateTween();
                     if (tween == null)
                     {
-                        var typeName = sequenceAnimation.FromTarget == null ? "null" : sequenceAnimation.FromTarget.GetType().Name;
+                        var typeName = sequenceAnimation.Target == null ? "null" : sequenceAnimation.Target.GetType().Name;
                         Debug.LogError($"Tween is null, Index : {i}, Animation Type : {sequenceAnimation.AnimationType}, Component Type : {typeName}");
                         continue;
                     }
@@ -140,6 +138,24 @@ namespace GameMain
         {
             mTween?.Kill();
             mTween = null;
+        }
+
+        public UnityEvent OnPlay
+        {
+            get => mOnPlay;
+            set => mOnPlay = value;
+        }
+
+        public UnityEvent OnUpdate
+        {
+            get => mOnUpdate;
+            set => mOnUpdate = value;
+        }
+
+        public UnityEvent OnComplete
+        {
+            get => mOnComplete;
+            set => mOnComplete = value;
         }
     }
 }

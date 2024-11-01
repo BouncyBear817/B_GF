@@ -78,7 +78,6 @@ namespace GameMain.Editor
             mSequenceList.DoLayoutList();
 
             Helper.DrawPropertyField(serializedObject.FindProperty("mPlayOnAwake"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mSnapping"));
             Helper.DrawPropertyField(serializedObject.FindProperty("mDelay"));
             Helper.DrawPropertyField(serializedObject.FindProperty("mEase"));
             Helper.DrawPropertyField(serializedObject.FindProperty("mLoops"));

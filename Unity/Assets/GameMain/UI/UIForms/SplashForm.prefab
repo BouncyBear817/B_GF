@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5602397276249117619}
   - component: {fileID: 1318206332217388517}
   - component: {fileID: 8954933315202312215}
-  - component: {fileID: 4608885209076172361}
+  - component: {fileID: 6528496483162432585}
   m_Layer: 5
   m_Name: I_Splash
   m_TagString: Untagged
@@ -59,7 +59,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -76,22 +76,103 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!111 &4608885209076172361
-Animation:
+--- !u!114 &6528496483162432585
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4895555389404261171}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: da29400cc439e1e4c93e6acd98615a31, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: da29400cc439e1e4c93e6acd98615a31, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 0
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069bed31507b4366a652999db78cebe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mSequenceAnimations:
+  - AddType: 0
+    AnimationType: 21
+    Target: {fileID: 8954933315202312215}
+    UseFromValue: 1
+    FromValue: {x: 0, y: 0, z: 0, w: 0}
+    UseToTarget: 0
+    ToTarget: {fileID: 0}
+    ToValue: {x: 1, y: 0, z: 0, w: 1}
+    SpeedBased: 1
+    DurationOrSpeed: 0.2
+    Snapping: 0
+    Loops: 0
+    LoopType: 0
+    UpdateType: 0
+    Delay: 0
+    CurveOrEase: 1
+    EaseCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 3.9904847
+        outSlope: 1
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 69
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 2
+        value: 1
+        inSlope: -0
+        outSlope: -1
+        tangentMode: 5
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 3
+        value: 0
+        inSlope: -1
+        outSlope: -1
+        tangentMode: 34
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 0
+    Ease: 6
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnUpdate:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  mPlayOnAwake: 0
+  mSnapping: 0
+  mDelay: 0
+  mEase: 6
+  mLoops: 0
+  mLoopType: 0
+  mUpdateType: 0
+  mOnPlay:
+    m_PersistentCalls:
+      m_Calls: []
+  mOnUpdate:
+    m_PersistentCalls:
+      m_Calls: []
+  mOnComplete:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6702683829172625254
 GameObject:
   m_ObjectHideFlags: 0

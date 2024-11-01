@@ -35,11 +35,11 @@ namespace GameMain
         public void ShowSplash(GameFrameworkAction completeAction)
         {
             mSplashForm.Open(null);
-            StartCoroutine(mSplashForm.StartSplash(() =>
+            mSplashForm.StartSplash(() =>
             {
                 completeAction?.Invoke();
                 mSplashForm.Close(false, null);
-            }));
+            });
         }
 
         public void ShowProgress(string message, float progress)
