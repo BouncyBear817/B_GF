@@ -6,57 +6,64 @@
 //  * Modify Record:
 //  *************************************************************/
 
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace GameMain
 {
-    [CreateAssetMenu(fileName = "GameGlobalSettings", menuName = "Bear Tools/Game Global Settings", order = 1)]
+    [CreateAssetMenu(fileName = "GameGlobalSettings", menuName = "Tools/Game Global Settings", order = 1)]
     public class GameGlobalSettings : ScriptableObject
     {
-        [Header("Framework")] 
         [SerializeField] private string mScriptAuthor = "Default";
-        [SerializeField] private string mScriptVersion = "0.0.1";
-        [SerializeField] private AppStage mAppStage = AppStage.None;
-
-        [Header("Font")] 
         [SerializeField] private Font mMainFont;
 
-        [Header("App Version")] 
         [SerializeField] private bool mForceUpdateApp = false;
         [SerializeField] private string mAppUpdateUri = "";
         [SerializeField] private string mAppUpdateDesc = "";
+        [SerializeField] private string mAppBuildPath = "";
 
-        [Header("Resource Version")]
         [SerializeField] private string mApplicableGameVersion = "";
-        [SerializeField] private int mInternalResourceVersion = 0;
         [SerializeField] private string mResourceVersionFileName = "ResourceVersion.txt";
 
-        [Header("Resource Update Prefix Uri")] 
         [SerializeField] private ServerType mServerType = ServerType.None;
         [SerializeField] private string mInternalNet = "";
         [SerializeField] private string mExternalNet = "";
         [SerializeField] private string mFormalNet = "";
 
-        [Header("Server")] [SerializeField] private string mCurrentUseServerChannel;
-        [SerializeField] private List<ServerChannelInfo> mServerChannelInfos;
+        public string ScriptAuthor
+        {
+            get => mScriptAuthor;
+            set => mScriptAuthor = value;
+        }
 
+        public Font MainFont
+        {
+            get => mMainFont;
+            set => mMainFont = value;
+        }
 
-        public string ScriptAuthor => mScriptAuthor;
+        public bool ForceUpdateApp
+        {
+            get => mForceUpdateApp;
+            set => mForceUpdateApp = value;
+        }
 
-        public string ScriptVersion => mScriptVersion;
+        public string AppUpdateUri
+        {
+            get => mAppUpdateUri;
+            set => mAppUpdateUri = value;
+        }
 
-        public AppStage AppStage => mAppStage;
+        public string AppUpdateDesc
+        {
+            get => mAppUpdateDesc;
+            set => mAppUpdateDesc = value;
+        }
 
-        public Font MainFont => mMainFont;
-
-        public bool ForceUpdateApp => mForceUpdateApp;
-
-        public string AppUpdateUri => mAppUpdateUri;
-
-        public string AppUpdateDesc => mAppUpdateDesc;
+        public string AppBuildPath
+        {
+            get => mAppBuildPath;
+            set => mAppBuildPath = value;
+        }
 
         public string UpdatePrefixUri
         {
@@ -76,38 +83,40 @@ namespace GameMain
             }
         }
 
-        public string ApplicableGameVersion => mApplicableGameVersion;
+        public string ApplicableGameVersion
+        {
+            get => mApplicableGameVersion;
+            set => mApplicableGameVersion = value;
+        }
 
-        public int InternalResourceVersion => mInternalResourceVersion;
+        public string ResourceVersionFileName
+        {
+            get => mResourceVersionFileName;
+            set => mResourceVersionFileName = value;
+        }
 
-        public string ResourceVersionFileName => mResourceVersionFileName;
+        public ServerType ServerType
+        {
+            get => mServerType;
+            set => mServerType = value;
+        }
 
-        public ServerType ServerType => mServerType;
+        public string InternalNet
+        {
+            get => mInternalNet;
+            set => mInternalNet = value;
+        }
 
-        public string InternalNet => mInternalNet;
+        public string ExternalNet
+        {
+            get => mExternalNet;
+            set => mExternalNet = value;
+        }
 
-        public string ExternalNet => mExternalNet;
-
-        public string FormalNet => mFormalNet;
-
-        public string CurrentUseServerChannel => mCurrentUseServerChannel;
-
-        public List<ServerChannelInfo> ServerChannelInfos => mServerChannelInfos;
-    }
-
-    [Serializable]
-    public class ServerChannelInfo
-    {
-        public string ChannelName;
-        public string CurrentUseServerName;
-        public List<ServerIPAndPort> ServerIPAndPorts;
-    }
-
-    [Serializable]
-    public class ServerIPAndPort
-    {
-        public string ServerName;
-        public string IP;
-        public string Port;
+        public string FormalNet
+        {
+            get => mFormalNet;
+            set => mFormalNet = value;
+        }
     }
 }

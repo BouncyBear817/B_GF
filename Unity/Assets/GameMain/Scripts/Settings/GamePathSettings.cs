@@ -10,35 +10,29 @@ using UnityEngine;
 
 namespace GameMain
 {
-    [CreateAssetMenu(fileName = "GamePathSettings", menuName = "Bear Tools/Game Path Settings", order = 3)]
+    [CreateAssetMenu(fileName = "GamePathSettings", menuName = "Tools/Game Path Settings", order = 3)]
     public class GamePathSettings : ScriptableObject
     {
-        [Header("Game Config")] 
         [SerializeField] private string mConfigPath;
         [SerializeField] private string mDataTablePath;
         [SerializeField] private string mLocalizationPath;
 
-        [Header("Game Config Excel")] 
         [SerializeField] private string mConfigExcelPath;
         [SerializeField] private string mDataTableExcelPath;
         [SerializeField] private string mLocalizationExcelPath;
 
-        [Header("Data Table Core Excel")] 
         [SerializeField] private string mEntityGroupDataTableExcelPath;
         [SerializeField] private string mSoundGroupDataTableExcelPath;
         [SerializeField] private string mUIGroupDataTableExcelPath;
-        
-        [Header("Data Table Core Group Code")]
+
         [SerializeField] private string mDataTableGroupCodePath;
 
-        [Header("Game Asset")] 
         [SerializeField] private string mEntityPath;
         [SerializeField] private string mFontPath;
         [SerializeField] private string mMusicPath;
         [SerializeField] private string mScenePath;
         [SerializeField] private string mSoundPath;
 
-        [Header("UI")] 
         [SerializeField] private string mUIPath;
 
 

@@ -11,7 +11,7 @@ using UnityEngine.Serialization;
 
 namespace GameMain
 {
-    [CreateAssetMenu(fileName = "GameConfigSettings", menuName = "Bear Tools/Game Config Settings[配置数据表、配置表]", order = 2)]
+    [CreateAssetMenu(fileName = "GameConfigSettings", menuName = "Tools/Game Config Settings[配置数据表、配置表]", order = 2)]
     public class GameConfigSettings : ScriptableObject
     {
         [SerializeField] private string[] mDataTables;

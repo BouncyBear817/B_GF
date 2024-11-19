@@ -6,8 +6,8 @@
 //  * Modify Record:
 //  *************************************************************/
 
-using System;
 using UnityEditor;
+using UnityEngine;
 
 namespace GameMain.Editor
 {
@@ -17,28 +17,65 @@ namespace GameMain.Editor
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-            
-            Helper.DrawPropertyField(serializedObject.FindProperty("mConfigPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mDataTablePath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mLocalizationPath"));
 
-            Helper.DrawPropertyField(serializedObject.FindProperty("mConfigExcelPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableExcelPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mLocalizationExcelPath"));
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("Game Config", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mConfigPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mDataTablePath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mLocalizationPath"));
+            }
+            EditorGUILayout.EndVertical();
 
-            Helper.DrawPropertyField(serializedObject.FindProperty("mEntityGroupDataTableExcelPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mSoundGroupDataTableExcelPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mUIGroupDataTableExcelPath"));
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("Game Config Excel", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mConfigExcelPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableExcelPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mLocalizationExcelPath"));
+            }
+            EditorGUILayout.EndVertical();
 
-            Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableGroupCodePath"));
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("Data Table Core Excel", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mEntityGroupDataTableExcelPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mSoundGroupDataTableExcelPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mUIGroupDataTableExcelPath"));
+            }
+            EditorGUILayout.EndVertical();
 
-            Helper.DrawPropertyField(serializedObject.FindProperty("mEntityPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mFontPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mMusicPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mScenePath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mSoundPath"));
-            Helper.DrawPropertyField(serializedObject.FindProperty("mUIPath"));
-            
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("Data Table Core Group Code", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableGroupCodePath"));
+            }
+            EditorGUILayout.EndVertical();
+
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("Game Asset", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mEntityPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mFontPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mMusicPath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mScenePath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mSoundPath"));
+            }
+            EditorGUILayout.EndVertical();
+
+            GUILayout.Space(10);
+            EditorGUILayout.TextField("UI", EditorStyles.boldLabel);
+            EditorGUILayout.BeginVertical("box");
+            {
+                Helper.DrawPropertyField(serializedObject.FindProperty("mUIPath"));
+            }
+            EditorGUILayout.EndVertical();
+
             serializedObject.ApplyModifiedProperties();
 
             Repaint();

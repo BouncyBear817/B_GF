@@ -11,7 +11,7 @@ using UnityEngine;
 
 namespace GameMain
 {
-    [CreateAssetMenu(fileName = "UIAutoBindGlobalSettings", menuName = "Bear Tools/UI Auto Bind Settings", order = 20)]
+    [CreateAssetMenu(fileName = "UIAutoBindGlobalSettings", menuName = "Tools/UI Auto Bind Settings", order = 20)]
     public class UIAutoBindGlobalSettings : ScriptableObject
     {
         [SerializeField] private string mNamespace;

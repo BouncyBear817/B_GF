@@ -6,6 +6,7 @@
 //  * Modify Record:
 //  *************************************************************/
 
+using System;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -63,19 +64,7 @@ namespace GameMain
 
         public static string GetResourceServerPath()
         {
-            switch (GameGlobalSettings.ServerType)
-            {
-                case ServerType.InternalNet:
-                    return GameGlobalSettings.InternalNet;
-                case ServerType.ExternalNet:
-                    return GameGlobalSettings.ExternalNet;
-                case ServerType.FormalNet:
-                    return GameGlobalSettings.FormalNet;
-                case ServerType.None:
-                default:
-                    Log.Fatal("GameGlobalSettings.ServerType is invalid.");
-                    return null;
-            }
+            return mGameGlobalSettings.UpdatePrefixUri;
         }
 
         public static string GetVersionListPath(string platform)
@@ -102,6 +91,25 @@ namespace GameMain
 
             var path = UnityEditor.AssetDatabase.GUIDToAssetPath(paths[0]);
             return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
+        }
+        
+        public static ScriptableObject GetSettings(string assetTypeName) 
+        {
+            var paths = UnityEditor.AssetDatabase.FindAssets($"t:{assetTypeName}");
+            if (paths.Length == 0)
+            {
+                Debug.LogError($"{assetTypeName} is not existed.");
+                return null;
+            }
+
+            if (paths.Length > 1)
+            {
+                Debug.LogError($"{assetTypeName} is more than 1, please delete others and leave one.");
+                return null;
+            }
+
+            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(paths[0]);
+            return UnityEditor.AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
         }
 #endif
 

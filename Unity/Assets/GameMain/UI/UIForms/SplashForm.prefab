@@ -158,7 +158,6 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   mPlayOnAwake: 0
-  mSnapping: 0
   mDelay: 0
   mEase: 6
   mLoops: 0

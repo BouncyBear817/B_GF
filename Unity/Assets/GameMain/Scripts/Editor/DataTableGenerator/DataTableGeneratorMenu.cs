@@ -13,7 +13,7 @@ namespace GameMain.Editor
 {
     public sealed class DataTableGeneratorMenu : EditorWindow
     {
-        [MenuItem("Assets/Bear Tools/Generate Data Table", priority = 1)]
+        [MenuItem("Assets/Tools/Generate Data Table", priority = 1)]
         private static void GenerateDataTable()
         {
             var objs = Selection.objects;
