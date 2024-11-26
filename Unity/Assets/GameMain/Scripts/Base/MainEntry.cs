@@ -6,7 +6,9 @@
  * Modify Record:
  *************************************************************/
 
+using System.Reflection;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace GameMain
 {
@@ -21,8 +23,28 @@ namespace GameMain
 
             InitBuiltinComponents();
             InitCustomComponents();
-            
+
             InitComponentsSet();
+        }
+
+        private void InitComponentsSet()
+        {
+            Debugger.ActiveWindow = SettingsUtils.GameBuildSettings.DebugMode;
+
+            var resourceComponent = GameEntry.GetComponent<ResourceComponent>();
+            if (resourceComponent != null)
+            {
+                var resourceType = resourceComponent.GetType();
+                var resourceMode = resourceType.GetField("m_ResourceMode", BindingFlags.Instance | BindingFlags.NonPublic);
+                if (resourceMode != null)
+                {
+                    resourceMode.SetValue(resourceComponent, SettingsUtils.GameBuildSettings.ResourceMode);
+                }
+            }
+
+            BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
+
+            BuiltinUIForm.InitBuiltinForm();
         }
     }
 }

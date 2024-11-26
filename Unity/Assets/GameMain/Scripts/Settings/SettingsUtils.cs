@@ -45,7 +45,7 @@ namespace GameMain
                 return mGameConfigSettings;
             }
         }
-        
+
         private const string GamePathSettingsPath = "Settings/GamePathSettings";
         private static GamePathSettings mGamePathSettings;
 
@@ -62,14 +62,25 @@ namespace GameMain
             }
         }
 
-        public static string GetResourceServerPath()
+        private const string GameBuildSettingsPath = "Settings/GameBuildSettings";
+        private static GameBuildSettings sGameBuildSettings;
+
+        public static GameBuildSettings GameBuildSettings
         {
-            return mGameGlobalSettings.UpdatePrefixUri;
+            get
+            {
+                if (sGameBuildSettings == null)
+                {
+                    sGameBuildSettings = GetSettingsByResources<GameBuildSettings>(GameBuildSettingsPath);
+                }
+
+                return sGameBuildSettings;
+            }
         }
 
         public static string GetVersionListPath(string platform)
         {
-            return PathUtil.GetCombinePath(GetResourceServerPath(), platform, GameGlobalSettings.ResourceVersionFileName);
+            return PathUtil.GetCombinePath(GameBuildSettings.UpdatePrefixUri, platform, GameBuildSettings.ResourceVersionFileName);
         }
 
 #if UNITY_EDITOR
@@ -92,8 +103,8 @@ namespace GameMain
             var path = UnityEditor.AssetDatabase.GUIDToAssetPath(paths[0]);
             return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
         }
-        
-        public static ScriptableObject GetSettings(string assetTypeName) 
+
+        public static ScriptableObject GetSettings(string assetTypeName)
         {
             var paths = UnityEditor.AssetDatabase.FindAssets($"t:{assetTypeName}");
             if (paths.Length == 0)

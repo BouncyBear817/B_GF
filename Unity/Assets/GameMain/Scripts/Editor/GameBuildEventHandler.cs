@@ -1,5 +1,4 @@
 using System.IO;
-using GameFramework;
 using LitJson;
 using UnityEditor;
 using UnityEngine;
@@ -47,12 +46,12 @@ namespace GameMain.Editor
             bool outputPackageSelected, string outputPackagePath, bool outputFullSelected, string outputFullPath, bool outputPackedSelected, string outputPackedPath,
             string buildReportPath)
         {
-            mVersionInfo.ForceUpdateApp = SettingsUtils.GameGlobalSettings.ForceUpdateApp;
+            mVersionInfo.ForceUpdateApp = SettingsUtils.GameBuildSettings.ForceUpdateApp;
             mVersionInfo.LatestAppVersion = applicableGameVersion;
-            mVersionInfo.AppUpdateUri = SettingsUtils.GameGlobalSettings.AppUpdateUri;
-            mVersionInfo.AppUpdateDesc = SettingsUtils.GameGlobalSettings.AppUpdateDesc;
-            
-            mVersionInfo.ApplicableGameVersion = SettingsUtils.GameGlobalSettings.ApplicableGameVersion;
+            mVersionInfo.AppUpdateUri = SettingsUtils.GameBuildSettings.AppUpdateUri;
+            mVersionInfo.AppUpdateDesc = SettingsUtils.GameBuildSettings.AppUpdateDesc;
+
+            mVersionInfo.ApplicableGameVersion = SettingsUtils.GameBuildSettings.ApplicableGameVersion;
             mVersionInfo.InternalResourceVersion = internalResourceVersion;
 
             FolderUtil.ClearFolder(Application.streamingAssetsPath);
@@ -130,7 +129,7 @@ namespace GameMain.Editor
             var outputPath = Application.streamingAssetsPath;
             if (outputPackageSelected)
             {
-                if (FolderUtil.CopyFilesToRootPath(outputPackagePath, outputPath, SearchOption.AllDirectories))
+                if (FolderUtil.CopyFilesToRootPath(outputPackagePath, outputPath))
                 {
                     Debug.Log($"Copy package files to '{outputPath}' success.");
                 }
@@ -138,7 +137,7 @@ namespace GameMain.Editor
 
             if (!outputPackageSelected && outputPackedSelected)
             {
-                if (FolderUtil.CopyFilesToRootPath(outputPackedPath, outputPath, SearchOption.AllDirectories))
+                if (FolderUtil.CopyFilesToRootPath(outputPackedPath, outputPath))
                 {
                     Debug.Log($"Copy packed files to '{outputPath}' success.");
                 }
@@ -146,12 +145,12 @@ namespace GameMain.Editor
 
             if (outputFullSelected)
             {
-                mVersionInfo.UpdatePrefixUri = PathUtil.GetCombinePath(SettingsUtils.GameGlobalSettings.UpdatePrefixUri, platform.ToString());
+                mVersionInfo.UpdatePrefixUri = PathUtil.GetCombinePath(SettingsUtils.GameBuildSettings.UpdatePrefixUri, platform.ToString());
 
                 var versionInfoJson = JsonMapper.ToJson(mVersionInfo);
-                FileUtil.CreateFile(Path.Combine(outputFullPath, SettingsUtils.GameGlobalSettings.ResourceVersionFileName), versionInfoJson);
+                FileUtil.CreateFile(Path.Combine(outputFullPath, SettingsUtils.GameBuildSettings.ResourceVersionFileName), versionInfoJson);
             }
-            
+
             AssetDatabase.Refresh();
         }
 

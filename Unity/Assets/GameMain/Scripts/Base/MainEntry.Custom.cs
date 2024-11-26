@@ -31,9 +31,5 @@ namespace GameMain
 
             BuiltinUIForm = GameEntry.GetComponent<BuiltinUIFormComponent>();
         }
-
-        private static void InitComponentsSet()
-        {
-        }
     }
 }

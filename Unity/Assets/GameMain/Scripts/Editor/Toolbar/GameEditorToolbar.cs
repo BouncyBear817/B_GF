@@ -33,6 +33,11 @@ namespace GameMain.Editor
             sGameSettingsContent = EditorGUIUtility.TrTextContentWithIcon("Game Settings", "游戏配置", "Settings");
             sOpenCsProjectContent = EditorGUIUtility.TrTextContentWithIcon("Open C# Project", "打开C#工程", "dll Script Icon");
 
+            EditorSceneManager.sceneOpened += (scene, mode) =>
+            {
+                sScenesContent.text = scene.name;
+            };
+
             ToolbarExtension.LeftToolbarGUI.Add(OnLeftToolbarGUI);
             ToolbarExtension.RightToolbarGUI.Add(OnRightToolbarGUI);
         }
@@ -80,7 +85,7 @@ namespace GameMain.Editor
         {
             if (GUILayout.Button(sBuildAppContent, EditorStyles.toolbarButton, GUILayout.Width(60)))
             {
-                AppBuilderEditor.Open();
+                GameBuilder.Open();
             }
             
             GUILayout.Space(10);

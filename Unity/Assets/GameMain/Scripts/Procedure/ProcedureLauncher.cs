@@ -19,11 +19,7 @@ namespace GameMain
         {
             base.OnEnter(procedureOwner);
             Log.Info("Procedure Launcher...");
-            
-            BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
-            
-            MainEntry.BuiltinUIForm.InitBuiltinForm();
-            
+
             ChangeState<ProcedureSplash>(procedureOwner);
         }
     }

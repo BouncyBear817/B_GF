@@ -13,16 +13,4 @@ MonoBehaviour:
   m_Name: GameGlobalSettings
   m_EditorClassIdentifier: 
   mScriptAuthor: Default
-  mScriptVersion: 0.0.1
-  mAppStage: 1
   mMainFont: {fileID: 12800000, guid: f9612d2ea47890742846a458b552127a, type: 3}
-  mForceUpdateApp: 0
-  mAppUpdateUri: http://127.0.0.1:8081/
-  mAppUpdateDesc: 
-  mAppBuildPath: D:/u3d_pro/Chuan_GameFramework/Unity/BuildApp
-  mApplicableGameVersion: 1.0.0|1.0.1|1.0.2
-  mResourceVersionFileName: ResourceVersion.txt
-  mServerType: 1
-  mInternalNet: http://127.0.0.1:8081/
-  mExternalNet: 
-  mFormalNet: 

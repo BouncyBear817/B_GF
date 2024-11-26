@@ -7,6 +7,7 @@
       <Resource Name="DataTables/Core/SoundGroupTable" LoadType="0" Packed="False" />
       <Resource Name="DataTables/Core/UIGroupTable" LoadType="0" Packed="False" />
       <Resource Name="DataTables/LevelTable" LoadType="0" Packed="False" />
+      <Resource Name="DataTables/ServerTable" LoadType="0" Packed="False" />
       <Resource Name="Prefabs/UI/UIInitRootForm" LoadType="0" Packed="False" />
       <Resource Name="Scenes/Game" LoadType="0" Packed="False" />
     </Resources>
@@ -16,6 +17,7 @@
       <Asset Guid="474c537d5b110d540a5c771cf5d33459" ResourceName="DataTables/LevelTable" />
       <Asset Guid="82f0bc9bec300174a9be7a97c2d65c87" ResourceName="Scenes/Game" />
       <Asset Guid="94670729364a50b4c9b441356665fe4c" ResourceName="Configs/Base" />
+      <Asset Guid="b44c7918530854a4fbfcdf4d61a634a7" ResourceName="DataTables/ServerTable" />
       <Asset Guid="c96b7e1b560a5f448b6b2502fd6de4db" ResourceName="DataTables/Core/SoundGroupTable" />
       <Asset Guid="cca5b9d733fbc0048a14acc230ea073e" ResourceName="DataTables/Core/EntityGroupTable" />
     </Assets>
