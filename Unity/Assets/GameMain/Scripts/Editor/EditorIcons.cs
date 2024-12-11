@@ -6,7 +6,9 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using GameMain.Editor;
 
+[ToolsMenuClass("Editor Icons %e", null, 1)]
 public class EditorIcons : EditorWindow
 {
     [MenuItem("Tools/Editor Icons %e", priority = -1001)]

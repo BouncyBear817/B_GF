@@ -19,6 +19,7 @@ namespace GameMain.Editor
     public partial class GameConfigGenerator
     {
         [MenuItem("Tools/Game Config/Refresh All Localizations")]
+        [ToolsMenuMethod("Game Config/Refresh All Localizations", null, 2, 4)]
         public static void RefreshAllLocalizations()
         {
             var excelFiles = GetAllGameConfigExcelFullPathList(GameConfigType.DataTable);

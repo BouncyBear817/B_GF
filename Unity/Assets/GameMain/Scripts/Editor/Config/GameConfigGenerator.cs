@@ -30,6 +30,7 @@ namespace GameMain.Editor
         }
 
         [MenuItem("Tools/Game Config/Refresh All Game Configs", false, 1001)]
+        [ToolsMenuMethod("Game Config/Refresh All", null, 2,  1)]
         public static void RefreshAllGameConfig()
         {
             RefreshAllConfigs();

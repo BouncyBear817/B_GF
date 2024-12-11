@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using GameFramework;
 using UnityEditor;
 using UnityEngine;
 
@@ -9,8 +11,8 @@ namespace GameMain.Editor
     [InitializeOnLoad]
     public static class ToolbarExtension
     {
-        static int sToolCount;
-        static GUIStyle sCommandStyle;
+        private static int sToolCount;
+        private static GUIStyle sCommandStyle;
 
         public static readonly List<Action> LeftToolbarGUI = new List<Action>();
         public static readonly List<Action> RightToolbarGUI = new List<Action>();
@@ -25,7 +27,7 @@ namespace GameMain.Editor
             var fieldName = "s_ShownToolIcons";
 #endif
             var toolIcons = toolbarType.GetField(fieldName, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            
+
 #if UNITY_2019_3_OR_NEWER
             sToolCount = toolIcons != null ? (int)toolIcons.GetValue(null) : 8;
 #elif UNITY_2019_1_OR_NEWER
@@ -42,20 +44,20 @@ namespace GameMain.Editor
         }
 
 #if UNITY_2019_3_OR_NEWER
-        public const float Space = 8;
+        private const float Space = 8;
 #else
-		public const float Space = 10;
+		private const float Space = 10;
 #endif
-        public const float LargeSpace = 20;
-        public const float ButtonWidth = 32;
-        public const float DropdownWidth = 80;
+        private const float LargeSpace = 20;
+        private const float ButtonWidth = 32;
+        private const float DropdownWidth = 80;
 #if UNITY_2019_1_OR_NEWER
-        public const float PlayPauseStopWidth = 140;
+        private const float PlayPauseStopWidth = 140;
 #else
-		public const float PlayPauseStopWidth = 100;
+		private const float PlayPauseStopWidth = 100;
 #endif
 
-        static void OnGUI()
+        private static void OnGUI()
         {
             // Create two containers, left and right
             // Screen is whole toolbar
@@ -146,7 +148,7 @@ namespace GameMain.Editor
             }
         }
 
-        static void OnGUILeft()
+        private static void OnGUILeft()
         {
             GUILayout.BeginHorizontal();
             foreach (var handler in LeftToolbarGUI)
@@ -157,7 +159,7 @@ namespace GameMain.Editor
             GUILayout.EndHorizontal();
         }
 
-        static void OnGUIRight()
+        private static void OnGUIRight()
         {
             GUILayout.BeginHorizontal();
             foreach (var handler in RightToolbarGUI)

@@ -18,6 +18,7 @@ namespace GameMain.Editor
     public partial class GameConfigGenerator
     {
         [MenuItem("Tools/Game Config/Refresh All Configs")]
+        [ToolsMenuMethod("Game Config/Refresh All Configs", null, 2, 2)]
         public static void RefreshAllConfigs()
         {
             var excelFiles = GetAllGameConfigExcelFullPathList(GameConfigType.Config);

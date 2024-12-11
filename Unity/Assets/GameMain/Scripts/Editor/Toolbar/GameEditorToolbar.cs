@@ -22,6 +22,7 @@ namespace GameMain.Editor
         private static GUIContent sBuildAppContent;
 
         private static GUIContent sGameSettingsContent;
+        private static GUIContent sToolsContent;
         private static GUIContent sOpenCsProjectContent;
 
         [InitializeOnLoadMethod]
@@ -31,12 +32,15 @@ namespace GameMain.Editor
             sBuildAppContent = EditorGUIUtility.TrTextContentWithIcon("Build", "打包", "BuildSettings.Standalone");
 
             sGameSettingsContent = EditorGUIUtility.TrTextContentWithIcon("Game Settings", "游戏配置", "Settings");
+            sToolsContent = EditorGUIUtility.TrTextContentWithIcon("Tools", "游戏工具", "CustomTool");
             sOpenCsProjectContent = EditorGUIUtility.TrTextContentWithIcon("Open C# Project", "打开C#工程", "dll Script Icon");
 
             EditorSceneManager.sceneOpened += (scene, mode) =>
             {
                 sScenesContent.text = scene.name;
             };
+            
+            ToolsMenuExtension.ScanEditorToolbarMenu();
 
             ToolbarExtension.LeftToolbarGUI.Add(OnLeftToolbarGUI);
             ToolbarExtension.RightToolbarGUI.Add(OnRightToolbarGUI);
@@ -88,10 +92,16 @@ namespace GameMain.Editor
                 GameBuilder.Open();
             }
             
+            // GUILayout.Space(10);
+            // if (EditorGUILayout.DropdownButton(sGameSettingsContent, FocusType.Passive, EditorStyles.toolbarPopup, GUILayout.Width(125)))
+            // {
+            //     DrawSettingsDropdownMenu();
+            // }
+
             GUILayout.Space(10);
-            if (EditorGUILayout.DropdownButton(sGameSettingsContent, FocusType.Passive, EditorStyles.toolbarPopup, GUILayout.Width(125)))
+            if (EditorGUILayout.DropdownButton(sToolsContent, FocusType.Passive, EditorStyles.toolbarPopup, GUILayout.Width(70)))
             {
-                DrawSettingsDropdownMenu();
+                ToolsMenuExtension.DrawToolsDropdownMenu();
             }
 
             GUILayout.Space(10);
