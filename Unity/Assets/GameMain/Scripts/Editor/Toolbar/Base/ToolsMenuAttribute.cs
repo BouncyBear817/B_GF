@@ -18,6 +18,7 @@ namespace GameMain.Editor
             ItemName = itemName;
             Priority = priority;
             OwnerType = ownerType;
+            SubPriority = subPriority;
         }
     }
 

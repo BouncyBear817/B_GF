@@ -8,10 +8,10 @@ using System.Linq;
 using System.IO;
 using GameMain.Editor;
 
-[ToolsMenuClass("Editor Icons %e", null, 1)]
+
 public class EditorIcons : EditorWindow
 {
-    [MenuItem("Tools/Editor Icons %e", priority = -1001)]
+    [ToolsMenuMethod("Other/Editor Icons %e", null, 40, 39)]
     public static void EditorIconsOpen()
     {
 #if UNITY_2018

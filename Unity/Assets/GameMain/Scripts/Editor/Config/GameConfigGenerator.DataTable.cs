@@ -20,7 +20,6 @@ namespace GameMain.Editor
     {
         private static List<string> mDataTableVarTypes = null;
 
-        [MenuItem("Tools/Game Config/Refresh All DataTables")]
         [ToolsMenuMethod("Game Config/Refresh All DataTables", null, 2, 3)]
         public static void RefreshAllDataTables()
         {
