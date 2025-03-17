@@ -73,8 +73,16 @@ namespace GameMain.Editor
             {
                 Debug.LogWarning("Load configuration failure.");
             }
-            
-            SetResourceMode(SettingsUtils.GameBuildSettings.ResourceMode);
+
+            if (string.IsNullOrWhiteSpace(mController.OutputDirectory) || !Directory.Exists(mController.OutputDirectory))
+            {
+                mController.OutputDirectory = Constant.AssetBundleOutputPath;
+            }
+
+            if (SettingsUtils.GameBuildSettings.ResourceMode != ResourceMode.Unspecified)
+            {
+                SetResourceMode(SettingsUtils.GameBuildSettings.ResourceMode);
+            }
         }
 
         private void Update()

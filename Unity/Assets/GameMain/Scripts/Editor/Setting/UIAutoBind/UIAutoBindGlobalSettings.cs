@@ -9,7 +9,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GameMain
+namespace GameMain.Editor
 {
     [CreateAssetMenu(fileName = "UIAutoBindGlobalSettings", menuName = "Tools/UI Auto Bind Settings", order = 20)]
     public class UIAutoBindGlobalSettings : ScriptableObject

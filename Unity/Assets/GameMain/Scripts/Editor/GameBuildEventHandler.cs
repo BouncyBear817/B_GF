@@ -1,5 +1,5 @@
 using System.IO;
-using LitJson;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 using UnityGameFramework.Editor.ResourceTools;
@@ -147,7 +147,7 @@ namespace GameMain.Editor
             {
                 mVersionInfo.UpdatePrefixUri = PathUtil.GetCombinePath(SettingsUtils.GameBuildSettings.UpdatePrefixUri, platform.ToString());
 
-                var versionInfoJson = JsonMapper.ToJson(mVersionInfo);
+                var versionInfoJson = JsonConvert.SerializeObject(mVersionInfo);
                 FileUtil.CreateFile(Path.Combine(outputFullPath, SettingsUtils.GameBuildSettings.ResourceVersionFileName), versionInfoJson);
             }
 

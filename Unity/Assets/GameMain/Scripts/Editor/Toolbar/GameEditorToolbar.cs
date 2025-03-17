@@ -35,11 +35,8 @@ namespace GameMain.Editor
             sToolsContent = EditorGUIUtility.TrTextContentWithIcon("Tools", "游戏工具", "CustomTool");
             sOpenCsProjectContent = EditorGUIUtility.TrTextContentWithIcon("Open C# Project", "打开C#工程", "dll Script Icon");
 
-            EditorSceneManager.sceneOpened += (scene, mode) =>
-            {
-                sScenesContent.text = scene.name;
-            };
-            
+            EditorSceneManager.sceneOpened += (scene, mode) => { sScenesContent.text = scene.name; };
+
             ToolsMenuExtension.ScanEditorToolbarMenu();
 
             ToolbarExtension.LeftToolbarGUI.Add(OnLeftToolbarGUI);
@@ -75,11 +72,8 @@ namespace GameMain.Editor
                     var sceneDir = Path.GetRelativePath(SettingsUtils.GamePathSettings.ScenePath, fileDir);
                     sceneName = $"{sceneDir}/{sceneName}";
                 }
-                
-                popMenu.AddItem(new GUIContent(sceneName), false, path =>
-                {
-                    EditorSceneManager.OpenScene((string)path, OpenSceneMode.Single);
-                }, scenePath);
+
+                popMenu.AddItem(new GUIContent(sceneName), false, path => { EditorSceneManager.OpenScene((string)path, OpenSceneMode.Single); }, scenePath);
             }
             
             popMenu.ShowAsContext();

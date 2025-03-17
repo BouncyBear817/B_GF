@@ -14,6 +14,9 @@ Unity/[Uu]ser[Ss]ettings/
 Unity/Assets/StreamingAssets
 Unity/GameAssetBundle
 
+# Ignore Build
+Unity/BuildApp
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 Unity/[Mm]emoryCaptures/
@@ -80,3 +83,14 @@ Unity/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 # Temporary auto-generated Android Assets
 Unity/[Aa]ssets/[Ss]treamingAssets/aa.meta
 Unity/[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# HybirdCLR
+Unity/HybridCLRData/hybridclr_repo
+Unity/HybridCLRData/il2cpp_plus_repo
+Unity/HybridCLRData/AssembliesPostIl2CppStrip
+Unity/HybridCLRData/HotUpdateDlls
+Unity/HybridCLRData/HybridCLRAssemblies
+Unity/HybridCLRData/LocalIl2CppData
+Unity/HybridCLRData/LocalIl2CppData-WindowsEditor
+Unity/HybridCLRData/LocalIl2CppData-OSXEditor
+Unity/HybridCLRData/StrippedAOTDllsTempProj

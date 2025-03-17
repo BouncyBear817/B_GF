@@ -35,8 +35,6 @@ namespace GameMain.Editor
             RefreshAllConfigs();
             RefreshAllDataTables();
             RefreshAllLocalizations();
-
-            GenerateGroupEnumScript();
         }
 
         /// <summary>

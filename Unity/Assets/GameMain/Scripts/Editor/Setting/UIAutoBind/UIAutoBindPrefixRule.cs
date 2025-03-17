@@ -9,7 +9,7 @@
 using System;
 using UnityEngine;
 
-namespace GameMain
+namespace GameMain.Editor
 {
     /// <summary>
     /// 自动绑定索引前缀规则

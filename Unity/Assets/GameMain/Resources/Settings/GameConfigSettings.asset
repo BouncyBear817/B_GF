@@ -15,6 +15,7 @@ MonoBehaviour:
   mDataTables:
   - LevelTable
   - ServerTable
+  - UITable
   - Core/EntityGroupTable
   - Core/SoundGroupTable
   - Core/UIGroupTable

@@ -26,9 +26,6 @@ namespace GameMain.Editor
         private SerializedProperty mBindComponentList;
         private SerializedProperty mClassName;
         private SerializedProperty mNamespace;
-        private SerializedProperty mUIGroupName;
-        private SerializedProperty mAllowMultiInstance;
-        private SerializedProperty mPauseCoveredUIForm;
         private SerializedProperty mComponentCodePath;
         private SerializedProperty mMountCodePath;
 
@@ -46,9 +43,6 @@ namespace GameMain.Editor
             mBindComponentList = serializedObject.FindProperty("mBindComponentList");
             mClassName = serializedObject.FindProperty("mClassName");
             mNamespace = serializedObject.FindProperty("mNamespace");
-            mUIGroupName = serializedObject.FindProperty("mUIGroupName");
-            mAllowMultiInstance = serializedObject.FindProperty("mAllowMultiInstance");
-            mPauseCoveredUIForm = serializedObject.FindProperty("mPauseCoveredUIForm");
             mComponentCodePath = serializedObject.FindProperty("mComponentCodePath");
             mMountCodePath = serializedObject.FindProperty("mMountCodePath");
 
@@ -125,10 +119,6 @@ namespace GameMain.Editor
             }
 
             EditorGUILayout.EndHorizontal();
-
-            mUIGroupName.enumValueIndex = (int)(Constant.EUIGroupName)EditorGUILayout.EnumPopup("UI Group Name", mTarget.UIGroupName);
-            mAllowMultiInstance.boolValue = EditorGUILayout.Toggle("Allow Multi Instance", mAllowMultiInstance.boolValue);
-            mPauseCoveredUIForm.boolValue = EditorGUILayout.Toggle("Pause Covered UI Form", mPauseCoveredUIForm.boolValue);
 
             EditorGUILayout.LabelField("----------------------------------------------------------------------");
             EditorGUILayout.LabelField("Default Component Code Saved Path:");
@@ -317,8 +307,6 @@ namespace GameMain.Editor
                 }
 
                 sw.WriteLine("\n\t\tprivate void GetBindComponents(GameObject go)\n\t\t{");
-                sw.WriteLine(
-                    $"\t\t\tmUIFormInfo = new Constant.UI.UIFormInfo(\"{mTarget.ClassName}\", Constant.EUIGroupName.{mTarget.UIGroupName}, {mTarget.AllowMultiInstance.ToString().ToLower()}, {mTarget.PauseCoveredUIForm.ToString().ToLower()});");
                 sw.WriteLine("\t\t\tvar uiAutoBindTool = go.GetComponent<UIAutoBindTool>();\n");
                 for (var i = 0; i < mTarget.mBindDataList.Count; i++)
                 {
