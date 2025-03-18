@@ -1,4 +1,8 @@
-﻿#	LevelTable		
-#	ID		
-#	int		
-#		备注	请添加字段, 字段名首字母大写
+﻿#	LevelTable				
+#	ID		DiffcultLevel	StartIndex	EndIndex
+#	int		string	int	int
+#		备注	难度等级	起始索引号	末尾索引号
+	1	简单	Easy	51	64
+	2	中等	Medium	36	50
+	3	困难	Hard	26	35
+	4	非常困难	Very Hard	17	25

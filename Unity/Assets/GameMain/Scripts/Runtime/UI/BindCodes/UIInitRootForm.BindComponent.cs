@@ -8,6 +8,8 @@ namespace GameMain.UI
 	{
 		private RectTransform mTransLaunchView;
 		private RawImage mRILaunchView;
+		private Button mBtnPlay;
+		private TMP_Dropdown mDrLevel;
 
 		private void GetBindComponents(GameObject go)
 		{
@@ -15,6 +17,8 @@ namespace GameMain.UI
 
 			mTransLaunchView = uiAutoBindTool.GetBindComponent<RectTransform>(0);
 			mRILaunchView = uiAutoBindTool.GetBindComponent<RawImage>(1);
+			mBtnPlay = uiAutoBindTool.GetBindComponent<Button>(2);
+			mDrLevel = uiAutoBindTool.GetBindComponent<TMP_Dropdown>(3);
 		}
 	}
 }

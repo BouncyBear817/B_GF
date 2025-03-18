@@ -22,6 +22,20 @@ namespace GameMain
         /// </summary>
         public override int Id => mId;
 
+        /// <summary>
+        /// 难度等级
+        /// </summary>
+        public string DiffcultLevel {get; private set;}
+
+        /// <summary>
+        /// 起始索引号
+        /// </summary>
+        public int StartIndex {get; private set;}
+
+        /// <summary>
+        /// 末尾索引号
+        /// </summary>
+        public int EndIndex {get; private set;}
 
 
         public override bool ParseDataRow(string dataRowString, object userData)
@@ -36,7 +50,9 @@ namespace GameMain
             index++;
             mId = int.Parse(columnStrings[index++]);
             index++;
-            index++;
+            DiffcultLevel = columnStrings[index++];
+            StartIndex = int.Parse(columnStrings[index++]);
+            EndIndex = int.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
             return true;
@@ -49,6 +65,9 @@ namespace GameMain
                 using (var binaryReader = new BinaryReader(memoryStream, Encoding.UTF8))
                 {
                     mId = binaryReader.Read7BitEncodedInt32();
+                    DiffcultLevel = binaryReader.ReadString();
+                    StartIndex = binaryReader.Read7BitEncodedInt32();
+                    EndIndex = binaryReader.Read7BitEncodedInt32();
                 }
             }
 

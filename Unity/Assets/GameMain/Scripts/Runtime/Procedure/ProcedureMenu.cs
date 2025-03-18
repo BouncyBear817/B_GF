@@ -18,8 +18,8 @@ namespace GameMain
             base.OnEnter(procedureOwner);
             
             Log.Info("Enter Menu Procedure.");
-            
-            MainEntry.UI.OpenUIForm(AssetUtil.GetUIFormAsset("UIInitRootForm"), Constant.EUIGroupName.BackgroundUI.ToString());
+
+            MainEntry.UI.OpenUIForm(UIViews.UIInitRootForm);
         }
 
         protected override void OnUpdate(ProcedureOwner procedureOwner, float elapseSeconds, float realElapseSeconds)
