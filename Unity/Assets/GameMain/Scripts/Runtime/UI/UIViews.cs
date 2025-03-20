@@ -5,5 +5,6 @@ namespace GameMain
 	public enum UIViews : int
 	{
 		UIInitRootForm = 1,
+		UIGameForm = 2,
 	}
 }

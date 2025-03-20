@@ -32,8 +32,9 @@ namespace GameMain.UI
 			//TODO: need msdId
 			var level = mSelectedLevelTable.DiffcultLevel;
 			var number = Utility.Random.GetRandom(mSelectedLevelTable.StartIndex, mSelectedLevelTable.EndIndex);
-			Broadcast(0, level, number);
+			Broadcast(UIMsgId.GamePlay, level, number);
 			Log.Info($"Start Sudoku : level '{level}', number '{number}'.");
+			MainEntry.UI.OpenUIForm(UIViews.UIGameForm);
 		}
 
 		private void DrLevelEvent(int index)
