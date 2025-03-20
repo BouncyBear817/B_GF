@@ -19,6 +19,7 @@ namespace GameMain
             mCoroutineManager = new CoroutineManager();
 
             var obj = new GameObject("CoroutineBehaviour");
+            obj.transform.SetParent(this.transform);
             mBehaviour = obj.GetOrAddComponent<CoroutineBehaviour>();
             
             mCoroutineManager.SetBehaviour(mBehaviour);
