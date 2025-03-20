@@ -227,6 +227,7 @@ namespace GameMain.Editor
                     case GameConfigType.DataTable:
                         GameConfigGenerator.RefreshDataTables(GameConfigGenerator.GetGameConfigExcelRelativeFullPath(ConfigType, GetGameConfigList()));
                         GameConfigGenerator.GenerateGroupEnumScript();
+                        GameConfigGenerator.GenerateUIViewScript();
                         break;
                     case GameConfigType.Config:
                         GameConfigGenerator.RefreshConfigs(GameConfigGenerator.GetGameConfigExcelRelativeFullPath(ConfigType, GetGameConfigList()));
