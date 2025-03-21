@@ -33,7 +33,7 @@ namespace GameMain
                     var cell = Grid.GetCellByPos(i, j);
                     if (cell != null)
                     {
-                        cell.InitValues(gridNumbers[i, j]);
+                        cell.InitValues(puzzleNumbers[i, j]);
                     }
                 }
             }
@@ -43,6 +43,7 @@ namespace GameMain
         {
             Grid = grid;
         }
+
         public void SetDifficultLevel(int difficulty)
         {
             DifficultLevel = difficulty;
@@ -129,7 +130,7 @@ namespace GameMain
                 gridNumbers[i, i] = value;
             }
 
-            // SolveSudoku();
+            SolveSudoku();
         }
 
         /// <summary>
@@ -145,6 +146,7 @@ namespace GameMain
                 return true;
             }
 
+            var isFind = false;
             for (var i = 0; i < SudokuConstant.GridLength; i++)
             {
                 for (var j = 0; j < SudokuConstant.GridLength; j++)
@@ -153,8 +155,14 @@ namespace GameMain
                     {
                         row = i;
                         col = j;
+                        isFind = true;
                         break;
                     }
+                }
+
+                if (isFind)
+                {
+                    break;
                 }
             }
 
@@ -163,15 +171,15 @@ namespace GameMain
                 if (CheckAll(row, col, i))
                 {
                     gridNumbers[row, col] = i;
-                }
 
-                if (SolveSudoku())
-                {
-                    return true;
-                }
-                else
-                {
-                    gridNumbers[row, col] = 0;
+                    if (SolveSudoku())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        gridNumbers[row, col] = 0;
+                    }
                 }
             }
 
@@ -180,6 +188,17 @@ namespace GameMain
 
         private bool IsValid()
         {
+            for (var i = 0; i < SudokuConstant.GridLength; i++)
+            {
+                for (var j = 0; j < SudokuConstant.GridLength; j++)
+                {
+                    if (gridNumbers[i, j] == 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+
             return true;
         }
 
@@ -188,12 +207,12 @@ namespace GameMain
         /// </summary>
         private bool CheckAll(int row, int col, int value)
         {
-            if (ColumnContainsValue(row, col, value))
+            if (ColumnContainsValue(col, value))
             {
                 return false;
             }
 
-            if (RowContainsValue(row, col, value))
+            if (RowContainsValue(row, value))
             {
                 return false;
             }
@@ -209,7 +228,7 @@ namespace GameMain
         /// <summary>
         /// 某列是否存在某个数
         /// </summary>
-        private bool ColumnContainsValue(int row, int col, int value)
+        private bool ColumnContainsValue(int col, int value)
         {
             for (var i = 0; i < SudokuConstant.GridLength; i++)
             {
@@ -225,7 +244,7 @@ namespace GameMain
         /// <summary>
         /// 某行是否存在某个数
         /// </summary>
-        private bool RowContainsValue(int row, int col, int value)
+        private bool RowContainsValue(int row, int value)
         {
             for (int i = 0; i < SudokuConstant.GridLength; i++)
             {
@@ -265,20 +284,20 @@ namespace GameMain
             System.Array.Copy(gridNumbers, puzzleNumbers, gridNumbers.Length);
 
             // 移除数字，制造难度
-            // for (int i = 0; i < DifficultLevel; i++)
-            // {
-            //     int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //     int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //
-            //     // 循环随机，直到随到一个没有处理过的位置
-            //     while (puzzleNumbers[row, col] == 0)
-            //     {
-            //         row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //         col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //     }
-            //
-            //     puzzleNumbers[row, col] = 0;
-            // }
+            for (int i = 0; i < DifficultLevel; i++)
+            {
+                int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+                int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+
+                // 循环随机，直到随到一个没有处理过的位置
+                while (puzzleNumbers[row, col] == 0)
+                {
+                    row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+                    col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+                }
+
+                puzzleNumbers[row, col] = 0;
+            }
 
             // 确保至少要出现8个不同的数字，才能保证唯一解
             var onBoard = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
@@ -299,17 +318,17 @@ namespace GameMain
             }
 
             // 如果剩余的数量大于1，说明已存在8个不同的数字，还原几个数字回来
-            // while (onBoard.Count - 1 > 1)
-            // {
-            //     int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //     int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
-            //
-            //     if (gridNumbers[row, col] == onBoard[0])
-            //     {
-            //         puzzleNumbers[row, col] = gridNumbers[row, col];
-            //         onBoard.RemoveAt(0);
-            //     }
-            // }
+            while (onBoard.Count - 1 > 1)
+            {
+                int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+                int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+
+                if (gridNumbers[row, col] == onBoard[0])
+                {
+                    puzzleNumbers[row, col] = gridNumbers[row, col];
+                    onBoard.RemoveAt(0);
+                }
+            }
 
             // 备份谜题，方便重开本局
             System.Array.Copy(puzzleNumbers, puzzleBak, gridNumbers.Length);

@@ -10,6 +10,7 @@ namespace GameMain.UI
 		private Button mBtnSetting;
 		private RectTransform mTransGameArea;
 		private TextMeshProUGUI mTMTimer;
+		private RectTransform mTransInputGrid;
 
 		private void GetBindComponents(GameObject go)
 		{
@@ -19,6 +20,7 @@ namespace GameMain.UI
 			mBtnSetting = uiAutoBindTool.GetBindComponent<Button>(1);
 			mTransGameArea = uiAutoBindTool.GetBindComponent<RectTransform>(2);
 			mTMTimer = uiAutoBindTool.GetBindComponent<TextMeshProUGUI>(3);
+			mTransInputGrid = uiAutoBindTool.GetBindComponent<RectTransform>(4);
 		}
 	}
 }

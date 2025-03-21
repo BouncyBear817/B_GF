@@ -71,6 +71,12 @@ namespace GameMain
             }
         }
 
+        public static Vector2 ScreenPointToUIPoint(this RectTransform rectTransform, Vector2 screenPoint)
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, screenPoint, UICamera, out var localPoint);
+            return localPoint;
+        }
+
         public static IEnumerator FadeToAlpha(this CanvasGroup canvasGroup, float alpha, float duration)
         {
             var time = 0f;

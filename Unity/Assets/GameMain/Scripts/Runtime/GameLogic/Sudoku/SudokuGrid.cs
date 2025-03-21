@@ -59,10 +59,9 @@ namespace GameMain
 
         public SudokuCell GetCellByPos(int row, int col)
         {
-            var factor1 = row / SudokuConstant.SubGridLength;
+            var factor1 = (row / SudokuConstant.SubGridLength) * SudokuConstant.cellLength;
             var factor2 = col / SudokuConstant.SubGridLength;
             var index = SudokuConstant.SubGridLength * (row + 2 * (factor1 + factor2)) + col;
-            Log.Info(factor1 + ", " + factor2 + ", " + index);
             return Cells[index];
         }
     }
