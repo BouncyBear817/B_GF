@@ -1,4 +1,5 @@
 using System.Collections;
+using GameFramework;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,6 +18,9 @@ namespace GameMain.UI
 		private SudokuCell mSudokuCell;
 
 		private SudokuCell mCurrentCell;
+		private DTLevelTable mLevelTable;
+
+		private bool mIsGridGenerated = false;
 		
 		protected override void OnInit(object userData)
 		{
@@ -26,9 +30,14 @@ namespace GameMain.UI
 			#region Auto Generate,Do not modify!
 			mBtnHome.onClick.AddListener(BtnHomeEvent);
 			mBtnSetting.onClick.AddListener(BtnSettingEvent);
+			mBtnNew.onClick.AddListener(BtnNewEvent);
+			mBtnRestart.onClick.AddListener(BtnRestartEvent);
+			mBtnSubmit.onClick.AddListener(BtnSubmitEvent);
+			mBtnTipNext.onClick.AddListener(BtnTipNextEvent);
+			mBtnTipBack.onClick.AddListener(BtnTipBackEvent);
+			mBtnCheck.onClick.AddListener(BtnCheckEvent);
 			#endregion
 			
-			AddListener(UIMsgId.GamePlay, OnGamePlay);
 			AddListener(UIMsgId.OpenInputPanel, OnOpenInputPanel);
 			
 			transform.Find("Mask").GetComponent<Button>().onClick.AddListener(OnMaskClick);
@@ -36,7 +45,6 @@ namespace GameMain.UI
 			mSudokuGrid = mTransGameArea.GetOrAddComponent<SudokuGrid>();
 			mSudokuBoard = mTransGameArea.GetOrAddComponent<SudokuBoard>();
 			mSudokuBoard.SetGrid(mSudokuGrid);
-			mSudokuBoard.SetDifficultLevel(40);
 			mSudokuSubGrid = mTransGameArea.Find("Grid").GetOrAddComponent<SudokuSubGrid>();
 			mSudokuSubGrid.gameObject.SetActive(false);
 			mSudokuCell = mTransGameArea.Find("Grid/Cell").GetOrAddComponent<SudokuCell>();
@@ -49,28 +57,89 @@ namespace GameMain.UI
 				inputButton.onClick.AddListener((() => OnInputButton(int.Parse(number.text))));
 			}
 
-			MainEntry.Coroutine.DoCoroutine(GenerateGrid());
+			MainEntry.Coroutine.DoCoroutine(GenerateGrid(userData));
+		}
+
+		protected override void OnOpen(object userData)
+		{
+			base.OnOpen(userData);
+			
+			if (mIsGridGenerated)
+			{
+				SetDifficult(userData);
+				mSudokuBoard.Init();
+			}
 		}
 
 		private void BtnHomeEvent()
 		{
+			mSudokuBoard.Clear();
+			MainEntry.UI.OpenUIForm(UIViews.UIInitRootForm);
+			Close();
 		}
 
 		private void BtnSettingEvent()
 		{
 		}
-		
-		private void OnGamePlay(params object[] args)
+
+		private void BtnNewEvent()
 		{
-			var level = args[0] as string;
-			var number = (int)args[1];
+			if (mLevelTable != null)
+			{
+				var number = Utility.Random.GetRandom(mLevelTable.StartIndex, mLevelTable.EndIndex);
+				mSudokuBoard.SetDifficultLevel(number);
+			}
 			
+			mSudokuBoard.Reset();
 		}
 
-		private IEnumerator GenerateGrid()
+		private void BtnSubmitEvent()
+		{
+			var completed = mSudokuBoard.CheckCompleted();
+			var message = completed ? "Success" : "Failed";
+			MainEntry.UI.OpenUIForm(UIViews.DialogForm, new DialogParams("Check Complete", message, "ok", o =>
+			{
+				BtnNewEvent();
+			}));
+		}
+
+		private void BtnRestartEvent()
+		{
+			mSudokuBoard.Restart();
+		}
+
+		private void BtnTipNextEvent()
+		{
+			mSudokuBoard.TipNext();
+		}
+
+		private void BtnTipBackEvent()
+		{
+			mSudokuBoard.TipBack();
+		}
+
+		private void BtnCheckEvent()
+		{
+			mSudokuBoard.Check();
+		}
+
+		private void SetDifficult(object userData)
+		{
+			var levelTable = userData as DTLevelTable;
+			if (levelTable != null)
+			{
+				mLevelTable = levelTable;
+				var number = Utility.Random.GetRandom(mLevelTable.StartIndex, mLevelTable.EndIndex);
+				mSudokuBoard.SetDifficultLevel(number);
+			}
+		}
+
+		private IEnumerator GenerateGrid(object userData)
 		{
 			yield return mSudokuGrid.GenerateGrid(mSudokuSubGrid, mSudokuCell);
-			
+
+			mIsGridGenerated = true;
+			SetDifficult(userData);
 			mSudokuBoard.Init();
 		}
 
@@ -92,9 +161,10 @@ namespace GameMain.UI
 
 		private void OnInputButton(int number)
 		{
-			mCurrentCell.SetValue(number);
+			mSudokuBoard.UpdatePuzzle(mCurrentCell.Coordinate.x, mCurrentCell.Coordinate.y, number);
 			
 			mTransInputGrid.gameObject.SetActive(false);
+			mCurrentCell = null;
 		}
 
 		private void OnMaskClick()

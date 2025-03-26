@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using GameFramework;
 using UnityEngine;
 
@@ -6,22 +7,105 @@ namespace GameMain
 {
     public class SudokuBoard : MonoBehaviour
     {
-        private int[,] gridNumbers = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
+        private int[,] mGridNumbers = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
 
-        private int[,] puzzleNumbers = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
+        private int[,] mPuzzleNumbers = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
 
-        private int[,] puzzleBak = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
+        private int[,] mPuzzleBak = new int[SudokuConstant.GridLength, SudokuConstant.GridLength];
 
         public SudokuGrid Grid { get; private set; }
 
         public int DifficultLevel { get; private set; }
 
+        private Stack<SudokuCell> mRecordCells = new Stack<SudokuCell>();
+
         public void Init()
         {
+            Clear();
+
             CreateGrid();
             CreatePuzzle();
 
             InitGrid();
+        }
+
+        public void Reset()
+        {
+            Clear();
+
+            Init();
+        }
+
+        public void Clear()
+        {
+            Array.Clear(mGridNumbers, 0, mGridNumbers.Length);
+            Array.Clear(mPuzzleNumbers, 0, mPuzzleNumbers.Length);
+            Array.Clear(mPuzzleBak, 0, mPuzzleBak.Length);
+
+            mRecordCells.Clear();
+        }
+
+        public void Restart()
+        {
+            Array.Copy(mPuzzleBak, mPuzzleNumbers, mGridNumbers.Length);
+            InitGrid();
+        }
+
+        public void TipNext()
+        {
+            if (!CheckPuzzleLeft())
+            {
+                return;
+            }
+
+            int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+            int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+
+            // 循环随机，直到随到一个没有处理过的位置
+            while (mPuzzleNumbers[row, col] != 0)
+            {
+                row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+                col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
+            }
+
+            var value = mGridNumbers[row, col];
+            UpdatePuzzle(row, col, value);
+        }
+
+        public void TipBack()
+        {
+            if (mRecordCells.Count > 0)
+            {
+                var cell = mRecordCells.Pop();
+                while (cell.GetValue() == 0)
+                {
+                    cell = mRecordCells.Pop();
+                }
+                UpdatePuzzle(cell.Coordinate.x, cell.Coordinate.y, 0);
+            }
+        }
+
+        public void Check()
+        {
+            for (int i = 0; i < SudokuConstant.GridLength; i++)
+            {
+                for (int j = 0; j < SudokuConstant.GridLength; j++)
+                {
+                    if (mPuzzleNumbers[i, j] == 0)
+                    {
+                        continue;
+                    }
+
+                    if (mPuzzleNumbers[i, j] != mGridNumbers[i, j])
+                    {
+                        var cell = Grid.GetCellByPos(i, j);
+                        if (cell != null)
+                        {
+                            cell.CheckError();
+                        }
+                    }
+                }
+            }
         }
 
         private void InitGrid()
@@ -33,7 +117,7 @@ namespace GameMain
                     var cell = Grid.GetCellByPos(i, j);
                     if (cell != null)
                     {
-                        cell.InitValues(puzzleNumbers[i, j]);
+                        cell.InitValues(mPuzzleNumbers[i, j]);
                     }
                 }
             }
@@ -57,7 +141,18 @@ namespace GameMain
         /// <param name="value"></param>
         public void UpdatePuzzle(int row, int col, int value)
         {
-            puzzleNumbers[row, col] = value;
+            mPuzzleNumbers[row, col] = value;
+
+            var cell = Grid.GetCellByPos(row, col);
+            if (cell != null)
+            {
+                if (value != 0)
+                {
+                    mRecordCells.Push(cell);
+                }
+
+                cell.InitValues(value, true);
+            }
         }
 
         /// <summary>
@@ -70,7 +165,7 @@ namespace GameMain
             {
                 for (int j = 0; j < SudokuConstant.GridLength; j++)
                 {
-                    if (puzzleNumbers[i, j] != gridNumbers[i, j])
+                    if (mPuzzleNumbers[i, j] != mGridNumbers[i, j])
                     {
                         return false;
                     }
@@ -90,7 +185,7 @@ namespace GameMain
 
             // 先在（0,0）位置生成一个数据
             var value = rowList[Utility.Random.GetRandom(0, rowList.Count)];
-            gridNumbers[0, 0] = value;
+            mGridNumbers[0, 0] = value;
             rowList.Remove(value);
             colList.Remove(value);
 
@@ -98,7 +193,7 @@ namespace GameMain
             for (int i = 1; i < SudokuConstant.GridLength; i++)
             {
                 value = rowList[Utility.Random.GetRandom(0, rowList.Count)];
-                gridNumbers[i, 0] = value;
+                mGridNumbers[i, 0] = value;
                 rowList.Remove(value);
             }
 
@@ -115,7 +210,7 @@ namespace GameMain
                     }
                 }
 
-                gridNumbers[0, i] = value;
+                mGridNumbers[0, i] = value;
                 colList.Remove(value);
             }
 
@@ -127,7 +222,7 @@ namespace GameMain
                     value = Utility.Random.GetRandom(1, 10);
                 }
 
-                gridNumbers[i, i] = value;
+                mGridNumbers[i, i] = value;
             }
 
             SolveSudoku();
@@ -151,7 +246,7 @@ namespace GameMain
             {
                 for (var j = 0; j < SudokuConstant.GridLength; j++)
                 {
-                    if (gridNumbers[i, j] == 0)
+                    if (mGridNumbers[i, j] == 0)
                     {
                         row = i;
                         col = j;
@@ -170,7 +265,7 @@ namespace GameMain
             {
                 if (CheckAll(row, col, i))
                 {
-                    gridNumbers[row, col] = i;
+                    mGridNumbers[row, col] = i;
 
                     if (SolveSudoku())
                     {
@@ -178,7 +273,7 @@ namespace GameMain
                     }
                     else
                     {
-                        gridNumbers[row, col] = 0;
+                        mGridNumbers[row, col] = 0;
                     }
                 }
             }
@@ -192,7 +287,7 @@ namespace GameMain
             {
                 for (var j = 0; j < SudokuConstant.GridLength; j++)
                 {
-                    if (gridNumbers[i, j] == 0)
+                    if (mGridNumbers[i, j] == 0)
                     {
                         return false;
                     }
@@ -232,7 +327,7 @@ namespace GameMain
         {
             for (var i = 0; i < SudokuConstant.GridLength; i++)
             {
-                if (gridNumbers[i, col] == value)
+                if (mGridNumbers[i, col] == value)
                 {
                     return true;
                 }
@@ -248,7 +343,7 @@ namespace GameMain
         {
             for (int i = 0; i < SudokuConstant.GridLength; i++)
             {
-                if (gridNumbers[row, i] == value)
+                if (mGridNumbers[row, i] == value)
                 {
                     return true;
                 }
@@ -266,7 +361,7 @@ namespace GameMain
             {
                 for (int j = 0; j < SudokuConstant.SubGridLength; j++)
                 {
-                    if (gridNumbers[(row / SudokuConstant.SubGridLength) * SudokuConstant.cellLength + i, (col / SudokuConstant.SubGridLength) * SudokuConstant.cellLength + j] == value)
+                    if (mGridNumbers[(row / SudokuConstant.SubGridLength) * SudokuConstant.cellLength + i, (col / SudokuConstant.SubGridLength) * SudokuConstant.cellLength + j] == value)
                     {
                         return true;
                     }
@@ -281,7 +376,7 @@ namespace GameMain
         /// </summary>
         private void CreatePuzzle()
         {
-            System.Array.Copy(gridNumbers, puzzleNumbers, gridNumbers.Length);
+            System.Array.Copy(mGridNumbers, mPuzzleNumbers, mGridNumbers.Length);
 
             // 移除数字，制造难度
             for (int i = 0; i < DifficultLevel; i++)
@@ -290,13 +385,13 @@ namespace GameMain
                 int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
 
                 // 循环随机，直到随到一个没有处理过的位置
-                while (puzzleNumbers[row, col] == 0)
+                while (mPuzzleNumbers[row, col] == 0)
                 {
                     row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
                     col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
                 }
 
-                puzzleNumbers[row, col] = 0;
+                mPuzzleNumbers[row, col] = 0;
             }
 
             // 确保至少要出现8个不同的数字，才能保证唯一解
@@ -309,7 +404,7 @@ namespace GameMain
                 {
                     for (int k = 0; k < onBoard.Count - 1; k++)
                     {
-                        if (onBoard[k] == puzzleNumbers[i, j])
+                        if (onBoard[k] == mPuzzleNumbers[i, j])
                         {
                             onBoard.RemoveAt(k);
                         }
@@ -323,15 +418,15 @@ namespace GameMain
                 int row = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
                 int col = Utility.Random.GetRandom(0, SudokuConstant.GridLength);
 
-                if (gridNumbers[row, col] == onBoard[0])
+                if (mGridNumbers[row, col] == onBoard[0])
                 {
-                    puzzleNumbers[row, col] = gridNumbers[row, col];
+                    mPuzzleNumbers[row, col] = mGridNumbers[row, col];
                     onBoard.RemoveAt(0);
                 }
             }
 
             // 备份谜题，方便重开本局
-            System.Array.Copy(puzzleNumbers, puzzleBak, gridNumbers.Length);
+            System.Array.Copy(mPuzzleNumbers, mPuzzleBak, mGridNumbers.Length);
         }
 
         /// <summary>
@@ -345,6 +440,22 @@ namespace GameMain
                 var rand = Utility.Random.GetRandom(i, list.Count);
                 (list[i], list[rand]) = (list[rand], list[i]);
             }
+        }
+
+        private bool CheckPuzzleLeft()
+        {
+            for (int i = 0; i < SudokuConstant.GridLength; i++)
+            {
+                for (int j = 0; j < SudokuConstant.GridLength; j++)
+                {
+                    if (mPuzzleNumbers[i, j] == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

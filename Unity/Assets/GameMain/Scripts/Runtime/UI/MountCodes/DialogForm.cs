@@ -29,19 +29,19 @@ namespace GameMain.UI
         private void BtnConfirmEvent()
         {
             mOnConfirmClick?.Invoke(this);
-            OnClose(false, null);
+            Close();
         }
 
         private void BtnCancelEvent()
         {
             mOnCancelClick?.Invoke(this);
-            OnClose(false, null);
+            Close();
         }
 
         private void BtnOtherEvent()
         {
             mOnOtherClick?.Invoke(this);
-            OnClose(false, null);
+            Close();
         }
 
         protected override void OnOpen(object userData)

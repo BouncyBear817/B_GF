@@ -278,8 +278,9 @@ namespace GameMain
         /// </summary>
         /// <param name="uiComponent">UI界面组件</param>
         /// <param name="uiViews">UI界面Id</param>
+        /// <param name="userData">用户自定义数据</param>
         /// <returns>界面的序列编号</returns>
-        public static int OpenUIForm(this UIComponent uiComponent, UIViews uiViews)
+        public static int OpenUIForm(this UIComponent uiComponent, UIViews uiViews, object userData = null)
         {
             var uiTable = GetUITable();
             if (uiTable != null)
@@ -298,7 +299,7 @@ namespace GameMain
                     return -1;
                 }
 
-                return uiComponent.OpenUIForm(uiAssetName, uiRow.GroupName, uiRow.Priority, uiRow.PauseCovered);
+                return uiComponent.OpenUIForm(uiAssetName, uiRow.GroupName, uiRow.Priority, uiRow.PauseCovered, userData);
             }
 
             return -1;

@@ -7,11 +7,9 @@ namespace GameMain
 {
     public class SudokuCell : MonoBehaviour
     {
-        public Vector2Int Coordinate { get; private set; }
-        public SudokuSubGrid SubGrid;
-        public TextMeshProUGUI Number;
-        public Button Button;
-        public RectTransform InputTransform;
+        public Vector2Int Coordinate;
+        private TextMeshProUGUI Number;
+        private Button Button;
 
         /// <summary>
         /// 当前格子的值
@@ -26,21 +24,31 @@ namespace GameMain
             Button.onClick.AddListener(OnCellClick);
         }
 
-        public void InitValues(int value)
+        public void InitValues(int value, bool input = false)
         {
             mValue = value;
-            Number.color = new Color(0.32f, 0.31f, 0.31f);
-            if (mValue > 0)
+            if (value != 0)
             {
+                Number.color =  input ? new Color32(0, 102, 187, 255) : new Color32(119, 110, 101, 255);
                 Number.text = mValue.ToString();
                 Button.enabled = false;
             }
+            else
+            {
+                Number.text = "";
+                Button.enabled = true;
+            }
         }
 
-        public void SetValue(int value)
+        public int GetValue()
         {
-            InitValues(value);
-            Number.color = Color.blue;
+            return mValue;
+        }
+
+        public void CheckError()
+        {
+            Number.color = Color.red;
+            Button.enabled = true;
         }
 
         public void SetCoordinate(int coordinateX, int coordinateY)
@@ -48,16 +56,9 @@ namespace GameMain
             Coordinate = new Vector2Int(coordinateX, coordinateY);
         }
 
-        public void SetSubGridParent(SudokuSubGrid sudokuSubGrid)
-        {
-            SubGrid = sudokuSubGrid;
-        }
-
         private void OnCellClick()
         {
             MainEntry.Messenger.Broadcast(UIMsgId.OpenInputPanel, this);
         }
-        
-        
     }
 }

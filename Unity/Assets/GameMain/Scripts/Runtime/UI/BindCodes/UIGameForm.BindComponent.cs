@@ -8,6 +8,12 @@ namespace GameMain.UI
 	{
 		private Button mBtnHome;
 		private Button mBtnSetting;
+		private Button mBtnNew;
+		private Button mBtnRestart;
+		private Button mBtnSubmit;
+		private Button mBtnTipNext;
+		private Button mBtnTipBack;
+		private Button mBtnCheck;
 		private RectTransform mTransGameArea;
 		private TextMeshProUGUI mTMTimer;
 		private RectTransform mTransInputGrid;
@@ -18,9 +24,15 @@ namespace GameMain.UI
 
 			mBtnHome = uiAutoBindTool.GetBindComponent<Button>(0);
 			mBtnSetting = uiAutoBindTool.GetBindComponent<Button>(1);
-			mTransGameArea = uiAutoBindTool.GetBindComponent<RectTransform>(2);
-			mTMTimer = uiAutoBindTool.GetBindComponent<TextMeshProUGUI>(3);
-			mTransInputGrid = uiAutoBindTool.GetBindComponent<RectTransform>(4);
+			mBtnNew = uiAutoBindTool.GetBindComponent<Button>(2);
+			mBtnRestart = uiAutoBindTool.GetBindComponent<Button>(3);
+			mBtnSubmit = uiAutoBindTool.GetBindComponent<Button>(4);
+			mBtnTipNext = uiAutoBindTool.GetBindComponent<Button>(5);
+			mBtnTipBack = uiAutoBindTool.GetBindComponent<Button>(6);
+			mBtnCheck = uiAutoBindTool.GetBindComponent<Button>(7);
+			mTransGameArea = uiAutoBindTool.GetBindComponent<RectTransform>(8);
+			mTMTimer = uiAutoBindTool.GetBindComponent<TextMeshProUGUI>(9);
+			mTransInputGrid = uiAutoBindTool.GetBindComponent<RectTransform>(10);
 		}
 	}
 }

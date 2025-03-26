@@ -1,16 +1,23 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace GameMain
 {
     public class SudokuSubGrid : MonoBehaviour
     {
-        public Vector2Int Coordinate { get; private set; }
-
-        public SudokuCell[,] Cells { get; private set; }
+        public SudokuGrid mGrid { get; private set; }
+        public List<SudokuCell> Cells;
+        
+        public Vector2Int Coordinate;
 
         private void Awake()
         {
-            Cells = new SudokuCell[SudokuConstant.cellLength, SudokuConstant.cellLength];
+            Cells = new List<SudokuCell>(SudokuConstant.cellLength * SudokuConstant.cellLength);
+        }
+
+        public void SetGrid(SudokuGrid grid)
+        {
+            mGrid = grid;
         }
 
         /// <summary>
@@ -26,15 +33,13 @@ namespace GameMain
         /// </summary>
         public void InitCells()
         {
-            var cellList = GetComponentsInChildren<SudokuCell>();
             for (int i = 0; i < SudokuConstant.cellLength; i++)
             {
                 for (int j = 0; j < SudokuConstant.cellLength; j++)
                 {
-                    Cells[i, j] = cellList[i + j];
-                    Cells[i, j].SetCoordinate(Coordinate.x * SudokuConstant.cellLength + i, Coordinate.y * SudokuConstant.cellLength + j);
-                    Cells[i, j].SetSubGridParent(this);
-                    Cells[i, j].InitValues(0);
+                    var cell = Cells[j + SudokuConstant.cellLength * i];
+                    cell.SetCoordinate(Coordinate.y * SudokuConstant.cellLength + j, Coordinate.x * SudokuConstant.cellLength + i);
+                    cell.InitValues(0);
                 }
             }
         }

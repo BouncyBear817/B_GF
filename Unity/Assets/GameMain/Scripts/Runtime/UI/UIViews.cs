@@ -6,5 +6,6 @@ namespace GameMain
 	{
 		UIInitRootForm = 1,
 		UIGameForm = 2,
+		DialogForm = 3,
 	}
 }
