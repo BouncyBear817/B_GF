@@ -21,6 +21,7 @@ namespace GameMain.UI
 		private DTLevelTable mLevelTable;
 
 		private bool mIsGridGenerated = false;
+		private float mLevelStartTime = 0f;
 		
 		protected override void OnInit(object userData)
 		{
@@ -68,7 +69,19 @@ namespace GameMain.UI
 			{
 				SetDifficult(userData);
 				mSudokuBoard.Init();
+				mLevelStartTime = Time.realtimeSinceStartup;
 			}
+		}
+
+		protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
+		{
+			base.OnUpdate(elapseSeconds, realElapseSeconds);
+
+			var t = Time.realtimeSinceStartup - mLevelStartTime;
+			var seconds = (int)(t % 60);
+			t /= 60;
+			var minutes = (int)(t % 60);
+			mTMTimer.text = $"{minutes:00}:{seconds:00}";
 		}
 
 		private void BtnHomeEvent()
@@ -76,6 +89,7 @@ namespace GameMain.UI
 			mSudokuBoard.Clear();
 			MainEntry.UI.OpenUIForm(UIViews.UIInitRootForm);
 			Close();
+			Clear();
 		}
 
 		private void BtnSettingEvent()
@@ -91,6 +105,7 @@ namespace GameMain.UI
 			}
 			
 			mSudokuBoard.Reset();
+			mLevelStartTime = Time.realtimeSinceStartup;
 		}
 
 		private void BtnSubmitEvent()
@@ -106,6 +121,7 @@ namespace GameMain.UI
 		private void BtnRestartEvent()
 		{
 			mSudokuBoard.Restart();
+			mLevelStartTime = Time.realtimeSinceStartup;
 		}
 
 		private void BtnTipNextEvent()
@@ -141,6 +157,7 @@ namespace GameMain.UI
 			mIsGridGenerated = true;
 			SetDifficult(userData);
 			mSudokuBoard.Init();
+			mLevelStartTime = Time.realtimeSinceStartup;
 		}
 
 		private void OnOpenInputPanel(object[] args)
@@ -170,6 +187,11 @@ namespace GameMain.UI
 		private void OnMaskClick()
 		{
 			mTransInputGrid.gameObject.SetActive(false);
+		}
+
+		private void Clear()
+		{
+			mLevelStartTime = 0;
 		}
 
 /*--------------------Auto generate footer.Do not add anything below the footer!------------*/
