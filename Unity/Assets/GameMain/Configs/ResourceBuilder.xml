@@ -2,14 +2,14 @@
 <UnityGameFramework>
   <ResourceBuilder>
     <Settings>
-      <InternalResourceVersion>12</InternalResourceVersion>
-      <Platforms>1</Platforms>
+      <InternalResourceVersion>15</InternalResourceVersion>
+      <Platforms>128</Platforms>
       <AssetBundleCompression>1</AssetBundleCompression>
       <CompressionHelperTypeName>UnityGameFramework.Runtime.DefaultCompressionHelper</CompressionHelperTypeName>
       <AdditionalCompressionSelected>False</AdditionalCompressionSelected>
       <ForceRebuildAssetBundleSelected>False</ForceRebuildAssetBundleSelected>
       <BuildEventHandlerTypeName>GameMain.Editor.GameBuildEventHandler</BuildEventHandlerTypeName>
-      <OutputDirectory>D:/u3d_pro/Chuan_GameFramework/Unity/GameAssetBundle</OutputDirectory>
+      <OutputDirectory>D:/u3d_pro/B_GF/Unity/GameAssetBundle</OutputDirectory>
       <OutputPackageSelected>False</OutputPackageSelected>
       <OutputFullSelected>True</OutputFullSelected>
       <OutputPackedSelected>False</OutputPackedSelected>
