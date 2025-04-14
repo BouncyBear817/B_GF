@@ -78,7 +78,7 @@ namespace GameMain
 
             message = infoBuilder.ToString();
 
-#if !UNITY_EDITOR
+#if UNITY_EDITOR
             var stackTrace = new StackTrace(STACK_TRACE_SKIP_FRAMES, true);
             var stackTrackLines = stackTrace.ToString().Split('\n');
             var filteredStackTraceLines = new string[stackTrackLines.Length - STACK_TRACE_SKIP_FRAMES];
