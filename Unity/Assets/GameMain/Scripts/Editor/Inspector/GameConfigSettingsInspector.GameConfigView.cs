@@ -82,11 +82,11 @@ namespace GameMain.Editor
                 switch (ConfigType)
                 {
                     case GameConfigType.DataTable:
-                        return SettingsUtils.GameConfigSettings.DataTables;
+                        return SettingsExtension.GameConfigSettings.DataTables;
                     case GameConfigType.Config:
-                        return SettingsUtils.GameConfigSettings.Configs;
+                        return SettingsExtension.GameConfigSettings.Configs;
                     case GameConfigType.Localization:
-                        return SettingsUtils.GameConfigSettings.Localizations;
+                        return SettingsExtension.GameConfigSettings.Localizations;
                 }
 
                 return null;
@@ -262,6 +262,15 @@ namespace GameMain.Editor
                 else if (ConfigType == GameConfigType.Config)
                 {
                     if (GameConfigGenerator.CreateConfigExcel(excelPath))
+                    {
+                        Reload();
+                        EditorUtility.RevealInFinder(excelPath);
+                        GUIUtility.ExitGUI();
+                    }
+                }
+                else if (ConfigType == GameConfigType.Localization)
+                {
+                    if (GameConfigGenerator.CreateLocalizationExcel(excelPath))
                     {
                         Reload();
                         EditorUtility.RevealInFinder(excelPath);

@@ -6,6 +6,8 @@
 //  * Modify Record:
 //  *************************************************************/
 
+using System;
+using GameFramework.Resource;
 using UnityEditor;
 using UnityEngine;
 
@@ -46,6 +48,47 @@ namespace GameMain.Editor
                 }
                 EditorGUILayout.EndHorizontal();
                 
+                EditorGUILayout.Space(10);
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Debug Mode", GUILayout.Width(160f));
+                    mGameGlobalSettings.DebugMode = EditorGUILayout.Toggle(mGameGlobalSettings.DebugMode, GUILayout.Width(160f));
+                }
+                EditorGUILayout.EndHorizontal();
+                
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Resource Mode", GUILayout.Width(160f));
+                    mGameGlobalSettings.ResourceMode = (ResourceMode)EditorGUILayout.EnumPopup(mGameGlobalSettings.ResourceMode, GUILayout.Width(160f));
+                }
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space(10);
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Server Type", GUILayout.Width(160f));
+                    mGameGlobalSettings.ServerType = (ServerType)EditorGUILayout.EnumPopup(mGameGlobalSettings.ServerType, GUILayout.Width(160f));
+                }
+                EditorGUILayout.EndHorizontal();
+                
+                EditorGUILayout.BeginHorizontal();
+                {
+                    EditorGUILayout.LabelField("Server Address", GUILayout.Width(160f));
+
+                    switch (mGameGlobalSettings.ServerType)
+                    {
+                        case ServerType.InternalNet:
+                            mGameGlobalSettings.InternalNet = EditorGUILayout.TextField(mGameGlobalSettings.InternalNet);
+                            break;
+                        case ServerType.ExternalNet:
+                            mGameGlobalSettings.ExternalNet = EditorGUILayout.TextField(mGameGlobalSettings.ExternalNet);
+                            break;
+                        case ServerType.FormalNet:
+                            mGameGlobalSettings.FormalNet = EditorGUILayout.TextField(mGameGlobalSettings.FormalNet);
+                            break;
+                    }
+                }
+                EditorGUILayout.EndHorizontal();
             }
             EditorGUILayout.EndVertical();
 

@@ -48,6 +48,11 @@ namespace GameMain
         {
             return Utility.Text.Format("Assets/GameMain/Sounds/{0}.wav", assetName);
         }
+        
+        public static string GetSettingsAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Settings/{0}.asset", assetName);
+        }
 
         public static string GetEntityAsset(string assetName)
         {

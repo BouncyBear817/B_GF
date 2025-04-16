@@ -12,15 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3630f42880b042349c79c45f2019d638, type: 3}
   m_Name: GameBuildSettings
   m_EditorClassIdentifier: 
-  ForceUpdateApp: 0
-  AppUpdateUri: http://127.0.0.1:8081/Game/APP/
-  AppUpdateDesc: 
-  GameBuildPath: D:/u3d_pro/Chuan_GameFramework/Unity/BuildApp
-  ApplicableGameVersion: 1.0.0|1.0.1|1.0.2
-  ResourceVersionFileName: ResourceVersion.txt
-  ServerType: 1
-  InternalNet: http://127.0.0.1:8081/Game/AB/
-  ExternalNet: 
-  FormalNet: 
-  DebugMode: 0
-  ResourceMode: 2
+  mForceUpdateApp: 0
+  mAppUpdateUri: http://192.168.0.86:8081/Game/APP/
+  mAppUpdateDesc: 
+  mGameBuildPath: BuildApp
+  mApplicableGameVersion: 1.0.0|1.0.1|1.0.2

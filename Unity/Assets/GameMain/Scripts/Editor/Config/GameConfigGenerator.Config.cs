@@ -24,7 +24,7 @@ namespace GameMain.Editor
             RefreshConfigs(excelFiles);
         }
 
-        public static void RefreshConfigs(List<string> excelFiles)
+        public static void RefreshConfigs(IList<string> excelFiles)
         {
             for (int i = 0; i < excelFiles.Count; i++)
             {

@@ -32,9 +32,9 @@ namespace GameMain.Editor
             GenerateUIViewScript();
         }
 
-        public static void RefreshDataTables(List<string> excelFiles)
+        public static void RefreshDataTables(IList<string> excelFiles)
         {
-            var gameConfig = SettingsUtils.GameConfigSettings;
+            var gameConfig = SettingsExtension.GameConfigSettings;
 
             for (int i = 0; i < excelFiles.Count; i++)
             {
@@ -49,6 +49,8 @@ namespace GameMain.Editor
                     {
                         Debug.Log($"Refreshed DataTable success : {excelPath} -> {outputPath}.");
                     }
+                    
+                    GenerateDataTableCode(GetGameConfigExcelRelativeFileName(GameConfigType.DataTable, excelPath), outputPath);
                 }
                 catch (Exception e)
                 {
@@ -59,7 +61,6 @@ namespace GameMain.Editor
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
 
-            GenerateDataTableCode(gameConfig);
         }
 
         /// <summary>
@@ -131,44 +132,29 @@ namespace GameMain.Editor
         /// <summary>
         /// 生成DataTable对应的脚本
         /// </summary>
-        /// <param name="gameConfigSettings">游戏配置设置</param>
-        public static void GenerateDataTableCode(GameConfigSettings gameConfigSettings)
+        /// <param name="dataTableName">dataTable name</param>
+        /// <param name="dataTablePath">输出txt文件地址</param>
+        public static void GenerateDataTableCode(string dataTableName, string dataTablePath)
         {
-            var dataTablesCount = gameConfigSettings.DataTables.Length;
-            var outputDir = GetGameConfigPrePath(GameConfigType.DataTable);
-            var outputExtension = GetGameConfigExcelOutputFileExtension(GameConfigType.DataTable);
-
-            for (int i = 0; i < dataTablesCount; i++)
+            if (!File.Exists(dataTablePath))
             {
-                var dataTableName = gameConfigSettings.DataTables[i];
-                var dataTablePath = PathUtil.GetCombinePath(outputDir, dataTableName + outputExtension);
-                EditorUtility.DisplayProgressBar($"Generate Code Progress : {i + 1} / {dataTablesCount}",
-                    $"Generate DataTable Code : {dataTablePath}",
-                    (i + 1) / (float)dataTablesCount);
-                if (!File.Exists(dataTablePath))
-                {
-                    Debug.LogWarning($"Generate DataTable Code failed. File is not exist : {dataTablePath}.");
-                    continue;
-                }
-
-                var dataTableProcessor = DataTableGenerator.Create(dataTableName);
-                if (!DataTableGenerator.CheckRawData(dataTableProcessor, dataTableName))
-                {
-                    Debug.LogError($"Check Raw Data Failed. DataTableName : {dataTableName}.");
-                    continue;
-                }
-
-                // DataTableGenerator.GenerateDataFile(dataTableProcessor, dataTableName);
-                DataTableGenerator.GenerateCodeFile(dataTableProcessor, dataTableName);
+                Debug.LogWarning($"Generate DataTable Code failed. File is not exist : {dataTablePath}.");
+                return;
             }
 
-            EditorUtility.ClearProgressBar();
-            AssetDatabase.Refresh();
+            var dataTableProcessor = DataTableGenerator.Create(dataTableName);
+            if (!DataTableGenerator.CheckRawData(dataTableProcessor, dataTableName))
+            {
+                Debug.LogError($"Check Raw Data Failed. DataTableName : {dataTableName}.");
+                return;
+            }
+
+            DataTableGenerator.GenerateCodeFile(dataTableProcessor, dataTableName);
         }
 
         public static void GenerateGroupEnumScript()
         {
-            var gamePathSettings = SettingsUtils.GamePathSettings;
+            var gamePathSettings = SettingsExtension.GamePathSettings;
             var excelDir = gamePathSettings.DataTableExcelPath;
             if (!Directory.Exists(excelDir))
             {
@@ -245,7 +231,7 @@ namespace GameMain.Editor
             stringBuilder.AppendLine("\t}");
             stringBuilder.AppendLine("}");
 
-            var outFilePath = SettingsUtils.GamePathSettings.DataTableGroupCodePath;
+            var outFilePath = SettingsExtension.GamePathSettings.DataTableGroupCodePath;
             try
             {
                 File.WriteAllText(outFilePath, stringBuilder.ToString(), Encoding.UTF8);
@@ -264,14 +250,14 @@ namespace GameMain.Editor
         /// </summary>
         public static void GenerateUIViewScript()
         {
-            var excelDir = SettingsUtils.GamePathSettings.DataTableExcelPath;
+            var excelDir = SettingsExtension.GamePathSettings.DataTableExcelPath;
             if (!Directory.Exists(excelDir))
             {
                 Debug.LogError($"Generate UIView failed! Directory '{excelDir}' is not exist.");
                 return;
             }
 
-            var excelFileName = PathUtil.GetCombinePath(excelDir, Constant.UITableExcel);
+            var excelFileName = PathUtil.GetCombinePath(excelDir, EditorConstant.UITableExcel);
             if (!File.Exists(excelFileName))
             {
                 Debug.LogError($"File '{excelFileName}' is not exist.");
@@ -309,8 +295,8 @@ namespace GameMain.Editor
 
             builder.AppendLine("\t}");
             builder.AppendLine("}");
-            File.WriteAllText(Constant.UIViewScriptFile, builder.ToString());
-            Debug.Log("Generate UIView.cs success.");
+            File.WriteAllText(SettingsExtension.GamePathSettings.DataTableUIViewCodePath, builder.ToString());
+            Debug.Log($"Generate UIView code file ({SettingsExtension.GamePathSettings.DataTableUIViewCodePath}) success.");
         }
     }
 }

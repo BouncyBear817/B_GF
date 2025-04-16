@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.IO;
 using System.Reflection;
+using Cysharp.Threading.Tasks;
 using GameFramework;
 using GameFramework.Resource;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 using UnityGameFramework.Editor.ResourceTools;
 
@@ -11,6 +14,7 @@ namespace GameMain.Editor
 {
     public class GameBuilder : EditorWindow
     {
+        private const string BUILD_TASK_TAG = "BUILD_TASK_TAG";
         private ResourceBuilderController mController;
         private bool mOrderBuildResources;
         private int mCompressionHelperTypeNameIndex;
@@ -76,13 +80,10 @@ namespace GameMain.Editor
 
             if (string.IsNullOrWhiteSpace(mController.OutputDirectory) || !Directory.Exists(mController.OutputDirectory))
             {
-                mController.OutputDirectory = Constant.AssetBundleOutputPath;
+                mController.OutputDirectory = EditorConstant.AssetBundleOutputPath;
             }
 
-            if (SettingsUtils.GameBuildSettings.ResourceMode != ResourceMode.Unspecified)
-            {
-                SetResourceMode(SettingsUtils.GameBuildSettings.ResourceMode);
-            }
+            SetResourceMode(SettingsUtils.GameGlobalSettings.ResourceMode);
         }
 
         private void Update()
@@ -91,6 +92,12 @@ namespace GameMain.Editor
             {
                 mOrderBuildResources = false;
                 BuildResources();
+            }
+
+            if (!EditorApplication.isCompiling && !EditorApplication.isUpdating && EditorPrefs.GetBool(BUILD_TASK_TAG, false))
+            {
+                EditorPrefs.SetBool(BUILD_TASK_TAG, false);
+                CallBuildMethods();
             }
         }
 
@@ -272,20 +279,15 @@ namespace GameMain.Editor
                             EditorGUILayout.LabelField("Resource Mode", GUILayout.Width(160f));
                             EditorGUI.BeginChangeCheck();
                             {
-                                SettingsUtils.GameBuildSettings.ResourceMode = (ResourceMode)EditorGUILayout.EnumPopup(SettingsUtils.GameBuildSettings.ResourceMode, GUILayout.Width(160f));
+                                SettingsUtils.GameGlobalSettings.ResourceMode = (ResourceMode)EditorGUILayout.EnumPopup(SettingsUtils.GameGlobalSettings.ResourceMode, GUILayout.Width(160f));
                             }
                             if (EditorGUI.EndChangeCheck())
                             {
-                                SetResourceMode(SettingsUtils.GameBuildSettings.ResourceMode);
-                                if (SettingsUtils.GameBuildSettings.ResourceMode == ResourceMode.Updatable)
-                                {
-                                    EditorGUILayout.LabelField("Resource Version File Name", GUILayout.Width(160f));
-                                    SettingsUtils.GameBuildSettings.ResourceVersionFileName = EditorGUILayout.TextField(SettingsUtils.GameBuildSettings.ResourceVersionFileName);
-                                }
+                                SetResourceMode(SettingsUtils.GameGlobalSettings.ResourceMode);
                             }
                         }
                         EditorGUILayout.EndHorizontal();
-                        if (SettingsUtils.GameBuildSettings.ResourceMode == ResourceMode.Unspecified)
+                        if (SettingsUtils.GameGlobalSettings.ResourceMode == ResourceMode.Unspecified)
                         {
                             EditorGUILayout.HelpBox("ResourceMode is invalid.", MessageType.Error);
                         }
@@ -311,7 +313,7 @@ namespace GameMain.Editor
                         }
                         EditorGUILayout.EndHorizontal();
                         
-                        SetOutputResourcePathByResourceMode(SettingsUtils.GameBuildSettings.ResourceMode);
+                        SetOutputResourcePathByResourceMode(SettingsUtils.GameGlobalSettings.ResourceMode);
                         
                         EditorGUILayout.BeginHorizontal();
                         {
@@ -336,7 +338,7 @@ namespace GameMain.Editor
                         }
                         EditorGUILayout.EndHorizontal();
 #endif
-                        SettingsUtils.GameBuildSettings.DebugMode = EditorGUILayout.ToggleLeft("Debug Mode", SettingsUtils.GameBuildSettings.DebugMode);
+                        SettingsUtils.GameGlobalSettings.DebugMode = EditorGUILayout.ToggleLeft("Debug Mode", SettingsUtils.GameGlobalSettings.DebugMode);
 
                         if (GUILayout.Button("Player Settings", GUILayout.Width(120f)))
                         {
@@ -353,20 +355,20 @@ namespace GameMain.Editor
                             EditorGUILayout.BeginHorizontal();
                             {
                                 EditorGUILayout.LabelField("Applicable Game Version", GUILayout.Width(160f));
-                                SettingsUtils.GameBuildSettings.ApplicableGameVersion = EditorGUILayout.TextField(SettingsUtils.GameBuildSettings.ApplicableGameVersion);
+                                SettingsExtension.GameBuildSettings.ApplicableGameVersion = EditorGUILayout.TextField(SettingsExtension.GameBuildSettings.ApplicableGameVersion);
                             }
                             EditorGUILayout.EndHorizontal();
                         
                             EditorGUILayout.BeginHorizontal();
                             {
                                 EditorGUILayout.LabelField("App Update Uri", GUILayout.Width(160f));
-                                SettingsUtils.GameBuildSettings.AppUpdateUri = EditorGUILayout.TextField(SettingsUtils.GameBuildSettings.AppUpdateUri);
-                                SettingsUtils.GameBuildSettings.ForceUpdateApp = EditorGUILayout.ToggleLeft("Force Update", SettingsUtils.GameBuildSettings.ForceUpdateApp, GUILayout.Width(100f));
+                                SettingsExtension.GameBuildSettings.AppUpdateUri = EditorGUILayout.TextField(SettingsExtension.GameBuildSettings.AppUpdateUri);
+                                SettingsExtension.GameBuildSettings.ForceUpdateApp = EditorGUILayout.ToggleLeft("Force Update", SettingsExtension.GameBuildSettings.ForceUpdateApp, GUILayout.Width(100f));
                             }
                             EditorGUILayout.EndHorizontal();
                             
                             EditorGUILayout.LabelField("App Update Desc", GUILayout.Width(160f));
-                            SettingsUtils.GameBuildSettings.AppUpdateDesc = EditorGUILayout.TextArea(SettingsUtils.GameBuildSettings.AppUpdateDesc, GUILayout.Height(50f));
+                            SettingsExtension.GameBuildSettings.AppUpdateDesc = EditorGUILayout.TextArea(SettingsExtension.GameBuildSettings.AppUpdateDesc, GUILayout.Height(50f));
                         }
                         
                         EditorGUILayout.Space(10);
@@ -380,31 +382,16 @@ namespace GameMain.Editor
                         EditorGUILayout.BeginHorizontal();
                         {
                             EditorGUILayout.LabelField("Build Game Path", GUILayout.Width(160f));
-                            using (var changeCheckScope = new EditorGUI.ChangeCheckScope())
+                            SettingsExtension.GameBuildSettings.GameBuildPath = EditorGUILayout.TextField(SettingsExtension.GameBuildSettings.GameBuildPath);
+                            if (GUILayout.Button("Select Path", GUILayout.Width(160f)))
                             {
-                                SettingsUtils.GameBuildSettings.GameBuildPath = EditorGUILayout.TextField(SettingsUtils.GameBuildSettings.GameBuildPath);
-                                if (GUILayout.Button("Select", GUILayout.Width(120f)))
+                                var path = EditorUtilityExtension.OpenRelativeFolderPanel("Select Build Game Path", SettingsExtension.GameBuildSettings.GameBuildPath);
+                                if (!string.IsNullOrEmpty(path))
                                 {
-                                    var folder = Path.Combine(Application.dataPath, EditorUserBuildSettings.GetBuildLocation(EditorUserBuildSettings.activeBuildTarget));
-                                    Debug.Log(EditorUserBuildSettings.activeBuildTarget);
-                                    if (!Directory.Exists(folder))
-                                    {
-                                        folder = Application.dataPath;
-                                    }
-
-                                    var path = EditorUtility.OpenFolderPanel("Select Build Game Path", folder, "");
-                                    if (!string.IsNullOrEmpty(path))
-                                    {
-                                        SettingsUtils.GameBuildSettings.GameBuildPath = path;
-                                    }
-
-                                    GUIUtility.ExitGUI();
+                                    SettingsExtension.GameBuildSettings.GameBuildPath = path;
                                 }
 
-                                if (changeCheckScope.changed)
-                                {
-                                    EditorUserBuildSettings.SetBuildLocation(EditorUserBuildSettings.activeBuildTarget, SettingsUtils.GameBuildSettings.GameBuildPath);
-                                }
+                                GUIUtility.ExitGUI();
                             }
                         }
                         EditorGUILayout.EndHorizontal();
@@ -496,7 +483,12 @@ namespace GameMain.Editor
                     {
                         if (GUILayout.Button("Build Resources", GUILayout.Height(35f)))
                         {
-                            mOrderBuildResources = true;
+                            Btn_BuildResources();
+                        }
+
+                        if (GUILayout.Button("Build App", GUILayout.Height(35f)))
+                        {
+                            Btn_BuildApp();
                         }
                     }
                     EditorGUI.EndDisabledGroup();
@@ -531,6 +523,172 @@ namespace GameMain.Editor
                 case ResourceMode.UpdatableWhilePlaying:
                     mController.OutputFullSelected = true;
                     break;
+            }
+        }
+
+        private async void Btn_BuildResources()
+        {
+            mController.OutputPackedSelected = (SettingsUtils.GameGlobalSettings.ResourceMode != ResourceMode.Package) && await HasPackedResource();
+            await GameBuilderExtension.AutoResolveAbDuplicateAssets();
+
+            mOrderBuildResources = true;
+        }
+
+        private async UniTask<bool> HasPackedResource()
+        {
+            var resEditor = new ResourceEditorController();
+            var loaded = false;
+            var result = false;
+            resEditor.OnLoadCompleted += () =>
+            {
+                var bundles = resEditor.GetResources();
+                for (int i = 0; i < bundles.Length; i++)
+                {
+                    if (bundles[i].Packed)
+                    {
+                        result = true;
+                    }
+                }
+
+                loaded = true;
+            };
+            if (resEditor.Load())
+            {
+                await UniTask.WaitUntil(() => loaded);
+            }
+            else
+            {
+                loaded = true;
+            }
+
+            return result;
+        }
+        
+        private async void Btn_BuildApp()
+        {
+#if UNITY_ANDROID
+            if (PlayerSettings.Android.useCustomKeystore && ! CheckKeystoreAvailable(PlayerSettings.Android.keystoreName))
+            {
+                EditorUtility.DisplayDialog("Build Error!", $"Keystore '{PlayerSettings.Android.keystoreName}' does not exist or has an incorrect format.", "OK");
+                return;
+            }
+#endif
+            mController.OutputPackedSelected = (SettingsUtils.GameGlobalSettings.ResourceMode != ResourceMode.Package) && await HasPackedResource();
+            if (mController.OutputPackageSelected)
+            {
+                await GameBuilderExtension.AutoResolveAbDuplicateAssets();
+                if (mController.BuildResources())
+                {
+                    PrepareBuildApp();
+                }
+            }
+            else
+            {
+                GameBuilderExtension.RemoveStreamingAssetsBundles();
+                var buildAppReady = !mController.OutputPackedSelected;
+                if (mController.OutputPackedSelected)
+                {
+                    await GameBuilderExtension.AutoResolveAbDuplicateAssets();
+                    buildAppReady = mController.BuildResources();
+                }
+
+                if (buildAppReady)
+                {
+                    PrepareBuildApp();
+                }
+            }
+        }
+
+        private void PrepareBuildApp()
+        {
+            AssetDatabase.Refresh();
+            EditorPrefs.SetBool(BUILD_TASK_TAG, true);
+        }
+
+        private void CallBuildMethods()
+        {
+            typeof(UnityEditor.BuildPlayerWindow).GetField("buildCompletionHandler", BindingFlags.Static | BindingFlags.NonPublic).SetValue(null, new Action<BuildReport>(OnPostprocessBuild));
+            var getBuildPlayerOptions = typeof(UnityEditor.BuildPlayerWindow.DefaultBuildMethods).GetMethod("GetBuildPlayerOptionsInternal", BindingFlags.NonPublic | BindingFlags.Static);
+            var buildOptions = new BuildPlayerOptions();
+            buildOptions.options = BuildOptions.ShowBuiltPlayer;
+
+            buildOptions.targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+            buildOptions.target = (BuildTarget)Utility.Assembly.GetType("UnityEditor.EditorUserBuildSettingsUtils").GetMethod("CalculateSelectedBuildTarget", BindingFlags.Public | BindingFlags.Static).Invoke(null, null);
+            buildOptions.subtarget = (int)typeof(UnityEditor.EditorUserBuildSettings).GetMethod("GetSelectedSubtargetFor", BindingFlags.Static | BindingFlags.NonPublic).Invoke(null, new object[] { buildOptions.target });
+            var errBuildDir = string.IsNullOrWhiteSpace(SettingsExtension.GameBuildSettings.GameBuildPath);
+            var locationPathName = GetBuildLocation(buildOptions.targetGroup, buildOptions.target, buildOptions.subtarget, buildOptions.options);
+            var locationDir = Path.GetDirectoryName(locationPathName);
+            if (!Directory.Exists(locationDir))
+            {
+                Directory.CreateDirectory(locationDir);
+            }
+            EditorUserBuildSettings.SetBuildLocation(buildOptions.target, locationPathName);
+
+            buildOptions = (BuildPlayerOptions)getBuildPlayerOptions.Invoke(null, new object[] { errBuildDir, buildOptions });
+            buildOptions.locationPathName = locationPathName;
+            var scenesList = new ArrayList();
+            var editorScenes = EditorBuildSettings.scenes;
+            foreach (var scene in editorScenes)
+            {
+                if (scene.enabled && !string.IsNullOrEmpty(scene.path))
+                {
+                    scenesList.Add(scene.path);
+                    break;// GF框架只需要把启动场景打进包里,其它场景动态加载
+                }
+            }
+            buildOptions.scenes = scenesList.ToArray(typeof(string)) as string[];
+            BuildPlayerWindow.DefaultBuildMethods.BuildPlayer(buildOptions);
+        }
+
+        private void OnPostprocessBuild(BuildReport report)
+        {
+            if (report.summary.result != BuildResult.Succeeded)
+            {
+                Debug.LogError("Build App Failed:" + report.summary.result.ToString());
+                return;
+            }
+            RenameApp(report);
+        }
+
+        private string GetBuildLocation(BuildTargetGroup targetGroup, BuildTarget target, int subtarget, BuildOptions options)
+        {
+            string defaultFolder = PathUtil.GetCombinePath(Directory.GetParent(Application.dataPath).FullName, SettingsExtension.GameBuildSettings.GameBuildPath, target.ToString());
+            string defaultName = Application.productName;
+            //打出包后给包重命名
+
+            string extension = Utility.Assembly.GetType("UnityEditor.PostprocessBuildPlayer").GetMethod("GetExtensionForBuildTarget", new Type[] { typeof(BuildTargetGroup), typeof(BuildTarget), typeof(int), typeof(BuildOptions) }).Invoke(null, new object[] { targetGroup, target, subtarget, options }) as string;
+            string buildPath = defaultFolder;
+            if (!string.IsNullOrEmpty(extension))
+            {
+                string appFileName = Utility.Text.Format("{0}.{1}", defaultName, extension);
+                buildPath = PathUtil.GetCombinePath(defaultFolder, appFileName);
+            }
+            return buildPath;
+        }
+        
+        private void RenameApp(BuildReport report)
+        {
+            if (report.summary.result != BuildResult.Succeeded) return;
+
+            if (report.summary.platform == BuildTarget.Android || report.summary.platform == BuildTarget.iOS)
+            {
+                var appFile = report.summary.outputPath;
+                if (File.Exists(appFile))
+                {
+                    var dir = Path.GetDirectoryName(appFile);
+                    var name = Path.GetFileNameWithoutExtension(appFile);
+                    var ext = Path.GetExtension(appFile);
+
+                    var finalName = Utility.Text.Format("{0}_{1}{2}_v{3}{4}", name, SettingsUtils.GameGlobalSettings.DebugMode ? "debug" : "release", EditorUserBuildSettings.development ? "Dev" : string.Empty, Application.version, ext);
+                    finalName = Path.Combine(dir, finalName);
+
+                    if (File.Exists(finalName))
+                    {
+                        File.Delete(finalName);
+                    }
+                    File.Move(report.summary.outputPath, finalName);
+                }
+
             }
         }
 

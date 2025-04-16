@@ -15,25 +15,25 @@ namespace GameMain.Editor
         [ToolsMenuMethod("Game Settings/UI AutoBind Global Settings", null, 3, 1)]
         public static void OpenUIAutoBindGlobalSetting1()
         {
-            Selection.activeObject = SettingsUtils.GetSettings("UIAutoBindGlobalSettings");
+            Selection.activeObject = SettingsExtension.GetSettings("UIAutoBindGlobalSettings");
         }
 
         [ToolsMenuMethod("Game Settings/Game Global Settings", null, 3, 2)]
         public static void OpenGameGlobalSetting1()
         {
-            Selection.activeObject = SettingsUtils.GetSettings("GameGlobalSettings");
+            Selection.activeObject = SettingsExtension.GetSettings("GameGlobalSettings");
         }
 
         [ToolsMenuMethod("Game Settings/Game Config Settings", null, 3, 3)]
         public static void OpenGameConfigSetting1()
         {
-            Selection.activeObject = SettingsUtils.GetSettings("GameConfigSettings");
+            Selection.activeObject = SettingsExtension.GetSettings("GameConfigSettings");
         }
 
         [ToolsMenuMethod("Game Settings/Game Path Settings", null, 3, 4)]
         public static void OpenGamePathSetting1()
         {
-            Selection.activeObject = SettingsUtils.GetSettings("GamePathSettings");
+            Selection.activeObject = SettingsExtension.GetSettings("GamePathSettings");
         }
     }
 }

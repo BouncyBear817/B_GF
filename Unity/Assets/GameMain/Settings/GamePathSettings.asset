@@ -22,6 +22,7 @@ MonoBehaviour:
   mSoundGroupDataTableExcelPath: Core/SoundGroupTable.xlsx
   mUIGroupDataTableExcelPath: Core/UIGroupTable.xlsx
   mDataTableGroupCodePath: Assets/GameMain/Scripts/Runtim/Definition/Constant/Constant.Group.cs
+  mDataTableUIViewCodePath: Assets/GameMain/Scripts/Runtime/UI/UIViews.cs
   mEntityPath: Assets/GameMain/Entities
   mFontPath: Assets/GameMain/Fonts
   mMusicPath: Assets/GameMain/Music

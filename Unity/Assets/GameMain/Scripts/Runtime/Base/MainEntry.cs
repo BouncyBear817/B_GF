@@ -29,7 +29,7 @@ namespace GameMain
 
         private void InitComponentsSet()
         {
-            Debugger.ActiveWindow = SettingsUtils.GameBuildSettings.DebugMode;
+            Debugger.ActiveWindow = SettingsUtils.GameGlobalSettings.DebugMode;
 
             var resourceComponent = GameEntry.GetComponent<ResourceComponent>();
             if (resourceComponent != null)
@@ -38,9 +38,11 @@ namespace GameMain
                 var resourceMode = resourceType.GetField("m_ResourceMode", BindingFlags.Instance | BindingFlags.NonPublic);
                 if (resourceMode != null)
                 {
-                    resourceMode.SetValue(resourceComponent, SettingsUtils.GameBuildSettings.ResourceMode);
+                    resourceMode.SetValue(resourceComponent, SettingsUtils.GameGlobalSettings.ResourceMode);
                 }
             }
+            
+            AwaitExtension.SubscribeEvent();
 
             BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
 

@@ -1,6 +1,6 @@
 ﻿using GameFramework;
 
-namespace GameMain.Hotfix
+namespace GameMain
 {
     /// <summary>
     /// Web Request Result

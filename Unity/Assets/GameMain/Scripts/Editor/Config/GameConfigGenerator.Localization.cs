@@ -26,9 +26,9 @@ namespace GameMain.Editor
             RefreshDataTables(excelFiles);
         }
 
-        public static void RefreshLocalizations(List<string> excelFiles)
+        public static void RefreshLocalizations(IList<string> excelFiles)
         {
-            var gameConfig = SettingsUtils.GameConfigSettings;
+            var gameConfig = SettingsExtension.GameConfigSettings;
 
             for (int i = 0; i < excelFiles.Count; i++)
             {

@@ -23,10 +23,11 @@ namespace GameMain
         private float mSmoothProgress = 0;
         private bool mPreloadedAllCompleted = false;
 
+        private GameConfigSettings mGameConfigSettings;
 
         public override bool UseNativeDialog => true;
 
-        protected override void OnEnter(ProcedureOwner procedureOwner)
+        protected override async void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);
 
@@ -37,10 +38,12 @@ namespace GameMain
 
             Log.Info("Preload Game Config And Init Game Config...");
 
+            mGameConfigSettings = await SettingsUtils.GetGameConfigSettings();
+
             mLoadedProgress = 0;
             mSmoothProgress = 0;
             mPreloadedAllCompleted = false;
-            mTotalProgress = SettingsUtils.GameConfigSettings.Configs.Length + SettingsUtils.GameConfigSettings.DataTables.Length;
+            mTotalProgress = mGameConfigSettings.Configs.Length + mGameConfigSettings.DataTables.Length;
 
             PreloadResources();
         }
@@ -88,7 +91,7 @@ namespace GameMain
 
         private void LoadConfigs()
         {
-            foreach (var config in SettingsUtils.GameConfigSettings.Configs)
+            foreach (var config in mGameConfigSettings.Configs)
             {
                 MainEntry.Config.LoadConfig(config, AssetUtil.GetConfigAsset(config, false, true), this);
             }
@@ -96,7 +99,7 @@ namespace GameMain
 
         private void LoadDataTables()
         {
-            foreach (var dataTable in SettingsUtils.GameConfigSettings.DataTables)
+            foreach (var dataTable in mGameConfigSettings.DataTables)
             {
                 MainEntry.DataTable.LoadDataTable(dataTable, AssetUtil.GetDataTableAsset(dataTable, false, true), this);
             }
@@ -104,7 +107,7 @@ namespace GameMain
 
         private void LoadLocalizations()
         {
-            foreach (var localization in SettingsUtils.GameConfigSettings.Localizations)
+            foreach (var localization in mGameConfigSettings.Localizations)
             {
                 Log.Info(localization);
             }

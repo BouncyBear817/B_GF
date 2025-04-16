@@ -49,10 +49,11 @@ namespace GameMain.Editor
             EditorGUILayout.EndVertical();
 
             GUILayout.Space(10);
-            EditorGUILayout.TextField("Data Table Core Group Code", EditorStyles.boldLabel);
+            EditorGUILayout.TextField("Auto Generate Code", EditorStyles.boldLabel);
             EditorGUILayout.BeginVertical("box");
             {
                 Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableGroupCodePath"));
+                Helper.DrawPropertyField(serializedObject.FindProperty("mDataTableUIViewCodePath"));
             }
             EditorGUILayout.EndVertical();
 

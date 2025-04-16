@@ -2,7 +2,7 @@
 using Cysharp.Threading.Tasks;
 using GameFramework;
 
-namespace GameMain.Hotfix
+namespace GameMain
 {
     /// <summary>
     /// Await Result 包装类

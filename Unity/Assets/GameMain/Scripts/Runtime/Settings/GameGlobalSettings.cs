@@ -6,6 +6,7 @@
 //  * Modify Record:
 //  *************************************************************/
 
+using GameFramework.Resource;
 using UnityEngine;
 
 namespace GameMain
@@ -15,6 +16,32 @@ namespace GameMain
     {
         [SerializeField] private string mScriptAuthor = "Default";
         [SerializeField] private Font mMainFont;
+
+        [SerializeField] private bool mDebugMode = false;
+        [SerializeField] private ResourceMode mResourceMode = ResourceMode.Unspecified;
+
+        [SerializeField] private ServerType mServerType = ServerType.None;
+        [SerializeField] private string mInternalNet = "";
+        [SerializeField] private string mExternalNet = "";
+        [SerializeField] private string mFormalNet = "";
+        
+        public string UpdatePrefixUri
+        {
+            get
+            {
+                switch (ServerType)
+                {
+                    case ServerType.InternalNet:
+                        return mInternalNet;
+                    case ServerType.ExternalNet:
+                        return mExternalNet;
+                    case ServerType.FormalNet:
+                        return mFormalNet;
+                    default:
+                        return "";
+                }
+            }
+        }
 
         public string ScriptAuthor
         {
@@ -26,6 +53,42 @@ namespace GameMain
         {
             get => mMainFont;
             set => mMainFont = value;
+        }
+
+        public bool DebugMode
+        {
+            get => mDebugMode;
+            set => mDebugMode = value;
+        }
+
+        public ResourceMode ResourceMode
+        {
+            get => mResourceMode;
+            set => mResourceMode = value;
+        }
+
+        public ServerType ServerType
+        {
+            get => mServerType;
+            set => mServerType = value;
+        }
+
+        public string InternalNet
+        {
+            get => mInternalNet;
+            set => mInternalNet = value;
+        }
+
+        public string ExternalNet
+        {
+            get => mExternalNet;
+            set => mExternalNet = value;
+        }
+
+        public string FormalNet
+        {
+            get => mFormalNet;
+            set => mFormalNet = value;
         }
     }
 }
