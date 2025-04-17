@@ -8,7 +8,7 @@
 
 using UnityEngine;
 
-namespace GameMain
+namespace GameMain.Editor
 {
     [CreateAssetMenu(fileName = "GamePathSettings", menuName = "Tools/Game Path Settings", order = 3)]
     public class GamePathSettings : ScriptableObject
@@ -26,6 +26,7 @@ namespace GameMain
         [SerializeField] private string mUIGroupDataTableExcelPath;
 
         [SerializeField] private string mDataTableGroupCodePath;
+        [SerializeField] private string mDataTableUIViewCodePath;
 
         [SerializeField] private string mEntityPath;
         [SerializeField] private string mFontPath;
@@ -94,6 +95,12 @@ namespace GameMain
         {
             get => mDataTableGroupCodePath;
             set => mDataTableGroupCodePath = value;
+        }
+
+        public string DataTableUIViewCodePath
+        {
+            get => mDataTableUIViewCodePath;
+            set => mDataTableUIViewCodePath = value;
         }
 
         public string EntityPath

@@ -71,7 +71,7 @@ namespace GameMain.Editor
                 return false;
             }
 
-            var autoBindGlobalSetting = SettingsUtils.GetSettings<UIAutoBindGlobalSettings>();
+            var autoBindGlobalSetting = SettingsExtension.GetSettings<UIAutoBindGlobalSettings>();
             var prefixRuleList = autoBindGlobalSetting.PrefixRuleList;
 
             var isValid = false;

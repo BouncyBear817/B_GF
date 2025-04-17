@@ -6,9 +6,8 @@
 //  * Modify Record:
 //  *************************************************************/
 
-using System;
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityGameFramework.Runtime;
 
 namespace GameMain
 {
@@ -30,119 +29,27 @@ namespace GameMain
             }
         }
 
-        private const string GameConfigSettingsPath = "Settings/GameConfigSettings";
+        private const string GameConfigSettingsPath = "GameConfigSettings";
         private static GameConfigSettings mGameConfigSettings;
 
-        public static GameConfigSettings GameConfigSettings
+        public static async Task<GameConfigSettings> GetGameConfigSettings()
         {
-            get
+            if (mGameConfigSettings == null)
             {
-                if (mGameConfigSettings == null)
-                {
-                    mGameConfigSettings = GetSettingsByResources<GameConfigSettings>(GameConfigSettingsPath);
-                }
-
-                return mGameConfigSettings;
+                mGameConfigSettings = await GetSettingsByAsset<GameConfigSettings>(GameConfigSettingsPath);
             }
-        }
 
-        private const string GamePathSettingsPath = "Settings/GamePathSettings";
-        private static GamePathSettings mGamePathSettings;
-
-        public static GamePathSettings GamePathSettings
-        {
-            get
-            {
-                if (mGamePathSettings == null)
-                {
-                    mGamePathSettings = GetSettingsByResources<GamePathSettings>(GamePathSettingsPath);
-                }
-
-                return mGamePathSettings;
-            }
-        }
-
-        private const string GameBuildSettingsPath = "Settings/GameBuildSettings";
-        private static GameBuildSettings sGameBuildSettings;
-
-        public static GameBuildSettings GameBuildSettings
-        {
-            get
-            {
-                if (sGameBuildSettings == null)
-                {
-                    sGameBuildSettings = GetSettingsByResources<GameBuildSettings>(GameBuildSettingsPath);
-                }
-
-                return sGameBuildSettings;
-            }
+            return mGameConfigSettings;
         }
 
         public static string GetVersionListPath(string platform)
         {
-            return PathUtil.GetCombinePath(GameBuildSettings.UpdatePrefixUri, platform, GameBuildSettings.ResourceVersionFileName);
+            return PathUtil.GetCombinePath(GameGlobalSettings.UpdatePrefixUri, platform, Constant.ResourceVersionFileName);
         }
-
-#if UNITY_EDITOR
-        public static T GetSettings<T>() where T : ScriptableObject, new()
-        {
-            var assetType = typeof(T).Name;
-            var paths = UnityEditor.AssetDatabase.FindAssets($"t:{assetType}");
-            if (paths.Length == 0)
-            {
-                Debug.LogError($"{assetType} is not existed.");
-                return null;
-            }
-
-            if (paths.Length > 1)
-            {
-                Debug.LogError($"{assetType} is more than 1, please delete others and leave one.");
-                return null;
-            }
-
-            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(paths[0]);
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<T>(path);
-        }
-
-        public static ScriptableObject GetSettings(string assetTypeName)
-        {
-            var paths = UnityEditor.AssetDatabase.FindAssets($"t:{assetTypeName}");
-            if (paths.Length == 0)
-            {
-                Debug.LogError($"{assetTypeName} is not existed.");
-                return null;
-            }
-
-            if (paths.Length > 1)
-            {
-                Debug.LogError($"{assetTypeName} is more than 1, please delete others and leave one.");
-                return null;
-            }
-
-            var path = UnityEditor.AssetDatabase.GUIDToAssetPath(paths[0]);
-            return UnityEditor.AssetDatabase.LoadAssetAtPath<ScriptableObject>(path);
-        }
-#endif
 
         public static T GetSettingsByResources<T>(string assetsPath) where T : ScriptableObject, new()
         {
             var assetType = typeof(T).Name;
-
-#if UNITY_EDITOR
-            var paths = UnityEditor.AssetDatabase.FindAssets($"t:{assetType}");
-            if (paths.Length == 0)
-            {
-                Debug.LogError($"{assetType} is not existed.");
-                return null;
-            }
-
-            if (paths.Length > 1)
-            {
-                Debug.LogError($"{assetType} is more than 1, please delete others and leave one.");
-                return null;
-            }
-#endif
-
             var settings = Resources.Load<T>(assetsPath);
             if (settings == null)
             {
@@ -151,6 +58,12 @@ namespace GameMain
             }
 
             return settings;
+        }
+
+        public static async Task<T> GetSettingsByAsset<T>(string assetsPath) where T : ScriptableObject, new()
+        {
+            var asset = AssetUtil.GetSettingsAsset(assetsPath);
+            return await MainEntry.Resource.LoadAssetsAsync<T>(asset);
         }
     }
 }

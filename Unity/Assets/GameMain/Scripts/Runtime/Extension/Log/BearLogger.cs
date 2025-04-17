@@ -56,6 +56,7 @@ namespace GameMain
 
         private static void OutLog(GameFrameworkLogLevel logLevel, string message)
         {
+#if UNITY_EDITOR
             var infoBuilder = GetStringByColor(logLevel, message);
             if (logLevel == GameFrameworkLogLevel.Warning || logLevel == GameFrameworkLogLevel.Error || logLevel == GameFrameworkLogLevel.Fatal)
             {
@@ -78,7 +79,6 @@ namespace GameMain
 
             message = infoBuilder.ToString();
 
-#if !UNITY_EDITOR
             var stackTrace = new StackTrace(STACK_TRACE_SKIP_FRAMES, true);
             var stackTrackLines = stackTrace.ToString().Split('\n');
             var filteredStackTraceLines = new string[stackTrackLines.Length - STACK_TRACE_SKIP_FRAMES];

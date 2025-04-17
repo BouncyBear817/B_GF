@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: UIAutoBindGlobalSettings
   m_EditorClassIdentifier: 
   mNamespace: GameMain.UI
-  mComponentCodePath: GameMain/Scripts/UI/BindCodes
-  mMountCodePath: GameMain/Scripts/UI/MountCodes
+  mComponentCodePath: GameMain/Scripts/Runtime/UI/BindCodes
+  mMountCodePath: GameMain/Scripts/Runtime/UI/MountCodes
   mMountScriptAssemblyList: []
   mPrefixRuleList:
   - Prefix: Btn

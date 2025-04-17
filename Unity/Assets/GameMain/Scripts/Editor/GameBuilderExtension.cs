@@ -23,9 +23,9 @@ namespace GameMain.Editor
             bool refreshCompleted = false;
             resEditor.OnLoadCompleted += async () =>
             {
-                if (resEditor.HasResource(Constant.SharedAssetBundleName, null))
+                if (resEditor.HasResource(EditorConstant.SharedAssetBundleName, null))
                 {
-                    foreach (var item in resEditor.GetResource(Constant.SharedAssetBundleName, null).GetAssets())
+                    foreach (var item in resEditor.GetResource(EditorConstant.SharedAssetBundleName, null).GetAssets())
                     {
                         resEditor.UnassignAsset(item.Guid);
                     }
@@ -48,18 +48,18 @@ namespace GameMain.Editor
 
         private static bool ResolveDuplicateAssets(ResourceEditorController resEditor, List<string> duplicateAssetNames)
         {
-            if (!resEditor.HasResource(Constant.SharedAssetBundleName, null))
+            if (!resEditor.HasResource(EditorConstant.SharedAssetBundleName, null))
             {
-                bool addSuccess = resEditor.AddResource(Constant.SharedAssetBundleName, null, null, LoadType.LoadFromMemoryAndQuickDecrypt, false);
+                bool addSuccess = resEditor.AddResource(EditorConstant.SharedAssetBundleName, null, null, LoadType.LoadFromMemoryAndQuickDecrypt, false);
 
                 if (!addSuccess)
                 {
-                    Debug.LogWarningFormat("ResourceEditor Add Resource:{0} Failed!", Constant.SharedAssetBundleName);
+                    Debug.LogWarningFormat("ResourceEditor Add Resource:{0} Failed!", EditorConstant.SharedAssetBundleName);
                     return false;
                 }
             }
 
-            var sharedRes = resEditor.GetResource(Constant.SharedAssetBundleName, null);
+            var sharedRes = resEditor.GetResource(EditorConstant.SharedAssetBundleName, null);
             bool hasChanged = false;
             List<string> sharedResFiles = new List<string>();
             foreach (var item in sharedRes.GetAssets())
@@ -67,7 +67,7 @@ namespace GameMain.Editor
                 sharedResFiles.Add(item.Name);
             }
 
-            Debug.Log($"-------------添加下列冗余资源到{Constant.SharedAssetBundleName}------------");
+            Debug.Log($"-------------添加下列冗余资源到{EditorConstant.SharedAssetBundleName}------------");
             foreach (var assetName in duplicateAssetNames)
             {
                 Debug.Log($"冗余资源:{assetName}");
@@ -76,9 +76,9 @@ namespace GameMain.Editor
                     continue;
                 }
 
-                if (!resEditor.AssignAsset(AssetDatabase.AssetPathToGUID(assetName), Constant.SharedAssetBundleName, null))
+                if (!resEditor.AssignAsset(AssetDatabase.AssetPathToGUID(assetName), EditorConstant.SharedAssetBundleName, null))
                 {
-                    Debug.LogWarning($"添加资源:{assetName}到{Constant.SharedAssetBundleName}失败!");
+                    Debug.LogWarning($"添加资源:{assetName}到{EditorConstant.SharedAssetBundleName}失败!");
                 }
 
                 hasChanged = true;
@@ -93,7 +93,7 @@ namespace GameMain.Editor
                 {
                     if (!resEditor.UnassignAsset(asset.Guid))
                     {
-                        Debug.LogWarning($"移除{Constant.SharedAssetBundleName}中的资源:{asset.Name}失败!");
+                        Debug.LogWarning($"移除{EditorConstant.SharedAssetBundleName}中的资源:{asset.Name}失败!");
                     }
 
                     hasChanged = true;
@@ -122,13 +122,13 @@ namespace GameMain.Editor
                 {
                     var hostAssets = resAnalyzer.GetHostAssets(scatteredAsset);
                     if (hostAssets == null || hostAssets.Length < 1) continue;
-                    var defaultHostAsset = hostAssets.FirstOrDefault(res => res.Resource.FullName != Constant.SharedAssetBundleName);
+                    var defaultHostAsset = hostAssets.FirstOrDefault(res => res.Resource.FullName != EditorConstant.SharedAssetBundleName);
                     if (defaultHostAsset != null)
                     {
                         var hostResourceName = defaultHostAsset.Resource.FullName;
                         foreach (var hostAsset in hostAssets)
                         {
-                            if (hostAsset.Resource.FullName == Constant.SharedAssetBundleName) continue;
+                            if (hostAsset.Resource.FullName == EditorConstant.SharedAssetBundleName) continue;
                             if (hostResourceName != hostAsset.Resource.Name)
                             {
                                 duplicateAssets.Add(scatteredAsset);

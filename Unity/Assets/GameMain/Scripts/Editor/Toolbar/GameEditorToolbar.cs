@@ -59,17 +59,17 @@ namespace GameMain.Editor
                 allowDuplicateNames = true
             };
 
-            var sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] { SettingsUtils.GamePathSettings.ScenePath });
+            var sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] { SettingsExtension.GamePathSettings.ScenePath });
             for (var i = 0; i < sceneGuids.Length; i++)
             {
                 var scenePath = AssetDatabase.GUIDToAssetPath(sceneGuids[i]);
                 var sceneName = Path.GetFileNameWithoutExtension(scenePath);
                 
                 var fileDir = Path.GetDirectoryName(scenePath);
-                var isInRootDir = Utility.Path.GetRegularPath(SettingsUtils.GamePathSettings.ScenePath).TrimEnd('/') == Utility.Path.GetRegularPath(fileDir).TrimEnd('/');
+                var isInRootDir = Utility.Path.GetRegularPath(SettingsExtension.GamePathSettings.ScenePath).TrimEnd('/') == Utility.Path.GetRegularPath(fileDir).TrimEnd('/');
                 if (!isInRootDir)
                 {
-                    var sceneDir = Path.GetRelativePath(SettingsUtils.GamePathSettings.ScenePath, fileDir);
+                    var sceneDir = Path.GetRelativePath(SettingsExtension.GamePathSettings.ScenePath, fileDir);
                     sceneName = $"{sceneDir}/{sceneName}";
                 }
 
@@ -121,7 +121,7 @@ namespace GameMain.Editor
                 popMenu.AddItem(new GUIContent(sSettingsList[i]), false, data =>
                 {
                     var settingsTypeName = sSettingsList[(int)data].Replace(" ", "");
-                    Selection.activeObject = SettingsUtils.GetSettings(settingsTypeName);
+                    Selection.activeObject = SettingsExtension.GetSettings(settingsTypeName);
                 }, i);
             }
 

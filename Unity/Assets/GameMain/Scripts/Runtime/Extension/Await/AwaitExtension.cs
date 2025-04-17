@@ -5,11 +5,10 @@ using GameFramework;
 using GameFramework.DataTable;
 using GameFramework.Event;
 using GameFramework.Resource;
-using GameMain.Builtin;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-namespace GameMain.Hotfix
+namespace GameMain
 {
     public static class AwaitExtension
     {

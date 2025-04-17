@@ -46,12 +46,12 @@ namespace GameMain.Editor
             bool outputPackageSelected, string outputPackagePath, bool outputFullSelected, string outputFullPath, bool outputPackedSelected, string outputPackedPath,
             string buildReportPath)
         {
-            mVersionInfo.ForceUpdateApp = SettingsUtils.GameBuildSettings.ForceUpdateApp;
+            mVersionInfo.ForceUpdateApp = SettingsExtension.GameBuildSettings.ForceUpdateApp;
             mVersionInfo.LatestAppVersion = applicableGameVersion;
-            mVersionInfo.AppUpdateUri = SettingsUtils.GameBuildSettings.AppUpdateUri;
-            mVersionInfo.AppUpdateDesc = SettingsUtils.GameBuildSettings.AppUpdateDesc;
+            mVersionInfo.AppUpdateUri = SettingsExtension.GameBuildSettings.AppUpdateUri;
+            mVersionInfo.AppUpdateDesc = SettingsExtension.GameBuildSettings.AppUpdateDesc;
 
-            mVersionInfo.ApplicableGameVersion = SettingsUtils.GameBuildSettings.ApplicableGameVersion;
+            mVersionInfo.ApplicableGameVersion = SettingsExtension.GameBuildSettings.ApplicableGameVersion;
             mVersionInfo.InternalResourceVersion = internalResourceVersion;
 
             FolderUtil.ClearFolder(Application.streamingAssetsPath);
@@ -145,10 +145,10 @@ namespace GameMain.Editor
 
             if (outputFullSelected)
             {
-                mVersionInfo.UpdatePrefixUri = PathUtil.GetCombinePath(SettingsUtils.GameBuildSettings.UpdatePrefixUri, platform.ToString());
+                mVersionInfo.UpdatePrefixUri = PathUtil.GetCombinePath(SettingsUtils.GameGlobalSettings.UpdatePrefixUri, platform.ToString());
 
                 var versionInfoJson = JsonConvert.SerializeObject(mVersionInfo);
-                FileUtil.CreateFile(Path.Combine(outputFullPath, SettingsUtils.GameBuildSettings.ResourceVersionFileName), versionInfoJson);
+                FileUtil.CreateFile(Path.Combine(outputFullPath, GameMain.Constant.ResourceVersionFileName), versionInfoJson);
             }
 
             AssetDatabase.Refresh();

@@ -16,7 +16,7 @@ namespace GameMain.Editor
 
         public const string DataTablePath = "Assets/GameMain/DataTables/";
 
-        public const string CSharpCodePath = "Assets/GameMain/Scripts/DataTables/";
+        public const string CSharpCodePath = "Assets/GameMain/Scripts/Runtime/DataTables/";
         public const string CSharpCodeTemplateFilePath = "Assets/GameMain/Scripts/Editor/DataTableGenerator/CodeTemplate/DataTableCodeTemplate.txt";
 
         public const string TxtPattern = "*.txt";

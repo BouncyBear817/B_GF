@@ -46,7 +46,7 @@ namespace GameMain.Editor
             mComponentCodePath = serializedObject.FindProperty("mComponentCodePath");
             mMountCodePath = serializedObject.FindProperty("mMountCodePath");
 
-            mUIAutoBindGlobalSettings = SettingsUtils.GetSettings<UIAutoBindGlobalSettings>();
+            mUIAutoBindGlobalSettings = SettingsExtension.GetSettings<UIAutoBindGlobalSettings>();
 
             serializedObject.ApplyModifiedProperties();
         }
