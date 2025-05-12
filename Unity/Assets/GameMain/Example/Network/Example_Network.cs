@@ -9,15 +9,15 @@
 using System.Collections;
 using GameFramework;
 using GameFramework.Network;
-using GameMain;
 using UnityEngine;
+using UnityGameFramework.Runtime;
 
 namespace GameMain.Example
 {
     public class Example_Network : MonoBehaviour
     {
         private string mIp = "127.0.0.1";
-        private string mPort = "8808";
+        private string mPort = "8809";
         private string mChannelName = "Test";
         private string mMessage;
 
@@ -28,8 +28,8 @@ namespace GameMain.Example
 
         void Connect(string ip, string port, string channelName)
         {
-            MainEntry.NetConnector.Connect(ip, int.Parse(port), channelName);
-            MainEntry.NetConnector.SetHeartBeatInterval(mChannelName, 20f);
+            MainEntry.NetConnector.Connect(ip, int.Parse(port), ServiceType.Udp, channelName);
+            MainEntry.NetConnector.SetHeartBeatInterval(mChannelName, 200f);
         }
 
         void SendPacket(string message)
@@ -88,7 +88,7 @@ namespace GameMain.Example
             var p = packet as SCTest;
             if (p != null)
             {
-                Debug.Log("Receive packet : " + Utility.Converter.GetString(p.MessageBody));
+                Log.Debug("Receive packet : " + Utility.Converter.GetString(p.MessageBody));
             }
         }
     }

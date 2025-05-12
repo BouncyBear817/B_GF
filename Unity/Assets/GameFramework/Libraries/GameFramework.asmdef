@@ -1,7 +1,9 @@
 {
     "name": "GameFramework",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "kcp2k"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": true,

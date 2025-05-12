@@ -33,16 +33,17 @@ namespace GameMain
         /// <summary>
         /// 创建网络频道
         /// </summary>
+        /// <param name="serviceType">网络服务类型</param>
         /// <param name="name">网络频道名称</param>
         /// <returns>网络频道</returns>
-        public INetworkChannel CreateTcpNetworkChannel(string name = "Default")
+        public INetworkChannel CreateNetworkChannel(ServiceType serviceType, string name = "Default")
         {
             var networkChannel = mNetworkChannels.GetValueOrDefault(name);
             if (networkChannel == null)
             {
                 mNetworkChannelHelper = ReferencePool.Acquire<NetworkChannelHelper>();
                 mNetworkChannelHelper.IsLittleEndian = mIsLittleEndian;
-                networkChannel = MainEntry.Network.CreateNetworkChannel(name, ServiceType.Tcp, mNetworkChannelHelper);
+                networkChannel = MainEntry.Network.CreateNetworkChannel(name, serviceType, mNetworkChannelHelper);
                 mNetworkChannels.Add(name, networkChannel);
             }
 
@@ -54,14 +55,15 @@ namespace GameMain
         /// </summary>
         /// <param name="ip">IP地址</param>
         /// <param name="port">IP端口</param>
+        /// <param name="serviceType">网络服务类型</param>
         /// <param name="name">网络频道名称</param>
         /// <param name="userData">用户自定义数据</param>
-        public void Connect(string ip, int port, string name = "Default", object userData = null)
+        public void Connect(string ip, int port, ServiceType serviceType, string name = "Default", object userData = null)
         {
             var networkChannel = mNetworkChannels.GetValueOrDefault(name);
             if (networkChannel == null)
             {
-                networkChannel = CreateTcpNetworkChannel(name);
+                networkChannel = CreateNetworkChannel(serviceType, name);
                 if (networkChannel == null)
                 {
                     Log.Error($"Connect failed, channel name ({name}) is null.");
