@@ -20,6 +20,8 @@ namespace GameMain
         public static CrossPlatformComponent CrossPlatform { get; private set; }
 
         public static BuiltinUIFormComponent BuiltinUIForm { get; private set; }
+        
+        public static CameraComponent Camera { get; private set; }
 
         private static void InitCustomComponents()
         {
@@ -30,6 +32,8 @@ namespace GameMain
             CrossPlatform = GameEntry.GetComponent<CrossPlatformComponent>();
 
             BuiltinUIForm = GameEntry.GetComponent<BuiltinUIFormComponent>();
+            
+            Camera = GameEntry.GetComponent<CameraComponent>();
         }
     }
 }
