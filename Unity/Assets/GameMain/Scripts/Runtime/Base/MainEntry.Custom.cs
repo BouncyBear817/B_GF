@@ -22,6 +22,8 @@ namespace GameMain
         public static BuiltinUIFormComponent BuiltinUIForm { get; private set; }
         
         public static CameraComponent Camera { get; private set; }
+        
+        public static WebSocketComponent WebSocket { get; private set; }
 
         private static void InitCustomComponents()
         {
@@ -34,6 +36,8 @@ namespace GameMain
             BuiltinUIForm = GameEntry.GetComponent<BuiltinUIFormComponent>();
             
             Camera = GameEntry.GetComponent<CameraComponent>();
+            
+            WebSocket = GameEntry.GetComponent<WebSocketComponent>();
         }
     }
 }
