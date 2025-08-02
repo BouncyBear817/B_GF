@@ -269,6 +269,7 @@ GameObject:
   m_Component:
   - component: {fileID: 758441288}
   - component: {fileID: 758441289}
+  - component: {fileID: 758441290}
   m_Layer: 0
   m_Name: Example_WebSocket
   m_TagString: Untagged
@@ -301,6 +302,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4ba6f0610167a1498689cda4cd46a81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &758441290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 758441286}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80369ce46e89249ae83c023ce4d6597f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &770945511
@@ -429,15 +442,35 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 886517797650238368, guid: d75497086db41ee4ab11c21a27a659ee,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2604091264966303132, guid: d75497086db41ee4ab11c21a27a659ee,
         type: 3}
       propertyPath: m_Name
       value: GameFramework
       objectReference: {fileID: 0}
+    - target: {fileID: 2604091264966303132, guid: d75497086db41ee4ab11c21a27a659ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4454338891608150799, guid: d75497086db41ee4ab11c21a27a659ee,
         type: 3}
       propertyPath: mAddress
       value: ws://0.0.0.0:8765
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683120585688639030, guid: d75497086db41ee4ab11c21a27a659ee,
+        type: 3}
+      propertyPath: m_WebRequestAgentHelperTypeName
+      value: GameMain.UnityWebRequestAgentHelper
+      objectReference: {fileID: 0}
+    - target: {fileID: 7234575250736384309, guid: d75497086db41ee4ab11c21a27a659ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8996891850446948150, guid: d75497086db41ee4ab11c21a27a659ee,
         type: 3}

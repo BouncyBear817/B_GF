@@ -11,8 +11,7 @@ namespace GameMain
         public string Address { get; private set; }
 
         public string[] SubProtocols { get; private set; }
-
-        public WebSocketState ReadyState { get; }
+        
         public event EventHandler OnOpen;
 
         public event EventHandler<MessageEventArgs> OnMessage;
@@ -39,7 +38,7 @@ namespace GameMain
             mWebSocket = new WebSocket(Address, SubProtocols);
             {
                 mWebSocket.NoDelay = true;
-                mWebSocket.EmitOnPing = true;
+                // mWebSocket.EmitOnPing = true;
 
                 if (OnOpen != null) mWebSocket.OnOpen += OnOpen;
 
@@ -50,8 +49,6 @@ namespace GameMain
                 if (OnClose != null) mWebSocket.OnClose += OnClose;
 
                 mWebSocket.Connect();
-
-                mWebSocket.Ping();
             }
         }
 

@@ -11,6 +11,7 @@ namespace GameMain
     public class WebSocketComponent : GameFrameworkComponent
     {
         private IWebSocketManager mWebSocketManager;
+        private EventComponent mEventComponent;
 
         [SerializeField] private string mAddress;
 
@@ -26,6 +27,16 @@ namespace GameMain
             mWebSocketManager.OnMessage += WebSocketOnMessage;
             mWebSocketManager.OnError += WebSocketOnError;
             mWebSocketManager.OnClose += WebSocketOnClose;
+        }
+
+        private void Start()
+        {
+            mEventComponent = GameEntry.GetComponent<EventComponent>();
+            if (mEventComponent == null)
+            {
+                Log.Fatal("Event component is invalid.");
+                return;
+            }
         }
 
         public void Connect(string address, string[] subProtocols = null)
@@ -58,6 +69,7 @@ namespace GameMain
         private void WebSocketOnOpen(object sender, EventArgs e)
         {
             Log.Info($"WebSocket is opened : {mAddress}");
+            mEventComponent.Fire(this, WebSocketOpenEventArgs.Create());
         }
 
         private void WebSocketOnMessage(object sender, MessageEventArgs e)
@@ -74,16 +86,20 @@ namespace GameMain
             {
                 Log.Info($"WebSocket message binary : {Encoding.UTF8.GetString(e.RawData)}, {e.Data}");
             }
+            
+            mEventComponent.Fire(this, WebSocketMessageEventArgs.Create(e.Data, (uint)e.Opcode, e.RawData));
         }
         
         private void WebSocketOnError(object sender, ErrorEventArgs e)
         {
             Log.Error($"WebSocket error : {e.Message}, exception: {e.Exception}");
+            mEventComponent.Fire(this, WebSocketErrorEventArgs.Create(e.Message, e.Exception));
         }
 
         private void WebSocketOnClose(object sender, CloseEventArgs e)
         {
             Log.Info($"WebSocket closed : {e.Code} , reason: {e.Reason}");
+            mEventComponent.Fire(this, WebSocketCloseEventArgs.Create(e.Code, e.Reason));
             mWebSocketManager.Dispose();
         }
     }

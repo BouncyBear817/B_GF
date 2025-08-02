@@ -9,6 +9,12 @@ namespace GameMain
         public static readonly int EventId = typeof(WebSocketCloseEventArgs).GetHashCode();
         
         public override int Id => EventId;
+        
+        public ushort Code
+        {
+            get;
+            private set;
+        }
 
         public string Reason
         {
@@ -16,23 +22,18 @@ namespace GameMain
             private set;
         }
 
-        public WebSocketCloseStatus? CloseCode
-        {
-            get;
-            private set;
-        }
-
-        public static WebSocketCloseEventArgs Create(string reason, WebSocketCloseStatus? closeCode)
+        public static WebSocketCloseEventArgs Create(ushort code, string reason)
         {
             var eventArgs = ReferencePool.Acquire<WebSocketCloseEventArgs>();
+            eventArgs.Code = code;
             eventArgs.Reason = reason;
-            eventArgs.CloseCode = closeCode;
             return eventArgs;
         }
         
         public override void Clear()
         {
-            
+            Code = 0;
+            Reason = null;
         }
     }
 }

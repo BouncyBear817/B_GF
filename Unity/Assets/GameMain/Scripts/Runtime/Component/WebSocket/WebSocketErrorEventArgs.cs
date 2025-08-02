@@ -1,3 +1,4 @@
+using System;
 using GameFramework;
 using GameFramework.Event;
 
@@ -15,23 +16,24 @@ namespace GameMain
             private set;
         }
 
-        public object UserData
+        public Exception Exception
         {
             get;
             private set;
         }
 
-        public static WebSocketErrorEventArgs Create(string errorMessage, object userData = null)
+        public static WebSocketErrorEventArgs Create(string errorMessage, Exception exception)
         {
             var eventArgs = ReferencePool.Acquire<WebSocketErrorEventArgs>();
             eventArgs.ErrorMessage = errorMessage;
-            eventArgs.UserData = userData;
+            eventArgs.Exception = exception;
             return eventArgs;
         }
         
         public override void Clear()
         {
-            
+            ErrorMessage = null;
+            Exception = null;
         }
     }
 }

@@ -1,18 +1,19 @@
 using System;
 using GameMain;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ThirdCamera : MonoBehaviour
 {
-    public Transform target;
-    public Transform camera;
+    public Transform Target;
+    public Transform Camera;
     
     private CameraManager mCameraManager;
     
     private void Awake()
     {
         mCameraManager = new CameraManager();
-        mCameraManager.Init(camera, target);
+        mCameraManager.Init(Camera, Target);
         mCameraManager.SetCameraController(CameraControllerType.FirstPerson);
     }
 

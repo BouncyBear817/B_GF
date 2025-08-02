@@ -16,8 +16,6 @@ namespace GameMain
         
         string[] SubProtocols { get; }
         
-        WebSocketState ReadyState { get; }
-        
         event EventHandler OnOpen;
         
         event EventHandler<MessageEventArgs> OnMessage;

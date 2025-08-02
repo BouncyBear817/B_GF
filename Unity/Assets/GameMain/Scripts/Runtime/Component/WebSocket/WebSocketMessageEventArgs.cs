@@ -1,6 +1,6 @@
-using System.Net.WebSockets;
 using GameFramework;
 using GameFramework.Event;
+using WebSocketSharp;
 
 namespace GameMain
 {
@@ -10,28 +10,38 @@ namespace GameMain
 
         public override int Id => EventId;
 
-        public byte[] Data
-        {
-            get; 
-            private set;
-        }
-
-        public WebSocketMessageType MessageType
+        public string Data
         {
             get;
             private set;
         }
 
-        public static WebSocketMessageEventArgs Create(byte[] data, WebSocketMessageType messageType)
+        public uint Opcode
+        {
+            get;
+            private set;
+        }
+
+        public byte[] RawData
+        {
+            get; 
+            private set;
+        }
+
+        public static WebSocketMessageEventArgs Create(string data, uint opcode, byte[] rawData)
         {
             var eventArgs = ReferencePool.Acquire<WebSocketMessageEventArgs>();
             eventArgs.Data = data;
-            eventArgs.MessageType = messageType;
+            eventArgs.Opcode = opcode;
+            eventArgs.RawData = rawData;
             return eventArgs;
         }
 
         public override void Clear()
         {
+            Data = string.Empty;
+            Opcode = 0;
+            RawData = null;
         }
     }
 }
