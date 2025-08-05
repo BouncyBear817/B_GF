@@ -25,7 +25,6 @@ public class Example_WebSocket : MonoBehaviour
     
     private List<string> mInfo = new List<string>(10);
     private Vector2 mScrollPosition = Vector2.zero;
-    private int mHeight = 0;
 
     private IEnumerator Start()
     {
@@ -73,7 +72,7 @@ public class Example_WebSocket : MonoBehaviour
         {
             var data = "The websocket is open.";
             mInfo.Add("Open : " + data);
-            mScrollPosition = new Vector2(0, mHeight);
+            mScrollPosition = new Vector2(0, float.MaxValue);
         }
     }
 
@@ -83,7 +82,7 @@ public class Example_WebSocket : MonoBehaviour
         {
             var data = Encoding.UTF8.GetString(eventArgs.RawData);
             mInfo.Add("Message : " + data);
-            mScrollPosition = new Vector2(0, mHeight);
+            mScrollPosition = new Vector2(0, float.MaxValue);
         }
     }
 
@@ -93,7 +92,7 @@ public class Example_WebSocket : MonoBehaviour
         {
             var data = eventArgs.ErrorMessage + " ," + eventArgs.Exception.Message;
             mInfo.Add("Error" + data);
-            mScrollPosition = new Vector2(0, mHeight);
+            mScrollPosition = new Vector2(0, float.MaxValue);
         }
     }
     
@@ -103,7 +102,7 @@ public class Example_WebSocket : MonoBehaviour
         {
             var data = eventArgs.Code + " ," + eventArgs.Reason;
             mInfo.Add("Close : " + data);
-            mScrollPosition = new Vector2(0, mHeight);
+            mScrollPosition = new Vector2(0, float.MaxValue);
         }
     }
 
@@ -160,15 +159,25 @@ public class Example_WebSocket : MonoBehaviour
             // {
             //     MainEntry.WebSocket.Send();
             // }
-            mHeight = mInfo.Count < 9 ? 200 : 200 + (mInfo.Count - 9) * 20;
-            mScrollPosition = GUI.BeginScrollView(new Rect(20, 320, 800, 200), mScrollPosition, new Rect(0,0, 750, mHeight));
+            GUILayout.Space(340);
+            mScrollPosition = GUILayout.BeginScrollView(mScrollPosition, GUILayout.Height(300));
             {
                 for (int i = 0; i < mInfo.Count; i++)
                 {
                     GUILayout.Label(mInfo[i]);
                 }
             }
-            GUI.EndScrollView();
+            GUILayout.EndScrollView();
+            
+            // mHeight = mInfo.Count < 9 ? 200 : 200 + (mInfo.Count - 9) * 20;
+            // mScrollPosition = GUI.BeginScrollView(new Rect(20, 320, 800, 200), mScrollPosition, new Rect(0,0, 750, mHeight));
+            // {
+            //     for (int i = 0; i < mInfo.Count; i++)
+            //     {
+            //         GUILayout.Label(mInfo[i]);
+            //     }
+            // }
+            // GUI.EndScrollView();
         }
     }
 
