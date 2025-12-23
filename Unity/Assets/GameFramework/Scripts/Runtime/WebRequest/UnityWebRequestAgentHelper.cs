@@ -89,7 +89,7 @@ namespace UnityGameFramework.Runtime
         }
 
         /// <summary>
-        /// 通过 Web 请求代理辅助器发送请求。（仅支持json格式）
+        /// 通过 Web 请求代理辅助器发送请求。
         /// </summary>
         /// <param name="webRequestUri">要发送的远程地址。</param>
         /// <param name="postData">要发送的数据流。</param>
@@ -102,7 +102,7 @@ namespace UnityGameFramework.Runtime
                 return;
             }
 
-            m_UnityWebRequest = UnityWebRequest.Post(webRequestUri, Utility.Converter.GetString(postData), "application/json");
+            m_UnityWebRequest = UnityWebRequest.PostWwwForm(webRequestUri, Utility.Converter.GetString(postData));
 #if UNITY_2017_2_OR_NEWER
             m_UnityWebRequest.SendWebRequest();
 #else
