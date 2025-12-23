@@ -7,6 +7,7 @@
  *************************************************************/
 
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityGameFramework.Runtime;
@@ -18,7 +19,7 @@ namespace GameMain
         public const int DepthFactor = 100;
         private const float FadeTime = 0.3f;
 
-        private static Font sMainFont = null;
+        private static TMP_FontAsset sMainFont = null;
         private Canvas mCachedCanvas = null;
         private CanvasGroup mCanvasGroup = null;
 
@@ -39,7 +40,7 @@ namespace GameMain
             }
         }
 
-        public static void SetMainFont(Font mainFont)
+        public static void SetMainFont(TMP_FontAsset mainFont)
         {
             if (mainFont == null)
             {
@@ -68,7 +69,7 @@ namespace GameMain
 
             gameObject.GetOrAddComponent<GraphicRaycaster>();
 
-            var texts = GetComponentsInChildren<Text>(true);
+            var texts = GetComponentsInChildren<TextMeshProUGUI>(true);
             foreach (var t in texts)
             {
                 t.font = sMainFont;
@@ -83,6 +84,8 @@ namespace GameMain
         protected override void OnOpen(object userData)
         {
             base.OnOpen(userData);
+            
+            OnRegisterEvent();
 
             StopAllCoroutines();
             StartCoroutine(OpenFade(FadeTime));
@@ -91,6 +94,8 @@ namespace GameMain
         protected override void OnClose(bool isShutdown, object userData)
         {
             base.OnClose(isShutdown, userData);
+            
+            OnUnRegisterEvent();
         }
 
         protected override void OnPause()
@@ -138,6 +143,10 @@ namespace GameMain
                 canvas.sortingOrder += deltaDepth;
             }
         }
+        
+        protected virtual void OnRegisterEvent() { }
+
+        protected virtual void OnUnRegisterEvent() { }
 
         private IEnumerator OpenFade(float duration)
         {

@@ -117,6 +117,8 @@ namespace GameMain
             return sequence;
         }
 
+        public SequenceAnimation[] SequenceAnimation => mSequenceAnimations;
+
         public Tween DOPlay()
         {
             mTween = CreateTween();

@@ -357,7 +357,7 @@ namespace GameMain.Editor
                     sw.WriteLine("\t\t\tbase.OnInit(userData);");
                     sw.WriteLine("\t\t\tGetBindComponents(gameObject);\n");
                     sw.WriteLine($"\t\t\t{regionStart}\n");
-                    sw.WriteLine("\t\t\t\n");
+
                     foreach (var bindData in mTarget.mBindDataList)
                     {
                         var str = GetListener(bindData);
@@ -367,7 +367,6 @@ namespace GameMain.Editor
                         }
                     }
 
-                    sw.WriteLine("\t\t\t\n");
                     sw.WriteLine($"\n\t\t\t{regionEnd}");
                     sw.WriteLine("\t\t}\n");
 

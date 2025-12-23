@@ -58,7 +58,7 @@ namespace GameMain
             }
 
             mSmoothProgress = Mathf.Lerp(mSmoothProgress, mLoadedProgress / (float)mTotalProgress, elapseSeconds * ProgressSpeed);
-            MainEntry.BuiltinUIForm.ShowProgress($"{mSmoothProgress:P1}", mSmoothProgress);
+            MainEntry.BuiltinUIForm.ShowProgress($"正在加载配置文件：{mSmoothProgress:P1}", mSmoothProgress);
 
             if (mLoadedProgress >= mTotalProgress && mSmoothProgress >= 0.99f)
             {

@@ -15,7 +15,7 @@ namespace GameMain
     public static class ProcedureExtension
     {
         private static Type sLastProcedure;
-        private static ProcedureOwner mProcedureOwner;
+        private static ProcedureOwner sProcedureOwner;
 
         public static void SetLastProcedure(this ProcedureComponent procedureComponent, ProcedureOwner procedureOwner, Type lastProcedure)
         {
@@ -25,12 +25,12 @@ namespace GameMain
                 return;
             }
 
-            mProcedureOwner = procedureOwner;
+            sProcedureOwner = procedureOwner;
             sLastProcedure = lastProcedure;
         }
 
         public static Type GetLastProcedure(this ProcedureComponent procedureComponent) => sLastProcedure;
 
-        public static ProcedureOwner GetProcedureOwner(this ProcedureComponent procedureComponent) => mProcedureOwner;
+        public static ProcedureOwner GetProcedureOwner(this ProcedureComponent procedureComponent) => sProcedureOwner;
     }
 }

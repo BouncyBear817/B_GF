@@ -7,6 +7,7 @@
 //  *************************************************************/
 
 using System;
+using System.IO;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -116,6 +117,11 @@ namespace GameMain
             }
 
             return new Vector3();
+        }
+
+        public static Vector3 ReadVector3(this BinaryReader reader)
+        {
+            return new Vector3(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
         }
 
         public static Vector4 ParseVector4(string value)

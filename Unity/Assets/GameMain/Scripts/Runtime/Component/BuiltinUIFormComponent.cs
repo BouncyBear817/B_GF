@@ -54,7 +54,10 @@ namespace GameMain
 
         public void HideProgress()
         {
-            mProgressForm.Close(false, null);
+            if (mProgressForm.isActiveAndEnabled)
+            {
+                mProgressForm.Close(false, null);
+            }
         }
 
         public void ShowDialog(DialogParams dialogParams)

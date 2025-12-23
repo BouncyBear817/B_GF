@@ -8,6 +8,7 @@
 
 using System;
 using GameFramework.Resource;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -44,7 +45,7 @@ namespace GameMain.Editor
                 EditorGUILayout.BeginHorizontal();
                 {
                     EditorGUILayout.LabelField("Main Font", GUILayout.Width(160f));
-                    mGameGlobalSettings.MainFont = (Font)EditorGUILayout.ObjectField("", mGameGlobalSettings.MainFont, typeof(Font), false);
+                    mGameGlobalSettings.MainFont = (TMP_FontAsset)EditorGUILayout.ObjectField("", mGameGlobalSettings.MainFont, typeof(TMP_FontAsset), false);
                 }
                 EditorGUILayout.EndHorizontal();
                 
