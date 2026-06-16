@@ -29,11 +29,5 @@ namespace GameMain.Editor
         {
             Selection.activeObject = SettingsExtension.GetSettings("GameConfigSettings");
         }
-
-        [ToolsMenuMethod("Game Settings/Game Path Settings", null, 3, 4)]
-        public static void OpenGamePathSetting1()
-        {
-            Selection.activeObject = SettingsExtension.GetSettings("GamePathSettings");
-        }
     }
 }

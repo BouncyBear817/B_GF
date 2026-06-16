@@ -3,14 +3,14 @@ namespace GameMain
 {
 	public static partial class Constant
 	{
-		public enum EEntityGroupName
+		public enum EEntityGroup
 		{
 			/// <summary>
 			/// 默认
 			/// </summary>
 			Default,
 		}
-		public enum ESoundGroupName
+		public enum ESoundGroup
 		{
 			/// <summary>
 			/// 背景音乐
@@ -21,7 +21,7 @@ namespace GameMain
 			/// </summary>
 			Sound,
 		}
-		public enum EUIGroupName
+		public enum EUIGroup
 		{
 			Default,
 			/// <summary>

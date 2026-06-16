@@ -43,6 +43,11 @@ namespace GameMain
         {
             return Utility.Text.Format("Assets/GameMain/Music/{0}.mp3", assetName);
         }
+        
+        public static string GetPrefabAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/Prefabs/{0}.prefab", assetName);
+        }
 
         public static string GetSoundAsset(string assetName)
         {
@@ -72,6 +77,16 @@ namespace GameMain
         public static string GetUITextureAsset(string assetName)
         {
             return Utility.Text.Format("Assets/GameMain/UI/UITextures/{0}.png", assetName);
+        }
+
+        public static string GetUISpriteAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/UI/UISprites/{0}.png", assetName);
+        }
+        
+        public static string GetUIVideoAsset(string assetName)
+        {
+            return Utility.Text.Format("Assets/GameMain/UI/UIMovies/{0}.mp4", assetName);
         }
     }
 }

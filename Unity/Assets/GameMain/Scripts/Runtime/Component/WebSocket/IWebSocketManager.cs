@@ -23,6 +23,8 @@ namespace GameMain
         event EventHandler<ErrorEventArgs> OnError;
         
         event EventHandler<CloseEventArgs> OnClose;
+        
+        WebSocket WebSocket { get; }
 
         void Connect(string address, string[] subProtocols = null);
         

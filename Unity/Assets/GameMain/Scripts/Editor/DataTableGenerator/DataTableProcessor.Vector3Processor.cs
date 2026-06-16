@@ -15,7 +15,7 @@ namespace GameMain.Editor
     {
         private sealed class Vector3Processor : GenericDataProcessor<Vector3>
         {
-            public override bool IsSystem => true;
+            public override bool IsSystem => false;
 
             public override string LanguageKeyword => "Vector3";
 

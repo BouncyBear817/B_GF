@@ -47,11 +47,11 @@ namespace GameMain.Editor
             switch (configType)
             {
                 case GameConfigType.DataTable:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.DataTablePath);
+                    return EditorConstant.DataTableFullPath;
                 case GameConfigType.Config:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.ConfigPath);
+                    return EditorConstant.ConfigFullPath;
                 case GameConfigType.Localization:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.LocalizationPath);
+                    return EditorConstant.LocalizationFullPath;
             }
 
             return "";
@@ -67,11 +67,11 @@ namespace GameMain.Editor
             switch (configType)
             {
                 case GameConfigType.DataTable:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.DataTableExcelPath);
+                    return EditorConstant.DataTableExcelFullPath;
                 case GameConfigType.Config:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.ConfigExcelPath);
+                    return EditorConstant.ConfigExcelFullPath;
                 case GameConfigType.Localization:
-                    return PathUtil.GetGameConfigFullPath(SettingsExtension.GamePathSettings.LocalizationExcelPath);
+                    return EditorConstant.LocalizationExcelFullPath;
             }
 
             return "";

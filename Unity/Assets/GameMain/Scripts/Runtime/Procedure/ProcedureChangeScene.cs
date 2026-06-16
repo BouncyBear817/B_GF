@@ -84,7 +84,7 @@ namespace GameMain
             if (eventArgs != null && eventArgs.UserData == this)
             {
                 Log.Error($"Load scene '{mNextSceneName}' failed, exception '{eventArgs.ErrorMessage}', will restart the framework automatically. ");
-                GameEntry.Shutdown(ShutdownType.Restart);
+                MainEntry.Shutdown(ShutdownType.Restart);
             }
         }
 

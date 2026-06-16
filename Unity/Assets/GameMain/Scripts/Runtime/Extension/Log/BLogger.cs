@@ -17,7 +17,7 @@ using UnityGameFramework.Runtime;
 
 namespace GameMain
 {
-    public static class BearLogger
+    public static class BLogger
     {
         private const int STACK_TRACE_SKIP_FRAMES = 3;
         private static readonly StringBuilder mStringBuilder = new();
@@ -162,11 +162,11 @@ namespace GameMain
                 {
                     var pathLine = matches.Groups[1].Value;
 
-                    if (!pathLine.Contains("BearLogger.cs") && !pathLine.Contains("BearLogHelper.cs") && !pathLine.Contains("GameFrameworkLog.cs") && !pathLine.Contains("Log.cs"))
+                    if (!pathLine.Contains("BLogger.cs") && !pathLine.Contains("BLogHelper.cs") && !pathLine.Contains("GameFrameworkLog.cs") && !pathLine.Contains("Log.cs"))
                     {
                         var lineNumber = GetLineNumber(pathLine);
                         var fullPath = GetFullPath(pathLine);
-                        if ((!pathLine.Contains(assetPath) || lineNumber != line) && !assetPath.Contains("BearLogger.cs") && !assetPath.Contains("BearLogHelper.cs") &&
+                        if ((!pathLine.Contains(assetPath) || lineNumber != line) && !assetPath.Contains("BLogger.cs") && !assetPath.Contains("BLogHelper.cs") &&
                             !assetPath.Contains("GameFrameworkLog.cs") && !assetPath.Contains("Log.cs"))
                         {
                             lineNumber = line;

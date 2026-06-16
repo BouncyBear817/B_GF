@@ -1,7 +1,6 @@
 using System;
 using GameMain;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class ThirdCamera : MonoBehaviour
 {

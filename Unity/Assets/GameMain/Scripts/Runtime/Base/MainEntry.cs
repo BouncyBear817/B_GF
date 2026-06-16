@@ -6,7 +6,9 @@
  * Modify Record:
  *************************************************************/
 
+using System;
 using System.Reflection;
+using GameFramework;
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
@@ -44,9 +46,18 @@ namespace GameMain
             
             AwaitExtension.SubscribeEvent();
 
-            BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
+            BUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
 
             BuiltinUIForm.InitBuiltinForm();
+            
+            Utility.Random.SetSeed(DateTime.UtcNow.Millisecond);
+        }
+
+        public static void Shutdown(ShutdownType shutdownType)
+        {
+            GameEntry.Shutdown(shutdownType);
+            
+            Destroy(DataManager.Instance.gameObject);
         }
     }
 }

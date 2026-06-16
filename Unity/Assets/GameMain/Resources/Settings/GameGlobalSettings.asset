@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameGlobalSettings
   m_EditorClassIdentifier: 
   mScriptAuthor: Default
-  mMainFont: {fileID: 12800000, guid: f9612d2ea47890742846a458b552127a, type: 3}
+  mMainFont: {fileID: 11400000, guid: 45bcb800556d9b64bb3bacd71e8852e8, type: 2}
   mDebugMode: 1
   mResourceMode: 1
   mServerType: 1

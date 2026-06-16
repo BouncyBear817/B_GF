@@ -198,7 +198,7 @@ namespace GameMain.Editor
                 else
                 {
                     stringBuilder.AppendLine(
-                        $"            {dataTableProcessor.GetName(i)} = DataTableExtension.Parse{dataTableProcessor.GetType(i).Name}.Parse(columnStrings[index++]);").AppendLine();
+                        $"            {dataTableProcessor.GetName(i)} = DataTableExtension.Parse{dataTableProcessor.GetType(i).Name}(columnStrings[index++]);").AppendLine();
                 }
             }
 

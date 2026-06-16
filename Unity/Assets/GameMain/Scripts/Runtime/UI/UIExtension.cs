@@ -10,6 +10,7 @@ using System.Collections;
 using GameFramework;
 using GameFramework.DataTable;
 using GameFramework.UI;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -70,7 +71,7 @@ namespace GameMain
                 return mUIManager;
             }
         }
-
+        
         public static IEnumerator FadeToAlpha(this CanvasGroup canvasGroup, float alpha, float duration)
         {
             var time = 0f;
@@ -99,7 +100,7 @@ namespace GameMain
             slider.value = value;
         }
 
-        public static void CloseUIForm(this UIComponent uiComponent, BearUIForm uiForm)
+        public static void CloseUIForm(this UIComponent uiComponent, BUIForm uiForm)
         {
             uiComponent.CloseUIForm(uiForm.UIForm);
         }
@@ -129,12 +130,12 @@ namespace GameMain
             topBar.anchoredPosition = pos;
         }
 
-        public static Transform GetUIGroupRoot(this UIComponent uiComponent, Constant.EUIGroupName groupName)
+        public static Transform GetUIGroupRoot(this UIComponent uiComponent, Constant.EUIGroup uiGroup)
         {
-            var group = uiComponent.GetUIGroup(groupName.ToString());
+            var group = uiComponent.GetUIGroup(uiGroup.ToString());
             if (group != null)
             {
-                var helper = group.Helper as BearUIGroupHelper;
+                var helper = group.Helper as BUIGroupHelper;
                 if (helper != null)
                 {
                     return helper.transform;
@@ -209,6 +210,80 @@ namespace GameMain
             layoutElement.preferredWidth = size.x;
             layoutElement.preferredHeight = size.y;
         }
+
+        public static void SetActive(this RectTransform transform, bool active)
+        {
+            transform.gameObject.SetActive(active);
+        }
+        
+        public static void SetActive(this Button button, bool active)
+        {
+            button.gameObject.SetActive(active);
+        }
+
+        public static void SetActive(this Image image, bool active)
+        {
+            image.gameObject.SetActive(active);
+        }
+        
+        public static void SetActive(this RawImage image, bool active)
+        {
+            image.gameObject.SetActive(active);
+        }
+        
+        public static void SetActive(this Toggle toggle, bool active)
+        {
+            toggle.gameObject.SetActive(active);
+        }
+
+        public static void SetActive(this TextMeshProUGUI textMeshProUGUI, bool active)
+        {
+            textMeshProUGUI.gameObject.SetActive(active);
+        }
+        
+        public static Sprite ToSprite(this Texture2D tex)
+        {
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height), new Vector2(0.5f, 0.5f));
+        }
+
+        public static void RefreshContentSize(this RectTransform rect)
+        {
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rect);
+        }
+        
+        public static IEnumerator CaptureUIPanel(RectTransform targetPanel, byte[] imageBytes)
+        {
+            // 等待当前帧渲染完全结束
+            yield return new WaitForEndOfFrame();
+
+            // 2. 获取UI区域的世界坐标角点并转换为屏幕坐标
+            var worldCorners = new Vector3[4];
+            targetPanel.GetWorldCorners(worldCorners);
+            var bottomLeft = RectTransformUtility.WorldToScreenPoint(UICamera, worldCorners[0]);
+            var topRight = RectTransformUtility.WorldToScreenPoint(UICamera, worldCorners[2]);
+
+            // 3. 计算截取区域的宽高
+            var width = (int)(topRight.x - bottomLeft.x);
+            var height = (int)(topRight.y - bottomLeft.y);
+            var rect = new Rect(bottomLeft.x, bottomLeft.y, width, height);
+
+            // 4. 创建Texture2D（使用支持Alpha的格式）
+            var screenShot = new Texture2D(width, height, TextureFormat.ARGB32, false);
+
+            // 5. 读取像素
+            screenShot.ReadPixels(rect, 0, 0);
+            screenShot.Apply();
+
+            // 6. 保存（示例）
+            var file = @"C:\Users\RZ\Documents\CameraScreenShot.png";
+            var bytes = screenShot.EncodeToPNG();
+            imageBytes = bytes;
+            System.IO.File.WriteAllBytes(file, bytes);
+            Debug.Log("截图保存成功！");
+
+            // 7. 清理
+            Object.Destroy(screenShot);
+        }
         
          /// <summary>
         /// 用于检测是否点击到UI元素
@@ -272,8 +347,9 @@ namespace GameMain
         /// </summary>
         /// <param name="uiComponent">UI界面组件</param>
         /// <param name="uiViews">UI界面Id</param>
+        /// <param name="userData">用户自定义数据</param>
         /// <returns>界面的序列编号</returns>
-        public static int OpenUIForm(this UIComponent uiComponent, UIViews uiViews)
+        public static int OpenUIForm(this UIComponent uiComponent, UIViews uiViews, object userData = null)
         {
             var uiTable = GetUITable();
             if (uiTable != null)
@@ -287,20 +363,54 @@ namespace GameMain
 
                 var uiRow = uiTable.GetDataRow(uiId);
                 var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
+
+                if (uiRow.PauseCovered)
+                {
+                    
+                }
                 if (uiComponent.IsLoadingUIForm(uiAssetName))
                 {
                     return -1;
                 }
 
-                return uiComponent.OpenUIForm(uiAssetName, uiRow.GroupName, uiRow.Priority, uiRow.PauseCovered);
+                if (uiComponent.HasUIForm(uiAssetName))
+                {
+                    uiComponent.GetUIForm(uiViews).OnOpen(userData);
+                    return -1;
+                }
+
+                return uiComponent.OpenUIForm(uiAssetName, uiRow.GroupName, uiRow.Priority, uiRow.PauseCovered, userData);
             }
 
             return -1;
         }
 
-        public static void CloseUIForm(this UIComponent uiComponent, UIViews uiView)
+        public static bool HasUIForm(this UIComponent uiComponent, UIViews uiViews)
         {
-            var uiAssetName = uiComponent.GetUIFormAssetName(uiView);
+            var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
+            return uiComponent.HasUIForm(uiAssetName);
+        }
+
+        public static UIForm GetUIForm(this UIComponent uiComponent, UIViews uiViews)
+        {
+            var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
+            if (uiComponent.HasUIForm(uiAssetName))
+            {
+                return uiComponent.GetUIForm(uiAssetName);
+            }
+
+            return null;
+        }
+        
+        public static bool IsLoadingUIForm(this UIComponent uiComponent, UIViews uiViews)
+        {
+            var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
+            return uiComponent.IsLoadingUIForm(uiAssetName);
+        }
+        
+        public static void CloseUIForm(this UIComponent uiComponent, UIViews uiViews)
+        {
+            var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
             if (uiComponent.HasUIForm(uiAssetName))
             {
                 var uiForm = uiComponent.GetUIForm(uiAssetName);

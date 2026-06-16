@@ -7,6 +7,7 @@
 //  *************************************************************/
 
 using GameFramework.Resource;
+using TMPro;
 using UnityEngine;
 
 namespace GameMain
@@ -15,7 +16,7 @@ namespace GameMain
     public class GameGlobalSettings : ScriptableObject
     {
         [SerializeField] private string mScriptAuthor = "Default";
-        [SerializeField] private Font mMainFont;
+        [SerializeField] private TMP_FontAsset mMainFont;
 
         [SerializeField] private bool mDebugMode = false;
         [SerializeField] private ResourceMode mResourceMode = ResourceMode.Unspecified;
@@ -49,7 +50,7 @@ namespace GameMain
             set => mScriptAuthor = value;
         }
 
-        public Font MainFont
+        public TMP_FontAsset MainFont
         {
             get => mMainFont;
             set => mMainFont = value;

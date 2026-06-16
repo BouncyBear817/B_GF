@@ -6,7 +6,7 @@ namespace GameMain.UI
 	/// <summary>
 	/// Please modify the description.
 	/// </summary>
-	public partial class SplashForm: BearUIForm
+	public partial class SplashForm: BUIForm
 	{
 		private UnityAction mCompleteAction;
 		private DOTweenSequence mSequence;

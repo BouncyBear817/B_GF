@@ -143,12 +143,12 @@ namespace GameMain
                     "Update", o =>
                     {
                         Application.OpenURL(versionInfo.AppUpdateUri);
-                        GameEntry.Shutdown(ShutdownType.Quit);
+                        MainEntry.Shutdown(ShutdownType.Quit);
                     }, "Later", o =>
                     {
                         if (versionInfo.ForceUpdateApp)
                         {
-                            GameEntry.Shutdown(ShutdownType.Quit);
+                            MainEntry.Shutdown(ShutdownType.Quit);
                         }
                         else
                         {

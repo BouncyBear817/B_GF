@@ -24,6 +24,11 @@ namespace GameMain
             ChangeState(procedureOwner, stateType);
         }
 
+        public void ChangeStateByType<T>(ProcedureOwner procedureOwner) where T : ProcedureBase
+        {
+            ChangeState<T>(procedureOwner);
+        }
+
         protected override void OnEnter(ProcedureOwner procedureOwner)
         {
             base.OnEnter(procedureOwner);

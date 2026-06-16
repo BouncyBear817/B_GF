@@ -39,6 +39,10 @@ namespace GameMain
             }
         }
 
+        public WebSocket WebSocket => mWebSocketManager.WebSocket;
+
+        public bool IsValid => mWebSocketManager.WebSocket != null;
+
         public void Connect(string address, string[] subProtocols = null)
         {
             mAddress = address;

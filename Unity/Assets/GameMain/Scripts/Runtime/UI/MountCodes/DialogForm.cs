@@ -8,7 +8,7 @@ namespace GameMain.UI
     /// <summary>
     /// Please modify the description.
     /// </summary>
-    public partial class DialogForm : BearUIForm
+    public partial class DialogForm : BUIForm
     {
         private GameFrameworkAction<object> mOnConfirmClick = null;
         private GameFrameworkAction<object> mOnCancelClick = null;

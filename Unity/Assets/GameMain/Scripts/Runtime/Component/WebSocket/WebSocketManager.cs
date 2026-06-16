@@ -12,6 +12,8 @@ namespace GameMain
 
         public string[] SubProtocols { get; private set; }
         
+        public WebSocket WebSocket => mWebSocket;
+        
         public event EventHandler OnOpen;
 
         public event EventHandler<MessageEventArgs> OnMessage;

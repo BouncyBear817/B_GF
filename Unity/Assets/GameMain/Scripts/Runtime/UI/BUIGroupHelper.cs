@@ -15,7 +15,7 @@ namespace GameMain
     /// <summary>
     /// UGUI界面组辅助器
     /// </summary>
-    public class BearUIGroupHelper : UIGroupHelperBase
+    public class BUIGroupHelper : UIGroupHelperBase
     {
         public const int DepthFactor = 1000;
 
