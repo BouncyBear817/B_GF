@@ -5,6 +5,7 @@ using Unity.CodeEditor;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameMain.Editor
 {
@@ -15,7 +16,6 @@ namespace GameMain.Editor
             "UI Auto Bind Global Settings",
             "Game Global Settings",
             "Game Config Settings",
-            "Game Path Settings"
         };
 
         private static GUIContent sScenesContent;
@@ -59,21 +59,31 @@ namespace GameMain.Editor
                 allowDuplicateNames = true
             };
 
-            var sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] { SettingsExtension.GamePathSettings.ScenePath });
+            var sceneGuids = AssetDatabase.FindAssets("t:Scene", new[] { Constant.Path.ScenePath });
             for (var i = 0; i < sceneGuids.Length; i++)
             {
                 var scenePath = AssetDatabase.GUIDToAssetPath(sceneGuids[i]);
                 var sceneName = Path.GetFileNameWithoutExtension(scenePath);
                 
                 var fileDir = Path.GetDirectoryName(scenePath);
-                var isInRootDir = Utility.Path.GetRegularPath(SettingsExtension.GamePathSettings.ScenePath).TrimEnd('/') == Utility.Path.GetRegularPath(fileDir).TrimEnd('/');
+                var isInRootDir = Utility.Path.GetRegularPath(Constant.Path.ScenePath).TrimEnd('/') == Utility.Path.GetRegularPath(fileDir).TrimEnd('/');
                 if (!isInRootDir)
                 {
-                    var sceneDir = Path.GetRelativePath(SettingsExtension.GamePathSettings.ScenePath, fileDir);
+                    var sceneDir = Path.GetRelativePath(Constant.Path.ScenePath, fileDir);
                     sceneName = $"{sceneDir}/{sceneName}";
                 }
 
-                popMenu.AddItem(new GUIContent(sceneName), false, path => { EditorSceneManager.OpenScene((string)path, OpenSceneMode.Single); }, scenePath);
+                popMenu.AddItem(new GUIContent(sceneName), false, path =>
+                {
+                    if (SceneManager.GetActiveScene().isDirty)
+                    {
+                        if (EditorUtility.DisplayDialog("Scene(s) Have Been Modified", $"Do you want to save the changes you made in the scenes:\n{SceneManager.GetActiveScene().name}\n\nYour changes will be lost if you don't save them.", "Save", "Don't Save"))
+                        {
+                            EditorSceneManager.SaveScene(SceneManager.GetActiveScene());
+                        }
+                    }
+                    EditorSceneManager.OpenScene((string)path, OpenSceneMode.Single);
+                }, scenePath);
             }
             
             popMenu.ShowAsContext();

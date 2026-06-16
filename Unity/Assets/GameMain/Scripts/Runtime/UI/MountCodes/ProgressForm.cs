@@ -5,7 +5,7 @@ namespace GameMain.UI
 	/// <summary>
 	/// Please modify the description.
 	/// </summary>
-	public partial class ProgressForm : BearUIForm
+	public partial class ProgressForm : BUIForm
 	{
 		protected override void OnInit(object userData)
 		{

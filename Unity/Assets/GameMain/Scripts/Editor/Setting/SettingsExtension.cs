@@ -4,33 +4,18 @@ namespace GameMain.Editor
 {
     public class SettingsExtension
     {
-        private static GamePathSettings mGamePathSettings;
-
-        public static GamePathSettings GamePathSettings
-        {
-            get
-            {
-                if (mGamePathSettings == null)
-                {
-                    mGamePathSettings = GetSettings<GamePathSettings>();
-                }
-
-                return mGamePathSettings;
-            }
-        }
-        
-        private static GameConfigSettings mGameConfigSettings;
+        private static GameConfigSettings sGameConfigSettings;
 
         public static GameConfigSettings GameConfigSettings
         {
             get
             {
-                if (mGameConfigSettings == null)
+                if (sGameConfigSettings == null)
                 {
-                    mGameConfigSettings = GetSettings<GameConfigSettings>();
+                    sGameConfigSettings = GetSettings<GameConfigSettings>();
                 }
 
-                return mGameConfigSettings;
+                return sGameConfigSettings;
             }
             
         }

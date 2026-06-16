@@ -154,8 +154,7 @@ namespace GameMain.Editor
 
         public static void GenerateGroupEnumScript()
         {
-            var gamePathSettings = SettingsExtension.GamePathSettings;
-            var excelDir = gamePathSettings.DataTableExcelPath;
+            var excelDir = EditorConstant.DataTableExcelPath;
             if (!Directory.Exists(excelDir))
             {
                 Debug.LogWarning($"Data Table Excel Directory doesn't exist : {excelDir}.");
@@ -164,7 +163,7 @@ namespace GameMain.Editor
 
             var groupExcelPaths = new string[]
             {
-                gamePathSettings.EntityGroupDataTableExcelPath, gamePathSettings.SoundGroupDataTableExcelPath, gamePathSettings.UIGroupDataTableExcelPath
+                EditorConstant.EntityGroupDataTableExcelPath, EditorConstant.SoundGroupDataTableExcelPath, EditorConstant.UIGroupDataTableExcelPath
             };
 
             var stringBuilder = new StringBuilder();
@@ -207,7 +206,7 @@ namespace GameMain.Editor
                 if (className.EndsWith(endWithStr))
                 {
                     className = className.Substring(0, className.Length - endWithStr.Length);
-                    className = $"E{className}Name";
+                    className = $"E{className}";
                 }
 
                 stringBuilder.AppendLine($"\t\tpublic enum {className}");
@@ -231,7 +230,7 @@ namespace GameMain.Editor
             stringBuilder.AppendLine("\t}");
             stringBuilder.AppendLine("}");
 
-            var outFilePath = SettingsExtension.GamePathSettings.DataTableGroupCodePath;
+            var outFilePath = Constant.Path.DataTableGroupCodePath;
             try
             {
                 File.WriteAllText(outFilePath, stringBuilder.ToString(), Encoding.UTF8);
@@ -250,14 +249,14 @@ namespace GameMain.Editor
         /// </summary>
         public static void GenerateUIViewScript()
         {
-            var excelDir = SettingsExtension.GamePathSettings.DataTableExcelPath;
+            var excelDir = EditorConstant.DataTableExcelPath;
             if (!Directory.Exists(excelDir))
             {
                 Debug.LogError($"Generate UIView failed! Directory '{excelDir}' is not exist.");
                 return;
             }
 
-            var excelFileName = PathUtil.GetCombinePath(excelDir, EditorConstant.UITableExcel);
+            var excelFileName = PathUtil.GetCombinePath(excelDir, EditorConstant.UITableExcelPath);
             if (!File.Exists(excelFileName))
             {
                 Debug.LogError($"File '{excelFileName}' is not exist.");
@@ -295,8 +294,8 @@ namespace GameMain.Editor
 
             builder.AppendLine("\t}");
             builder.AppendLine("}");
-            File.WriteAllText(SettingsExtension.GamePathSettings.DataTableUIViewCodePath, builder.ToString());
-            Debug.Log($"Generate UIView code file ({SettingsExtension.GamePathSettings.DataTableUIViewCodePath}) success.");
+            File.WriteAllText(Constant.Path.DataTableUIViewCodePath, builder.ToString());
+            Debug.Log($"Generate UIView code file ({Constant.Path.DataTableUIViewCodePath}) success.");
         }
     }
 }

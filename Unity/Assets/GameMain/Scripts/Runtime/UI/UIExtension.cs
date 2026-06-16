@@ -100,7 +100,7 @@ namespace GameMain
             slider.value = value;
         }
 
-        public static void CloseUIForm(this UIComponent uiComponent, BearUIForm uiForm)
+        public static void CloseUIForm(this UIComponent uiComponent, BUIForm uiForm)
         {
             uiComponent.CloseUIForm(uiForm.UIForm);
         }
@@ -130,12 +130,12 @@ namespace GameMain
             topBar.anchoredPosition = pos;
         }
 
-        public static Transform GetUIGroupRoot(this UIComponent uiComponent, Constant.EUIGroupName groupName)
+        public static Transform GetUIGroupRoot(this UIComponent uiComponent, Constant.EUIGroup uiGroup)
         {
-            var group = uiComponent.GetUIGroup(groupName.ToString());
+            var group = uiComponent.GetUIGroup(uiGroup.ToString());
             if (group != null)
             {
-                var helper = group.Helper as BearUIGroupHelper;
+                var helper = group.Helper as BUIGroupHelper;
                 if (helper != null)
                 {
                     return helper.transform;
@@ -363,6 +363,11 @@ namespace GameMain
 
                 var uiRow = uiTable.GetDataRow(uiId);
                 var uiAssetName = uiComponent.GetUIFormAssetName(uiViews);
+
+                if (uiRow.PauseCovered)
+                {
+                    
+                }
                 if (uiComponent.IsLoadingUIForm(uiAssetName))
                 {
                     return -1;

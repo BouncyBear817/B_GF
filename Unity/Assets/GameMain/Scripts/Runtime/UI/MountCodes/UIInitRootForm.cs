@@ -5,7 +5,7 @@ namespace GameMain.UI
 	/// <summary>
 	/// Please modify the description.
 	/// </summary>
-	public partial class UIInitRootForm: BearUIForm
+	public partial class UIInitRootForm: BUIForm
 	{
 		protected override void OnInit(object userData)
 		{

@@ -46,7 +46,7 @@ namespace GameMain
             
             AwaitExtension.SubscribeEvent();
 
-            BearUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
+            BUIForm.SetMainFont(SettingsUtils.GameGlobalSettings.MainFont);
 
             BuiltinUIForm.InitBuiltinForm();
             

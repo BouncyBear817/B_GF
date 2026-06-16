@@ -14,7 +14,7 @@ using UnityGameFramework.Runtime;
 
 namespace GameMain
 {
-    public abstract class BearUIForm : UIFormLogic, IMessenger
+    public abstract class BUIForm : UIFormLogic, IMessenger
     {
         public const int DepthFactor = 100;
         private const float FadeTime = 0.3f;
@@ -136,7 +136,7 @@ namespace GameMain
             base.OnDepthChanged(uiGroupDepth, depthInUIGroup);
 
             var oldDepth = Depth;
-            var deltaDepth = BearUIGroupHelper.DepthFactor * uiGroupDepth + DepthFactor * depthInUIGroup - oldDepth + OriginDepth;
+            var deltaDepth = BUIGroupHelper.DepthFactor * uiGroupDepth + DepthFactor * depthInUIGroup - oldDepth + OriginDepth;
 
             foreach (var canvas in GetComponentsInChildren<Canvas>(true))
             {

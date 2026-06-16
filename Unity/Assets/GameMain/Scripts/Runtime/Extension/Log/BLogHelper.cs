@@ -10,26 +10,26 @@ using GameFramework;
 
 namespace GameMain
 {
-    public class BearLogHelper : GameFrameworkLog.ILogHelper
+    public class BLogHelper : GameFrameworkLog.ILogHelper
     {
         public void Log(GameFrameworkLogLevel level, object message)
         {
             switch (level)
             {
                 case GameFrameworkLogLevel.Debug:
-                    BearLogger.Debug(message.ToString());
+                    BLogger.Debug(message.ToString());
                     break;
                 case GameFrameworkLogLevel.Info:
-                    BearLogger.Info(message.ToString());
+                    BLogger.Info(message.ToString());
                     break;
                 case GameFrameworkLogLevel.Warning:
-                    BearLogger.Warning(message.ToString());
+                    BLogger.Warning(message.ToString());
                     break;
                 case GameFrameworkLogLevel.Error:
-                    BearLogger.Error(message.ToString());
+                    BLogger.Error(message.ToString());
                     break;
                 case GameFrameworkLogLevel.Fatal:
-                    BearLogger.Fatal(message.ToString());
+                    BLogger.Fatal(message.ToString());
                     break;
                 default:
                     throw new GameFrameworkException(message.ToString());

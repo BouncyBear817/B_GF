@@ -38,6 +38,11 @@ namespace GameMain
         public int Priority {get; private set;}
 
         /// <summary>
+        /// 是否允许多个界面实例
+        /// </summary>
+        public bool AllowMultiInstance {get; private set;}
+
+        /// <summary>
         /// 是否暂停被覆盖的界面
         /// </summary>
         public bool PauseCovered {get; private set;}
@@ -58,6 +63,7 @@ namespace GameMain
             AssetName = columnStrings[index++];
             GroupName = columnStrings[index++];
             Priority = int.Parse(columnStrings[index++]);
+            AllowMultiInstance = bool.Parse(columnStrings[index++]);
             PauseCovered = bool.Parse(columnStrings[index++]);
 
             GeneratePropertyArray();
@@ -74,6 +80,7 @@ namespace GameMain
                     AssetName = binaryReader.ReadString();
                     GroupName = binaryReader.ReadString();
                     Priority = binaryReader.Read7BitEncodedInt32();
+                    AllowMultiInstance = binaryReader.ReadBoolean();
                     PauseCovered = binaryReader.ReadBoolean();
                 }
             }

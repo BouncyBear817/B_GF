@@ -351,7 +351,7 @@ namespace GameMain.Editor
                     var ns = string.IsNullOrEmpty(mTarget.Namespace) ? DefaultNamespace : mTarget.Namespace;
                     sw.WriteLine($"\nnamespace {ns}" + "\n{");
                     sw.WriteLine($"\t/// <summary>\n\t/// Please modify the description.\n\t/// </summary>");
-                    sw.WriteLine($"\tpublic partial class {className}" + " : BearUIForm\n\t{");
+                    sw.WriteLine($"\tpublic partial class {className}" + " : BUIForm\n\t{");
 
                     sw.WriteLine("\t\tprotected override void OnInit(object userData)\n\t\t{");
                     sw.WriteLine("\t\t\tbase.OnInit(userData);");

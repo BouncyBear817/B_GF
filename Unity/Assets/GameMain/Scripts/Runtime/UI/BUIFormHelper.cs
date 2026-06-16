@@ -13,7 +13,7 @@ using Object = UnityEngine.Object;
 
 namespace GameMain
 {
-    public class BearUIFormHelper : UIFormHelperBase
+    public class BUIFormHelper : UIFormHelperBase
     {
         private ResourceComponent mResourceComponent;
 
